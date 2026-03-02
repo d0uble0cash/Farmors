@@ -4,3 +4,6 @@
 *.mp3 filter=lfs diff=lfs merge=lfs -text
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.anim filter=lfs diff=lfs merge=lfs -text
+
+ProjectSettings/** linguist-vendored
+Packages/** linguist-vendored
