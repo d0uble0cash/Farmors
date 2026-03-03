@@ -16,7 +16,9 @@ public class GameManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Load immediately (no "no camera" frame)
+        // Load saved progress into GameState (if a save exists)
+        if (SaveSystem.I != null) SaveSystem.I.Load();
+
         SceneManager.LoadScene("FarmHub");
     }
 }
