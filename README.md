@@ -1,6 +1,6 @@
 # Farmors (Working Title)
 
-Farmors is a 2.5D pixel-style farming and metroidvania game where you manage a small farm and venture into biomes to rescue lost farm animals.
+Farmors is a 2.5D pixel-style farming and metroidvania game where you manage a farm and venture into biomes to rescue lost farm animals.
 
 > ⚠ Working title — name may change.
 
