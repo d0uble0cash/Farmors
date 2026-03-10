@@ -3,28 +3,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractor : MonoBehaviour
 {
-    [Header("Raycast")]
-    [SerializeField] private Camera cam;
+    [Header("Proximity Detection")]
     [SerializeField] private LayerMask interactMask = ~0;
 
-    [Header("Distance")]
-    [SerializeField] private float interactDistance = 100f;
-    [SerializeField] private bool useCameraFarClip = true;
+    [Header("Radius")]
+    [SerializeField] private float interactRadius = 1f;
 
     [Header("Input System")]
     [SerializeField] private InputActionReference interactAction;
-    [SerializeField] private bool allowMouseClick = true;
 
     private CropPlot focused;
-
-    private void Awake()
-    {
-        if (cam == null)
-            cam = Camera.main;
-
-        if (useCameraFarClip && cam != null)
-            interactDistance = cam.farClipPlane;
-    }
 
     private void OnEnable()
     {
@@ -46,10 +34,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Update()
     {
-        UpdateFocus_MouseHover();
-
-        if (allowMouseClick && focused != null && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
-            focused.Interact();
+        UpdateFocus_ByProximity();
     }
 
     private void OnInteractPerformed(InputAction.CallbackContext ctx)
@@ -58,33 +43,27 @@ public class PlayerInteractor : MonoBehaviour
             focused.Interact();
     }
 
-    private void UpdateFocus_MouseHover()
+    private void UpdateFocus_ByProximity()
     {
-        if (cam == null)
+        Vector3 origin = transform.position;
+        Collider[] hits = Physics.OverlapSphere(origin, interactRadius, interactMask);
+        CropPlot closestPlot = null;
+        float closestSqrDist = float.MaxValue;
+
+        foreach (var hit in hits)
         {
-            SetFocus(null);
-            return;
+            var plot = hit.GetComponentInParent<CropPlot>();
+            if (plot != null && plot.MatchesCollider(hit))
+            {
+                float sqrDist = (plot.transform.position - origin).sqrMagnitude;
+                if (sqrDist < closestSqrDist)
+                {
+                    closestSqrDist = sqrDist;
+                    closestPlot = plot;
+                }
+            }
         }
-
-        if (Mouse.current == null)
-        {
-            SetFocus(null);
-            return;
-        }
-
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = cam.ScreenPointToRay(mousePos);
-
-        CropPlot newFocus = null;
-
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask))
-        {
-            var plot = hit.collider.GetComponentInParent<CropPlot>();
-            if (plot != null && plot.MatchesCollider(hit.collider))
-                newFocus = plot;
-        }
-
-        SetFocus(newFocus);
+        SetFocus(closestPlot);
     }
 
     private void SetFocus(CropPlot newFocus)
