@@ -21,10 +21,10 @@ public class GameState : MonoBehaviour
         }
         I = this;
         DontDestroyOnLoad(gameObject);
+        PlayerInventory.Add("seed_corn", 10);
     }
 
-    // Small helper methods (your other systems can call these)
-    public void AddMoney(int amount) => money += amount;
+    public InventoryModel PlayerInventory { get; } = new InventoryModel();
 
     public void AddRescuedAnimal(string animalId) => rescuedAnimals.Add(animalId);
     public bool HasRescuedAnimal(string animalId) => rescuedAnimals.Contains(animalId);
