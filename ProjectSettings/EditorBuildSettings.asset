@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/StartMenu.unity
     guid: 2d329c72a6d13b6459abd70edaf32a9f
   - enabled: 1
-    path: Assets/Scenes/FarmHub.unity
+    path: Assets/Scenes/FarmHub/FarmHub.unity
     guid: 8febce6add74c224fb3f28029e85a5c4
   - enabled: 1
     path: Assets/Scenes/ForestBiome.unity

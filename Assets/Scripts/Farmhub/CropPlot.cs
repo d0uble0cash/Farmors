@@ -6,7 +6,6 @@ public class CropPlot : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float growTimeSeconds = 5f;
-    [SerializeField] private int harvestMoney = 10;
 
     [Header("Visuals")]
     [SerializeField] private Renderer plotRenderer;
@@ -20,6 +19,11 @@ public class CropPlot : MonoBehaviour
     [Header("Interaction")]
     [Tooltip("Optional: set a specific collider used for raycast hit testing. If null, any collider on this object/children works.")]
     [SerializeField] private Collider interactCollider;
+
+    [Header("Crop Data")]
+    [SerializeField] private ItemDefinition harvestItem;
+    [SerializeField] private int harvestAmount = 1;
+    [SerializeField] private ItemDefinition requiredSeed;
 
     public PlotState State => state;
     public bool CanInteract => state == PlotState.Empty || state == PlotState.Ready;
@@ -77,21 +81,38 @@ public class CropPlot : MonoBehaviour
     {
         if (!CanInteract)
             return;
+        
+        if (GameState.I == null)
+        {
+            Debug.LogError("GameState.I is null. Start from Boot scene so Core singletons exist.");
+            return;
+        }
 
         if (state == PlotState.Empty)
         {
+            if (requiredSeed == null)
+            {
+                Debug.LogError("CropPlot requiredSeed is not set.", this);
+                return;
+            }
+
+            if (!GameState.I.PlayerInventory.TryRemove(requiredSeed.Id, 1))
+            {
+                Debug.Log($"Not enough seeds: {requiredSeed.DisplayName}", this);
+                return;
+            }
+
             SetState(PlotState.Growing, resetTimer: true);
         }
         else if (state == PlotState.Ready)
         {
-            if (GameState.I == null)
+            if (harvestItem == null)
             {
-                Debug.LogError("GameState.I is null. Start from Boot scene so Core singletons exist.");
+                Debug.LogError("CropPlot harvestItem is not set.", this);
                 return;
             }
-
-            GameState.I.AddMoney(harvestMoney);
-            Debug.Log("Money: " + GameState.I.money);
+            GameState.I.PlayerInventory.Add(harvestItem.Id, harvestAmount);
+            Debug.Log($"Harvested {harvestAmount}x {harvestItem.DisplayName}!");
 
             SetState(PlotState.Empty, resetTimer: true);
         }
@@ -117,7 +138,9 @@ public class CropPlot : MonoBehaviour
 
         string text = state switch
         {
-            PlotState.Empty => "Plant",
+            PlotState.Empty => (GameState.I != null && requiredSeed != null && GameState.I.PlayerInventory.Has(requiredSeed.Id))
+                ? "Plant"
+                : "Need Seeds",
             PlotState.Growing => "Growing...",
             PlotState.Ready => "Harvest",
             _ => ""
@@ -147,7 +170,7 @@ public class CropPlot : MonoBehaviour
 
         ApplyStateVisuals();
         ApplyCropGrowthVisual();
-        RefreshPrompt(); // <-- THIS is what makes the prompt switch immediately
+        RefreshPrompt(); 
     }
 
     private void ApplyStateVisuals()

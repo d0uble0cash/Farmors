@@ -8,7 +8,7 @@ public class SaveSystem : MonoBehaviour
     public static SaveSystem I { get; private set; }
 
     [Serializable]
-    private class SaveData
+    public class SaveData
     {
         public int money;
         public List<string> rescuedAnimals = new();
@@ -61,7 +61,6 @@ public class SaveSystem : MonoBehaviour
             Debug.Log("No save file found. Starting fresh.");
             return;
         }
-
         var json = File.ReadAllText(SavePath);
         var data = JsonUtility.FromJson<SaveData>(json);
 
