@@ -6,20 +6,33 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
 
     void Awake()
-{
-    if (instance != null)
     {
-        Destroy(gameObject);
-        return;
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
+    void Start()
+    {
+        var gameState = GameState.I;
+        var saveSystem = SaveSystem.I;
+        if (gameState == null || saveSystem == null)
+        {
+            Debug.LogError("GameState or SaveSystem not found. Cannot initialize game.");
+            return;
+        }
 
-    instance = this;
-    DontDestroyOnLoad(gameObject);
-}
-
-void Start()
-{
-    SaveSystem.I?.Load();
-    SceneManager.LoadScene("FarmHub");
-}
+        if (saveSystem.HasSave())
+        {
+            saveSystem.Load();
+        }
+        else
+        {
+            gameState.InitializeNewGame();
+        }
+        SceneManager.LoadScene("FarmHub");
+    }
 }

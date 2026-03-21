@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public class InventoryModel
@@ -55,4 +56,22 @@ public class InventoryModel
         if (!VerifyValid(id, amount)) return false;
         return GetCount(id) >= amount;
     }
+
+    public List<InventoryEntry> ToSnapshot()
+    {
+        var snapshot = new List<InventoryEntry>();
+        foreach (var item in items)
+            snapshot.Add(new InventoryEntry { id = item.Key, amount = item.Value });
+        return snapshot;
+    }
+
+    public  void LoadFromSnapshot(List<InventoryEntry> snapshot)
+    {
+        items.Clear();
+        if (snapshot == null) return;
+        foreach (var entry in snapshot)
+            Add(entry.id, entry.amount);
+    }
+
+    public void Clear() => items.Clear();
 }
