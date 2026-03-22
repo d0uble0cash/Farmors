@@ -40,7 +40,8 @@ public class InventoryUI : MonoBehaviour
         {
             foreach (var item in items)
             {
-                newText += $"{item.Key}: {item.Value}\n";
+                ItemDefinition definition = ItemDatabase.I.GetItemById(item.Key);
+                newText += $"{definition?.DisplayName ?? item.Key}: {item.Value}\n";
             }
         }
         text.text = newText;
