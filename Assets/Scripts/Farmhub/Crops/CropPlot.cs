@@ -47,7 +47,6 @@ public class CropPlot : MonoBehaviour
 
         SetState(PlotState.Empty, resetTimer: true);
 
-        // Start hidden until focused
         if (prompt != null)
         {
             prompt.Show(false);
