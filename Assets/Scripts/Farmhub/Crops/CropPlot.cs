@@ -34,6 +34,7 @@ public class CropPlot : MonoBehaviour {
     private static readonly int ColorId = Shader.PropertyToID("_Color");
 
     private void Awake() {
+
         if (plotRenderer == null) {
             plotRenderer = GetComponentInChildren<Renderer>();
         }
@@ -56,8 +57,8 @@ public class CropPlot : MonoBehaviour {
         TickGrowth();
     }
 
-    private void TickGrowth()
-    {
+    private void TickGrowth() {
+        
         if (state != PlotState.Growing) {
             return;
         }
