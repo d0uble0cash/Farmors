@@ -4,12 +4,12 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private TMP_Text text;
+    [SerializeField] private TMP_Text inventoryText;
 
     private void Awake()
     {
-        if (text == null)
-            text = GetComponentInChildren<TMP_Text>();
+        if (inventoryText == null)
+            inventoryText = GetComponentInChildren<TMP_Text>();
     }
 
     private void Update()
@@ -18,14 +18,14 @@ public class InventoryUI : MonoBehaviour
     }
     private void RefreshText()
     {
-        if (text == null) 
+        if (inventoryText == null) 
         {
             return;
         }
 
         if (GameState.I == null)
         {
-            text.text = "Inventory:\nUnavailable";
+            inventoryText.text = "Inventory:\nUnavailable";
             return;
         }
         
@@ -40,10 +40,10 @@ public class InventoryUI : MonoBehaviour
         {
             foreach (var item in items)
             {
-                ItemDefinition definition = ItemDatabase.I.GetItemById(item.Key);
+                ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
                 newText += $"{definition?.DisplayName ?? item.Key}: {item.Value}\n";
             }
         }
-        text.text = newText;
+        inventoryText.text = newText;
     }
 }

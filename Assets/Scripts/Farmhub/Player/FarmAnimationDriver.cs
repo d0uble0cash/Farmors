@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class FarmAnimationDriver : MonoBehaviour
-{
+public class FarmAnimationDriver : MonoBehaviour {
     [SerializeField] private Animator visualAnimator;
 
     private Vector3 lastPosition;
 
-    private void Start()
-    {
+    private void Start() {
+        
         lastPosition = transform.position;
     }
 
-    private void Update()
-    {
-        if (visualAnimator == null)
+    private void Update() {
+
+        if (visualAnimator == null) {
             return;
+        }
 
         float distanceMoved = Vector3.Distance(transform.position, lastPosition);
         float speed = distanceMoved / Mathf.Max(Time.deltaTime, 0.0001f);

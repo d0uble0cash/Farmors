@@ -3,16 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    private static GameManager gameInstance;
 
     void Awake()
     {
-        if (instance != null)
+        if (gameInstance != null)
         {
             Destroy(gameObject);
             return;
         }
-        instance = this;
+        gameInstance = this;
         DontDestroyOnLoad(gameObject);
     }
     void Start()
