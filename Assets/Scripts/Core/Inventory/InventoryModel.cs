@@ -68,7 +68,7 @@ public class InventoryModel
 
         if (string.IsNullOrWhiteSpace(id))
         {
-         return 0;
+        return 0;
         }
 
         return items.TryGetValue(id, out var count) ? count : 0;
