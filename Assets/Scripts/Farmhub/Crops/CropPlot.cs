@@ -175,7 +175,7 @@ public class CropPlot : MonoBehaviour {
     }
 
     private void ApplyStateVisuals() {
-       
+        
         if (plotRenderer == null) {
             return;
         }
