@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 357942254}
   - component: {fileID: 357942257}
   - component: {fileID: 357942256}
+  - component: {fileID: 357942258}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -189,7 +190,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9d71d4fdca65248a677f518aac6cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameState
-  money: 0
+--- !u!114 &357942258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357942253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271b895c05037354d8397c2604ec3e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDatabase
+  itemDefinitions:
+  - {fileID: 11400000, guid: 2ca8158b83c7b0245afcb123ef3c602b, type: 2}
+  - {fileID: 11400000, guid: d48608bde4635e747bd0bc811f4c53f3, type: 2}
+  - {fileID: 11400000, guid: aa0d0c1e2a1342e4a88dcba2170eed1c, type: 2}
+  - {fileID: 11400000, guid: a9377214fec1e4e4cb520ff5d597db49, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

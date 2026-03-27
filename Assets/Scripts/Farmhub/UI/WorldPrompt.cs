@@ -10,7 +10,7 @@ public class WorldPrompt : MonoBehaviour
     [SerializeField] private bool faceCamera = true;
 
     [Header("Fade")]
-    [SerializeField] private float fadeSpeed = 10f; // higher = snappier
+    [SerializeField] private float fadeSpeed = 10f;
 
     [Header("Bob")]
     [SerializeField] private float bobAmplitude = 0.05f;
@@ -40,21 +40,17 @@ public class WorldPrompt : MonoBehaviour
         baseLocalPos = transform.localPosition;
         baseLocalScale = transform.localScale;
 
-        // Start hidden without disabling the object
         SetAlphaImmediate(0f);
     }
 
     private void Update()
     {
-        // Smooth fade (no coroutines needed)
         currentAlpha = Mathf.MoveTowards(currentAlpha, targetAlpha, fadeSpeed * Time.deltaTime);
         ApplyAlpha(currentAlpha);
 
-        // Bob always (only noticeable when visible)
         float bob = Mathf.Sin(Time.time * bobFrequency) * bobAmplitude;
         transform.localPosition = baseLocalPos + new Vector3(0f, bob, 0f);
 
-        // Pulse only when "Ready"
         if (pulsing)
         {
             float p = Mathf.Sin(Time.time * pulseFrequency) * 0.5f + 0.5f; // 0..1
@@ -72,7 +68,6 @@ public class WorldPrompt : MonoBehaviour
             if (cam == null) cam = Camera.main;
             if (cam != null)
             {
-                // Face camera, but keep upright (optional: remove flattening if you want full look-at)
                 Vector3 forward = cam.transform.forward;
                 forward.y = 0f;
                 if (forward.sqrMagnitude > 0.0001f)
