@@ -1,12 +1,10 @@
 using UnityEngine;
 
-public class CropPlot : MonoBehaviour
-{
+public class CropPlot : MonoBehaviour {
     public enum PlotState { Empty, Growing, Ready }
 
     [Header("Settings")]
     [SerializeField] private float growTimeSeconds = 5f;
-    [SerializeField] private int harvestMoney = 10;
 
     [Header("Visuals")]
     [SerializeField] private Renderer plotRenderer;
@@ -18,8 +16,12 @@ public class CropPlot : MonoBehaviour
     [SerializeField] private WorldPrompt prompt;
 
     [Header("Interaction")]
-    [Tooltip("Optional: set a specific collider used for raycast hit testing. If null, any collider on this object/children works.")]
     [SerializeField] private Collider interactCollider;
+
+    [Header("Crop Data")]
+    [SerializeField] private ItemDefinition harvestItem;
+    [SerializeField] private int harvestAmount = 1;
+    [SerializeField] private ItemDefinition requiredSeed;
 
     public PlotState State => state;
     public bool CanInteract => state == PlotState.Empty || state == PlotState.Ready;
@@ -31,40 +33,39 @@ public class CropPlot : MonoBehaviour
     private MaterialPropertyBlock mpb;
     private static readonly int ColorId = Shader.PropertyToID("_Color");
 
-    private void Awake()
-    {
-        if (plotRenderer == null)
-            plotRenderer = GetComponentInChildren<Renderer>();
+    private void Awake() {
 
-        if (interactCollider == null)
+        if (plotRenderer == null) {
+            plotRenderer = GetComponentInChildren<Renderer>();
+        }
+
+        if (interactCollider == null) {
             interactCollider = GetComponentInChildren<Collider>();
+        }
 
         mpb = new MaterialPropertyBlock();
 
         SetState(PlotState.Empty, resetTimer: true);
 
-        // Start hidden until focused
-        if (prompt != null)
-        {
+        if (prompt != null) {
             prompt.Show(false);
             prompt.SetPulsing(false);
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
         TickGrowth();
     }
 
-    private void TickGrowth()
-    {
-        if (state != PlotState.Growing)
+    private void TickGrowth() {
+        
+        if (state != PlotState.Growing) {
             return;
+        }
 
         growTimer += Time.deltaTime;
 
-        if (growTimer >= growTimeSeconds)
-        {
+        if (growTimer >= growTimeSeconds) {
             growTimer = growTimeSeconds;
             SetState(PlotState.Ready, resetTimer: false);
             return;
@@ -73,52 +74,72 @@ public class CropPlot : MonoBehaviour
         ApplyCropGrowthVisual();
     }
 
-    public void Interact()
-    {
-        if (!CanInteract)
+    public void Interact() {
+        
+        if (!CanInteract) {
             return;
-
-        if (state == PlotState.Empty)
-        {
-            SetState(PlotState.Growing, resetTimer: true);
         }
-        else if (state == PlotState.Ready)
-        {
-            if (GameState.I == null)
-            {
-                Debug.LogError("GameState.I is null. Start from Boot scene so Core singletons exist.");
+        
+        if (GameState.I == null) {
+            Debug.LogError("GameState.I is null. Start from Boot scene so Core singletons exist.");
+            return;
+        }
+
+        if (state == PlotState.Empty) {
+
+            if (requiredSeed == null) {
+                Debug.LogError("CropPlot requiredSeed is not set.", this);
                 return;
             }
 
-            GameState.I.AddMoney(harvestMoney);
-            Debug.Log("Money: " + GameState.I.money);
+            if (!GameState.I.PlayerInventory.TryRemove(requiredSeed.Id, 1)) {
+                Debug.Log($"Not enough seeds: {requiredSeed.DisplayName}", this);
+                return;
+            }
+
+            SetState(PlotState.Growing, resetTimer: true);
+        }
+
+        else if (state == PlotState.Ready) {
+            
+            if (harvestItem == null) {
+                Debug.LogError("CropPlot harvestItem is not set.", this);
+                return;
+            }
+
+            GameState.I.PlayerInventory.Add(harvestItem.Id, harvestAmount);
+            Debug.Log($"Harvested {harvestAmount}x {harvestItem.DisplayName}!");
 
             SetState(PlotState.Empty, resetTimer: true);
         }
     }
 
-    public void SetFocused(bool focused)
-    {
+    public void SetFocused(bool focused) {
+        
         isFocused = focused;
         RefreshPrompt();
     }
 
-    private void RefreshPrompt()
-    {
-        if (prompt == null)
+    private void RefreshPrompt() {
+        
+        if (prompt == null) {
             return;
+        }
 
-        if (!isFocused)
-        {
+        if (!isFocused) {
             prompt.Show(false);
             prompt.SetPulsing(false);
             return;
         }
 
-        string text = state switch
-        {
-            PlotState.Empty => "Plant",
+        string text = state switch {
+
+            PlotState.Empty => (GameState.I != null && requiredSeed != null && GameState.I.PlayerInventory.Has(requiredSeed.Id))
+                ? "Plant"
+                : "Need Seeds",
+
             PlotState.Growing => "Growing...",
+
             PlotState.Ready => "Harvest",
             _ => ""
         };
@@ -128,35 +149,38 @@ public class CropPlot : MonoBehaviour
         prompt.SetPulsing(state == PlotState.Ready);
     }
 
-    public bool MatchesCollider(Collider c)
-    {
-        if (c == null) return false;
+    public bool MatchesCollider(Collider c) {
 
-        if (interactCollider != null)
+        if (c == null) {
+            return false;
+        }
+
+        if (interactCollider != null) {
             return c == interactCollider || c.transform.IsChildOf(interactCollider.transform);
+        }
 
         return c.GetComponentInParent<CropPlot>() == this;
     }
 
-    private void SetState(PlotState newState, bool resetTimer)
-    {
+    private void SetState(PlotState newState, bool resetTimer) {
         state = newState;
 
-        if (resetTimer)
+        if (resetTimer) {
             growTimer = 0f;
+        }
 
         ApplyStateVisuals();
         ApplyCropGrowthVisual();
-        RefreshPrompt(); // <-- THIS is what makes the prompt switch immediately
+        RefreshPrompt(); 
     }
 
-    private void ApplyStateVisuals()
-    {
-        if (plotRenderer == null)
+    private void ApplyStateVisuals() {
+       
+        if (plotRenderer == null) {
             return;
+        }
 
-        Color c = state switch
-        {
+        Color c = state switch {
             PlotState.Empty => new Color(0.25f, 0.15f, 0.08f),
             PlotState.Growing => new Color(0.35f, 0.22f, 0.12f),
             PlotState.Ready => new Color(0.25f, 0.35f, 0.12f),
@@ -168,18 +192,21 @@ public class CropPlot : MonoBehaviour
         plotRenderer.SetPropertyBlock(mpb);
     }
 
-    private void ApplyCropGrowthVisual()
-    {
-        if (cropVisual == null)
+    private void ApplyCropGrowthVisual() {
+
+        if (cropVisual == null) {
             return;
+        }
 
         bool shouldShow = state != PlotState.Empty;
 
-        if (cropVisual.gameObject.activeSelf != shouldShow)
+        if (cropVisual.gameObject.activeSelf != shouldShow) {
             cropVisual.gameObject.SetActive(shouldShow);
+        }
 
-        if (!shouldShow)
+        if (!shouldShow) {
             return;
+        }
 
         float t = (state == PlotState.Ready)
             ? 1f

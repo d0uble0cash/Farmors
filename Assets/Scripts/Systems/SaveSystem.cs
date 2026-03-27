@@ -1,20 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class SaveSystem : MonoBehaviour
 {
     public static SaveSystem I { get; private set; }
-
-    [Serializable]
-    private class SaveData
-    {
-        public int money;
-        public List<string> rescuedAnimals = new();
-        public List<string> unlockedAbilities = new();
-    }
-
     private string SavePath => Path.Combine(Application.persistentDataPath, "save.json");
 
     private void Awake()
@@ -35,13 +24,7 @@ public class SaveSystem : MonoBehaviour
             Debug.LogWarning("No GameState found. Cannot save.");
             return;
         }
-
-        var data = new SaveData
-        {
-            money = GameState.I.money,
-            rescuedAnimals = new List<string>(GameState.I.rescuedAnimals),
-            unlockedAbilities = new List<string>(GameState.I.unlockedAbilities)
-        };
+        var data = GameState.I.ToSaveData();
 
         var json = JsonUtility.ToJson(data, true);
         File.WriteAllText(SavePath, json);
@@ -61,20 +44,18 @@ public class SaveSystem : MonoBehaviour
             Debug.Log("No save file found. Starting fresh.");
             return;
         }
-
+        
         var json = File.ReadAllText(SavePath);
         var data = JsonUtility.FromJson<SaveData>(json);
 
-        GameState.I.money = data.money;
-
-        GameState.I.rescuedAnimals.Clear();
-        foreach (var id in data.rescuedAnimals)
-            GameState.I.rescuedAnimals.Add(id);
-
-        GameState.I.unlockedAbilities.Clear();
-        foreach (var id in data.unlockedAbilities)
-            GameState.I.unlockedAbilities.Add(id);
-
+        if (data == null)
+        {
+            Debug.LogError("Failed to load save data. Starting fresh.");
+            return;
+        }
+        
+        GameState.I.LoadFromSaveData(data);
         Debug.Log($"Loaded from: {SavePath}");
     }
+    public bool HasSave() => File.Exists(SavePath); 
 }
