@@ -1,0 +1,10 @@
+{
+    "name": "Unity86d1665248b8208af830.Fantasypackageui.Editor",
+    "references": [
+      "Unity86d1665248b8208af830.Fantasypackageui"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}

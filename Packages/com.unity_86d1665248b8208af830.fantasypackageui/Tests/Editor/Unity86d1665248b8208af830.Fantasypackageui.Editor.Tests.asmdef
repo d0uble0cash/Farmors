@@ -1,0 +1,14 @@
+{
+    "name": "Unity86d1665248b8208af830.Fantasypackageui.Editor.Tests",
+    "references": [
+        "Unity86d1665248b8208af830.Fantasypackageui.Editor",
+        "Unity86d1665248b8208af830.Fantasypackageui"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": []
+}
