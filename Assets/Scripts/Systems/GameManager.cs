@@ -33,6 +33,6 @@ public class GameManager : MonoBehaviour
         {
             gameState.InitializeNewGame();
         }
-        SceneManager.LoadScene("FarmHub");
+        SceneManager.LoadScene("StartMenu");
     }
 }
