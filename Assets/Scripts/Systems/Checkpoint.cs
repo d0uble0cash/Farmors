@@ -1,3 +1,4 @@
+using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -36,13 +37,13 @@ public class Checkpoint : MonoBehaviour
     private void Start()
     {
         // Restore static data from PlayerPrefs on scene load
-        if (PlayerPrefs.HasKey(KeyID))
+        if (GameState.I != null && !string.IsNullOrEmpty(GameState.I.LastCheckpointID))
         {
-            LastCheckpointID    = PlayerPrefs.GetString(KeyID);
-            LastCheckpointScene = PlayerPrefs.GetString(KeyScene);
+            LastCheckpointID    = GameState.I.LastCheckpointID;
+            LastCheckpointScene = GameState.I.LastCheckpointScene;
             LastCheckpointPos   = new Vector3(
-                PlayerPrefs.GetFloat(KeyX),
-                PlayerPrefs.GetFloat(KeyY),
+                GameState.I.LastCheckpointX,
+                GameState.I.LastCheckpointY,
                 0f
             );
         }
@@ -56,12 +57,15 @@ public class Checkpoint : MonoBehaviour
         LastCheckpointPos   = transform.position;
         LastCheckpointScene = SceneManager.GetActiveScene().name;
 
-        // Persist to PlayerPrefs
-        PlayerPrefs.SetString(KeyID,    checkpointID);
-        PlayerPrefs.SetString(KeyScene, LastCheckpointScene);
-        PlayerPrefs.SetFloat(KeyX,      transform.position.x);
-        PlayerPrefs.SetFloat(KeyY,      transform.position.y);
-        PlayerPrefs.Save();
+        if (GameState.I != null)
+        {
+            GameState.I.LastCheckpointID = checkpointID;
+            GameState.I.LastCheckpointScene = LastCheckpointScene;
+            GameState.I.LastCheckpointX = TransformBlock.position.x;
+            GameState.I.LastCheckpointY = TransformBlock.position.y;
+        }
+        
+        SaveSystem.I?.Save();
 
         Debug.Log($"[Checkpoint] Saved: {checkpointID} in {LastCheckpointScene}");
 
