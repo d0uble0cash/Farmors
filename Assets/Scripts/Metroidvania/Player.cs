@@ -59,6 +59,14 @@ public class Player : MonoBehaviour
 
    private PlayerAbilities abilities;
 
+   [Header("Farm Components")]
+   public PlayerInteractor farmInteractor;
+
+   [Header("Cameras")]
+   public GameObject cameraFarm;
+   public GameObject cameraMetroid;
+
+
     private void Awake()
     {
         abilities = GetComponent<PlayerAbilities>();
@@ -100,9 +108,25 @@ public class Player : MonoBehaviour
         {
             rb.gravityScale = 0f;
             rb.linearVelocity = Vector2.zero;
+
+            //Camera Switch
+            if (cameraFarm != null) cameraFarm.SetActive(true);
+            if (cameraMetroid != null) cameraMetroid.SetActive(false);
+
+            //Component State
+            if (farmInteractor != null) farmInteractor.enabled = true;
+            if (abilities != null) abilities.enabled = false;
         } else
         {
             rb.gravityScale = normalGravity;
+
+            //Camera
+            if (cameraFarm != null) cameraFarm.SetActive(false);
+            if (cameraMetroid != null) cameraMetroid.SetActive(true);
+
+            //Components
+            if (farmInteractor != null) farmInteractor.enabled = false;
+            if (abilities != null) abilities.enabled = true;
         }
         animator.SetInteger("GameMode", (int)newMode);
     }
