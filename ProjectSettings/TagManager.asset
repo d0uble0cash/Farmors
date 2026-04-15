@@ -11,7 +11,7 @@ TagManager:
   - Interactable
   - Water
   - UI
-  - Ground
+  - FrontGround
   - 
   - 
   - 
@@ -46,6 +46,9 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3331064879
+    locked: 0
+  - name: FrontGround
+    uniqueID: 2003266793
     locked: 0
   m_RenderingLayers:
   - Default
