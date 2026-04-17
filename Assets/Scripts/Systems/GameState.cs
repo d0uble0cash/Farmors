@@ -16,6 +16,12 @@ public class GameState : MonoBehaviour
     public void UnlockAbility(string abilityId) => unlockedAbilities.Add(abilityId);
     public bool HasAbility(string abilityId) => unlockedAbilities.Contains(abilityId);
 
+    [Header("Checkpoint")]
+    public string lastCheckpointID = "";
+    public string lastCheckpointScene = "";
+    public float lastCheckpointX = 0f;
+    public float lastCheckpointY = 0f;
+
     private void Awake()
     {
         if (I != null)
@@ -42,7 +48,12 @@ public class GameState : MonoBehaviour
         {
             rescuedAnimals = new List<string>(rescuedAnimals),
             unlockedAbilities = new List<string>(unlockedAbilities),
-            inventory = PlayerInventory.ToSnapshot()
+            inventory = PlayerInventory.ToSnapshot(),
+
+            lastCheckpointID    = lastCheckpointID,
+            lastCheckpointScene = lastCheckpointScene,
+            lastCheckpointX     = lastCheckpointX,
+            lastCheckpointY     = lastCheckpointY
         };
     }
     public void LoadFromSaveData(SaveData data)
@@ -62,5 +73,10 @@ public class GameState : MonoBehaviour
         unlockedAbilities.Clear();
         foreach (var id in data.unlockedAbilities)
             unlockedAbilities.Add(id);
+
+        lastCheckpointID    = data.lastCheckpointID;
+        lastCheckpointScene = data.lastCheckpointScene;
+        lastCheckpointX     = data.lastCheckpointX;
+        lastCheckpointY     = data.lastCheckpointY;
     }
 }
