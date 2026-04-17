@@ -1,0 +1,11 @@
+{
+    "name": "Unity86d1665248b8208af830.Fantasypackageui.Tests",
+    "references": [
+        "Unity86d1665248b8208af830.Fantasypackageui"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}
