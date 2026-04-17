@@ -1,4 +1,3 @@
-using System.Threading.Tasks.Dataflow;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,35 +14,30 @@ public class Checkpoint : MonoBehaviour
 
     [Header("Setup")]
     public CheckpointType type = CheckpointType.Bench;
-    public string checkpointID;         // unique ID e.g. "cave_bench_01" — set in Inspector
+    public string checkpointID; // unique ID e.g. "cave_bench_01" — set in Inspector
 
     [Header("Farm Return (Portal only)")]
     public bool canReturnToFarm = true;
-    public string farmSceneName = "FarmScene";  // exact scene name in Build Settings
+    public string farmSceneName = "FarmScene"; // exact scene name in Build Settings
 
     [Header("Visuals")]
     public Animator checkpointAnimator;
     public string activateAnimTrigger = "activate";
 
-    public static string  LastCheckpointID    { get; private set; }
-    public static Vector3 LastCheckpointPos   { get; private set; }
-    public static string  LastCheckpointScene { get; private set; }
-
-    private const string KeyID    = "Checkpoint_ID";
-    private const string KeyX     = "Checkpoint_X";
-    private const string KeyY     = "Checkpoint_Y";
-    private const string KeyScene = "Checkpoint_Scene";
+    public static string LastCheckpointID { get; private set; }
+    public static Vector3 LastCheckpointPos { get; private set; }
+    public static string LastCheckpointScene { get; private set; }
 
     private void Start()
     {
-        // Restore static data from PlayerPrefs on scene load
-        if (GameState.I != null && !string.IsNullOrEmpty(GameState.I.LastCheckpointID))
+        // Restore static data from GameState on scene load
+        if (GameState.I != null && !string.IsNullOrEmpty(GameState.I.lastCheckpointID))
         {
-            LastCheckpointID    = GameState.I.LastCheckpointID;
-            LastCheckpointScene = GameState.I.LastCheckpointScene;
-            LastCheckpointPos   = new Vector3(
-                GameState.I.LastCheckpointX,
-                GameState.I.LastCheckpointY,
+            LastCheckpointID = GameState.I.lastCheckpointID;
+            LastCheckpointScene = GameState.I.lastCheckpointScene;
+            LastCheckpointPos = new Vector3(
+                GameState.I.lastCheckpointX,
+                GameState.I.lastCheckpointY,
                 0f
             );
         }
@@ -53,18 +47,18 @@ public class Checkpoint : MonoBehaviour
     public void Activate(Player player)
     {
         // Save position
-        LastCheckpointID    = checkpointID;
-        LastCheckpointPos   = transform.position;
+        LastCheckpointID = checkpointID;
+        LastCheckpointPos = transform.position;
         LastCheckpointScene = SceneManager.GetActiveScene().name;
 
         if (GameState.I != null)
         {
-            GameState.I.LastCheckpointID = checkpointID;
-            GameState.I.LastCheckpointScene = LastCheckpointScene;
-            GameState.I.LastCheckpointX = TransformBlock.position.x;
-            GameState.I.LastCheckpointY = TransformBlock.position.y;
+            GameState.I.lastCheckpointID = checkpointID;
+            GameState.I.lastCheckpointScene = LastCheckpointScene;
+            GameState.I.lastCheckpointX = transform.position.x;
+            GameState.I.lastCheckpointY = transform.position.y;
         }
-        
+
         SaveSystem.I?.Save();
 
         Debug.Log($"[Checkpoint] Saved: {checkpointID} in {LastCheckpointScene}");
@@ -113,7 +107,6 @@ public class Checkpoint : MonoBehaviour
         else
         {
             // Different scene — load it, then PlayerSpawner will position the player
-            // (see PlayerSpawner below)
             SceneManager.LoadScene(LastCheckpointScene);
         }
     }
@@ -123,7 +116,8 @@ public class Checkpoint : MonoBehaviour
         if (type == CheckpointType.Bench && other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
-            if (player != null) Activate(player);
+            if (player != null)
+                Activate(player);
         }
     }
 }

@@ -101,7 +101,7 @@ public class Player : MonoBehaviour
         }
     }
     //Method to switch between platformer and farming mode
-    private void SwitchMode(GameMode newMode)
+    public void SwitchMode(GameMode newMode)
     {
         currentMode = newMode;
         if (newMode == GameMode.TopDown)
