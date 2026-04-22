@@ -1,10 +1,5 @@
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using NUnit.Framework;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
@@ -75,7 +70,7 @@ public class Player : MonoBehaviour
 
     private void Start()
    {
-        rb.gravityScale = normalGravity;
+        if (rb != null) rb.gravityScale = normalGravity;
    }
 
 
@@ -128,7 +123,7 @@ public class Player : MonoBehaviour
             if (farmInteractor != null) farmInteractor.enabled = false;
             if (abilities != null) abilities.enabled = true;
         }
-        animator.SetInteger("GameMode", (int)newMode);
+        animator?.SetInteger("GameMode", (int)newMode);
     }
 
     private void TickTimers()
@@ -184,6 +179,7 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (rb == null) return; //null check
         rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
     }
 
@@ -209,23 +205,28 @@ public class Player : MonoBehaviour
 
     private void HandleTopDownMovement()
     {
+        if (rb == null) return; //null check
         rb.linearVelocity = moveInput.normalized * topDownSpeed;
     }
 
     void CheckGrounded()
     {
+        //FIX : null check so missing GroundCheck doesn't crash the game
+        if (groundCheck == null) return;
         wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
     void HandleAnimations()
     {
+        //FIX : null check so missing Animator doesn't crash the game
+        if (animator == null) return;
         if(currentMode == GameMode.Platformer) {
             animator.SetBool("isGrounded", isGrounded);
             animator.SetBool("isJumping", rb.linearVelocity.y > 0.1f);
             animator.SetFloat("yVelocity", rb.linearVelocity.y);
             animator.SetBool("isIdle", Mathf.Abs(moveInput.x) < 0.1f && isGrounded);
-            animator.SetBool("isWalk", Mathf.Abs(moveInput.x) > 0.1f && isGrounded);    
+            animator.SetBool("isWalking", Mathf.Abs(moveInput.x) > 0.1f && isGrounded);    
         }
         else
         {
