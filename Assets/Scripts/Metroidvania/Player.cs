@@ -99,13 +99,13 @@ public class Player : MonoBehaviour
 
    void Update()
     {
-        TryStandUp();
         if (!isSliding)
         {
             Flip();
         }
         HandleAnimations();
         HandleSlide();
+        TryStandUp();
         TickTimers();
     }
 
@@ -258,20 +258,19 @@ public class Player : MonoBehaviour
 
     void TryStandUp()
     {
-        if (isSliding)
-        {
-            animator.SetBool("isCrouching", false);
-            return;
-        }
-        bool shouldCrouch = moveInput.y <= 0.1f || Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
-        if (!shouldCrouch)
-        {
-            SetColliderNormal();
-            animator.SetBool("isCrouching", false);
-        } else
+        if (headCheck == null) return;
+        if (isSliding) return;
+        
+        bool ceilingAbove = Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
+        bool pressingDown = moveInput.y < -.1f;
+        if (ceilingAbove || pressingDown)
         {
             SetColliderSlide();
-            animator.SetBool("isCrouching", true);  
+            animator.SetBool("isCrouching", true);
+        } else
+        {
+            SetColliderNormal();
+            animator.SetBool("isCrouching", false);  
         }
     }
 
@@ -319,8 +318,8 @@ public class Player : MonoBehaviour
     void HandleAnimations()
     {
         //FIX : null check so missing Animator doesn't crash the game
-        bool isCrouching = animator.GetBool("isCrouching");
         if (animator == null) return;
+        bool isCrouching = animator.GetBool("isCrouching");
         if(currentMode == GameMode.Platformer) {
             animator.SetBool("isGrounded", isGrounded);
             animator.SetBool("isJumping", rb.linearVelocity.y > 0.1f);
