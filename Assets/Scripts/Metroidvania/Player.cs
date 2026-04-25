@@ -15,8 +15,11 @@ public class Player : MonoBehaviour
    public Rigidbody2D rb;
    public PlayerInput playerInput;
    public Animator animator;
+   public CapsuleCollider2D playerCollider;
+
    [Header("Movement Variables")]
-   public float speed = 8f;
+   public float walkSpeed;
+   public float runSpeed;
    public float topDownSpeed = 5f;
    [Header("Jump")]
    public float jumpForce = 16f;
@@ -28,6 +31,25 @@ public class Player : MonoBehaviour
    public float jumpGravity = 2.5f;
    public int facingDirection = 1;
 
+   [Header("Crouch Check")]
+   public Transform headCheck;
+   public float headCheckRadius = .2f;
+
+   [Header("Slide Settings")]
+    public float slideDuration = .6f;
+    public float slideSpeed = 12;
+    public float slideStopDuration = .15f;
+
+    public float slideHeight;
+    public Vector2 slideOffset;
+    public float normalHeight;
+    public Vector2 normalOffset;
+
+    private bool isSliding;
+    private  bool slideInputLocked;
+    private float slideTimer;
+    private float slideStopTimer;
+
    [Header("Coyote Time")]
    public float coyoteTimeDuration = 0.12f;
 
@@ -36,6 +58,7 @@ public class Player : MonoBehaviour
    
    //Inputs
    private Vector2 moveInput;
+   private bool runPressed;
    private bool jumpPressed;
    private bool jumpReleased;
 
@@ -76,8 +99,13 @@ public class Player : MonoBehaviour
 
    void Update()
     {
-        Flip();
+        if (!isSliding)
+        {
+            Flip();
+        }
         HandleAnimations();
+        HandleSlide();
+        TryStandUp();
         TickTimers();
     }
 
@@ -87,7 +115,10 @@ public class Player : MonoBehaviour
         if (currentMode == GameMode.Platformer)
         {   
             ApplyVariableGravity();
-            HandleMovement();
+            if (!isSliding)
+            {
+                HandleMovement();
+            }
             HandleJump();
         } else
         {
@@ -147,7 +178,7 @@ public class Player : MonoBehaviour
 
     private void HandlePlatformerMovement()
     {
-        float targetSpeed = moveInput.x * speed;
+        float targetSpeed = moveInput.x * walkSpeed;
         rb.linearVelocity = new Vector2(targetSpeed, rb.linearVelocity.y);
     }
 
@@ -177,10 +208,77 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void HandleSlide()
+    {
+        if (isSliding)
+        {
+            slideTimer -= Time.deltaTime;
+            rb.linearVelocity = new Vector2(slideSpeed * facingDirection, rb.linearVelocity.y);
+            //If we are done sliding
+            if (slideTimer <= 0)
+            {
+                isSliding = false;
+                slideStopTimer = slideStopDuration;
+                TryStandUp();
+            }
+        }
+
+        if (slideStopTimer > 0)
+        {
+            slideStopTimer -= Time.deltaTime;
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
+
+        //Start the slide
+        if (isGrounded && runPressed && moveInput.y < -.1f && !isSliding && !slideInputLocked)
+        {
+            isSliding = true;
+            slideInputLocked = true;
+            slideTimer = slideDuration;
+            SetColliderSlide();
+        }
+
+        if (slideStopTimer < 0 && moveInput.y >= -.1f)
+        {
+            slideInputLocked = false;
+        }
+    }
+
+    void SetColliderNormal()
+    {
+        playerCollider.size = new Vector2(playerCollider.size.x, normalHeight);
+        playerCollider.offset = normalOffset;
+    }
+
+    void SetColliderSlide()
+    {
+        playerCollider.size = new Vector2(playerCollider.size.x, slideHeight);
+        playerCollider.offset = slideOffset;
+    }
+
+    void TryStandUp()
+    {
+        if (headCheck == null) return;
+        if (isSliding) return;
+        
+        bool ceilingAbove = Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
+        bool pressingDown = moveInput.y < -.1f;
+        if (ceilingAbove || pressingDown)
+        {
+            SetColliderSlide();
+            animator.SetBool("isCrouching", true);
+        } else
+        {
+            SetColliderNormal();
+            animator.SetBool("isCrouching", false);  
+        }
+    }
+
     private void HandleMovement()
     {
         if (rb == null) return; //null check
-        rb.linearVelocity = new Vector2(moveInput.x * speed, rb.linearVelocity.y);
+        float currentSpeed = runPressed ? runSpeed : walkSpeed;
+        rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
     }
 
     private void ApplyVariableGravity()
@@ -221,12 +319,17 @@ public class Player : MonoBehaviour
     {
         //FIX : null check so missing Animator doesn't crash the game
         if (animator == null) return;
+        bool isCrouching = animator.GetBool("isCrouching");
         if(currentMode == GameMode.Platformer) {
             animator.SetBool("isGrounded", isGrounded);
             animator.SetBool("isJumping", rb.linearVelocity.y > 0.1f);
+            animator.SetBool("isSliding", isSliding);
             animator.SetFloat("yVelocity", rb.linearVelocity.y);
-            animator.SetBool("isIdle", Mathf.Abs(moveInput.x) < 0.1f && isGrounded);
-            animator.SetBool("isWalking", Mathf.Abs(moveInput.x) > 0.1f && isGrounded);    
+            
+            bool isMoving = Mathf.Abs(moveInput.x) > .1f && isGrounded;
+            animator.SetBool("isIdle", !isMoving && isGrounded && !isSliding && !isCrouching);
+            animator.SetBool("isWalking", isMoving && !runPressed && !isSliding && !isCrouching);   
+            animator.SetBool("isRunning", isMoving && runPressed && !isSliding && !isCrouching); 
         }
         else
         {
@@ -261,6 +364,11 @@ public class Player : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
+    public void OnSprint (InputValue value)
+    {
+        runPressed = value.isPressed;
+    }
+
     public void OnJump (InputValue value)
     {
         if(value.isPressed) 
@@ -283,5 +391,8 @@ public class Player : MonoBehaviour
         }
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(headCheck.position, headCheckRadius);
     }
 }
