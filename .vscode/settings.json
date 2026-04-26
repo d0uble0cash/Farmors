@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Farmors.slnx"
+    "dotnet.defaultSolution": "Farmors-1.slnx"
 }
