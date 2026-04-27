@@ -22,4 +22,8 @@ public class FarmGrid : MonoBehaviour
 
         return new Vector2Int(x, y);
     }
+    internal Vector3 ConvertToWorldPosition(Vector2Int vector2Int)
+    {    
+        return ConvertToWorldPosition(vector2Int.x, vector2Int.y);
+    }
 }
