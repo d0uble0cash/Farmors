@@ -14269,8 +14269,8 @@ MonoBehaviour:
   agent: {fileID: 1188428683}
   visualRoot: {fileID: 808666127}
   wanderRadius: 20
-  minWaitTime: 1
-  maxWaitTime: 3
+  minWaitTime: 3
+  maxWaitTime: 10
   minMoveDistance: 1
   bobSpeed: 20
   bobAmount: 0.1
@@ -14573,8 +14573,8 @@ MonoBehaviour:
   agent: {fileID: 1203444853}
   visualRoot: {fileID: 74550328}
   wanderRadius: 20
-  minWaitTime: 1
-  maxWaitTime: 3
+  minWaitTime: 3
+  maxWaitTime: 20
   minMoveDistance: 1
   bobSpeed: 10
   bobAmount: 0.3
@@ -22742,8 +22742,8 @@ MonoBehaviour:
   agent: {fileID: 1868568697}
   visualRoot: {fileID: 1793893931}
   wanderRadius: 20
-  minWaitTime: 1
-  maxWaitTime: 3
+  minWaitTime: 3
+  maxWaitTime: 6
   minMoveDistance: 1
   bobSpeed: 20
   bobAmount: 0.1
