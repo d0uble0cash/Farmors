@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         gameInstance = this;
         DontDestroyOnLoad(gameObject);
     }
-    void Start()
+    private void Start()
     {
         var gameState = GameState.I;
         var saveSystem = SaveSystem.I;
