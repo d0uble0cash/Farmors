@@ -3,8 +3,8 @@ using UnityEngine;
 public class FarmGrid : MonoBehaviour
 {
     [SerializeField] float cellSize = 1f;
-    [SerializeField] int width = 10;
-    [SerializeField] int height = 10;
+    //[SerializeField] int width = 10;
+    //[SerializeField] int height = 10;
 
     public Vector3 ConvertToWorldPosition(int x, int y)
     {
@@ -21,5 +21,9 @@ public class FarmGrid : MonoBehaviour
         int y = Mathf.FloorToInt((worldPosition.z - transform.position.z) / cellSize);
 
         return new Vector2Int(x, y);
+    }
+    internal Vector3 ConvertToWorldPosition(Vector2Int vector2Int)
+    {    
+        return ConvertToWorldPosition(vector2Int.x, vector2Int.y);
     }
 }
