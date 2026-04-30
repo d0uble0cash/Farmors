@@ -31,7 +31,6 @@ public class InventoryUI : MonoBehaviour{
             foreach (var item in items){
                 ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
                 if (definition?.Icon ?? item.Key == null){
-                    
                     newText += $"{definition?.DisplayName ?? item.Key}: {item.Value}\n";
                 }
             }
