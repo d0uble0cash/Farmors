@@ -190,6 +190,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9d71d4fdca65248a677f518aac6cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameState
+  lastCheckpointID: 
+  lastCheckpointScene: 
+  lastCheckpointX: 0
+  lastCheckpointY: 0
 --- !u!114 &357942258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,6 +211,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d48608bde4635e747bd0bc811f4c53f3, type: 2}
   - {fileID: 11400000, guid: aa0d0c1e2a1342e4a88dcba2170eed1c, type: 2}
   - {fileID: 11400000, guid: a9377214fec1e4e4cb520ff5d597db49, type: 2}
+  - {fileID: 11400000, guid: aff7af86e1e9ece4cafe1ce08d4e1042, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
