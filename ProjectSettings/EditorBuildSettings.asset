@@ -9,23 +9,26 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/StartMenu.unity
-    guid: 2d329c72a6d13b6459abd70edaf32a9f
-  - enabled: 1
     path: Assets/Scenes/Boot.unity
     guid: aee20612a0cf4a14687c598dc0c323c1
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: 2d329c72a6d13b6459abd70edaf32a9f
   - enabled: 0
     path: Assets/Scenes/StartMenu.unity
     guid: 2d329c72a6d13b6459abd70edaf32a9f
   - enabled: 1
     path: Assets/Scenes/FarmHub/FarmHub.unity
     guid: 8febce6add74c224fb3f28029e85a5c4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ForestBiome.unity
     guid: 39e3480bb86e69943bf92f54d15af9ae
   - enabled: 1
     path: Assets/Scenes/Calculator.unity
     guid: 011c3aa79b6830b4094ce242e5413a39
+  - enabled: 1
+    path: Assets/Scenes/ForestLevel.unity
+    guid: bcef2444a88c64542b747a1fd5b78bcd
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
