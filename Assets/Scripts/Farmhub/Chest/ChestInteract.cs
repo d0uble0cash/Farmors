@@ -1,10 +1,12 @@
 using UnityEngine;
-
 public class ChestInteract : MonoBehaviour, IInteractable
 {
     [Header("Animation")]
     [SerializeField] private Animator lidAnimator;
 
+    [Header("ChestScreen")]
+    [SerializeField] private GameObject chestScreen;
+    
     [Header("Interaction")]
     [SerializeField] private Collider interactionCollider;
 
@@ -15,7 +17,6 @@ public class ChestInteract : MonoBehaviour, IInteractable
     private bool isFocused = false;
 
     public bool CanInteract => true;
-
     private void Awake()
     {
         if (interactionCollider == null)
@@ -47,11 +48,13 @@ public class ChestInteract : MonoBehaviour, IInteractable
         {
             lidAnimator.Play("Chest_Close");
             isOpen = false;
+            chestScreen.SetActive(false);
         }
         else
         {
             lidAnimator.Play("chest_Open");
             isOpen = true;
+            chestScreen.SetActive(true);
         }
 
         RefreshPrompt();
