@@ -2,8 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
-public class EventHandlerUI : MonoBehaviour
-{
+public class EventHandlerUI : MonoBehaviour{
     [Header("Input")]
     [SerializeField] private InputActionAsset inputActions;
 
@@ -23,6 +22,7 @@ public class EventHandlerUI : MonoBehaviour
     [SerializeField] private GameObject vendorScreen;
     [SerializeField] private GameObject chestScreen;
     [SerializeField] private GameObject blacksmithScreen;
+    [SerializeField] private GameObject cointext;
 
     [Header("Clock UI")]
     [SerializeField] private TMP_Text clockText;
@@ -34,8 +34,7 @@ public class EventHandlerUI : MonoBehaviour
     private float elapsedTime;
     private int currentDay = 1;
 
-    private void Awake()
-    {
+    private void Awake(){
         invActionButton = InputSystem.actions.FindAction("Inventory");
         mapActionButton = InputSystem.actions.FindAction("Map");
         journalActionButton = InputSystem.actions.FindAction("Journal");
@@ -47,35 +46,29 @@ public class EventHandlerUI : MonoBehaviour
         CloseAllScreens();
     }
 
-    private void Update()
-    {
+    private void Update(){
         elapsedTime += Time.deltaTime * timeScale;
         UpdateClockUI();
 
-        if (invActionButton != null && invActionButton.WasPressedThisFrame())
-        {
+        if (invActionButton != null && invActionButton.WasPressedThisFrame()){
             OpenScreen(invScreen);
+            cointext.SetActive(true);
         }
-        else if (mapActionButton != null && mapActionButton.WasPressedThisFrame())
-        {
+        else if (mapActionButton != null && mapActionButton.WasPressedThisFrame()){
             OpenScreen(mapScreen);
         }
-        else if (journalActionButton != null && journalActionButton.WasPressedThisFrame())
-        {
+        else if (journalActionButton != null && journalActionButton.WasPressedThisFrame()){
             OpenScreen(journalScreen);
         }
-        else if (optionsActionButton != null && optionsActionButton.WasPressedThisFrame())
-        {
+        else if (optionsActionButton != null && optionsActionButton.WasPressedThisFrame()){
             OpenScreen(optionsScreen);
         }
-        else if (escapeActionButton != null && escapeActionButton.WasPressedThisFrame())
-        {
+        else if (escapeActionButton != null && escapeActionButton.WasPressedThisFrame()){
             EnablePlayerActionMap();
         }
     }
 
-    public void OpenScreen(GameObject screen)
-    {
+    public void OpenScreen(GameObject screen){
         if (screen == null)
             return;
 
@@ -84,8 +77,7 @@ public class EventHandlerUI : MonoBehaviour
         EnableUIActionMap();
     }
 
-    public void CloseAllScreens()
-    {
+    public void CloseAllScreens(){
         if (invScreen != null) invScreen.SetActive(false);
         if (mapScreen != null) mapScreen.SetActive(false);
         if (journalScreen != null) journalScreen.SetActive(false);
@@ -94,10 +86,10 @@ public class EventHandlerUI : MonoBehaviour
         if (vendorScreen != null) vendorScreen.SetActive(false);
         if (chestScreen != null) chestScreen.SetActive(false);
         if (blacksmithScreen != null) blacksmithScreen.SetActive(false);
+        cointext.SetActive(false);
     }
 
-    public void EnableUIActionMap()
-    {
+    public void EnableUIActionMap(){
         if (inputActions == null)
             return;
 
@@ -108,8 +100,7 @@ public class EventHandlerUI : MonoBehaviour
         if (uiMap != null) uiMap.Enable();
     }
 
-    public void EnablePlayerActionMap()
-    {
+    public void EnablePlayerActionMap(){
         CloseAllScreens();
 
         if (inputActions == null)
@@ -122,23 +113,21 @@ public class EventHandlerUI : MonoBehaviour
         if (uiMap != null) uiMap.Disable();
     }
 
-    public void OpenVendorUI()
-    {
+    public void OpenVendorUI(){
         OpenScreen(vendorScreen);
+        cointext.SetActive(true);
     }
 
-    public void OpenChestUI()
-    {
+    public void OpenChestUI(){
         OpenScreen(chestScreen);
     }
 
-    public void OpenBlacksmithUI()
-    {
+    public void OpenBlacksmithUI(){
         OpenScreen(blacksmithScreen);
+        cointext.SetActive(true);
     }
 
-    private void UpdateClockUI()
-    {
+    private void UpdateClockUI(){
         if (clockText == null)
             return;
 

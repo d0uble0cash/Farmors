@@ -2465,6 +2465,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 1786638509}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2121236875}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -7402,8 +7414,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1487713179}
   m_HandleRect: {fileID: 1487713178}
   m_Direction: 2
-  m_Value: 0.9997219
-  m_Size: 0.647249
+  m_Value: 0.9765847
+  m_Size: 0.63680345
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11109,6 +11121,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2121236875}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 357322967}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -11121,7 +11145,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2121236875}
+      - m_Target: {fileID: 1786638509}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -11131,7 +11155,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &692592502
 MonoBehaviour:
@@ -18758,6 +18782,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1786638509}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 357322967}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -19024,6 +19060,7 @@ GameObject:
   - component: {fileID: 1369340549}
   - component: {fileID: 1369340551}
   - component: {fileID: 1369340553}
+  - component: {fileID: 1369340554}
   m_Layer: 5
   m_Name: StartInv
   m_TagString: Untagged
@@ -19050,7 +19087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 10.674988, y: -80.62174}
+  m_AnchoredPosition: {x: 10.674988, y: -80.41573}
   m_SizeDelta: {x: -60.61, y: 76.4362}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1369340549
@@ -19135,6 +19172,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RectMask2D
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!114 &1369340554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369340547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7edf950ef5a7b4ba0ffa19e84f2f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+  inventoryText: {fileID: 1491622616}
+  InventoryMenu: {fileID: 0}
+  weaponitemSlots: []
+  farmitemSlots: []
 --- !u!1 &1369854541
 GameObject:
   m_ObjectHideFlags: 0
@@ -20941,6 +20994,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
   inventoryText: {fileID: 0}
+  InventoryMenu: {fileID: 0}
+  weaponitemSlots: []
+  farmitemSlots: []
 --- !u!1 &1492544631
 GameObject:
   m_ObjectHideFlags: 0
@@ -21393,6 +21449,7 @@ MonoBehaviour:
   vendorScreen: {fileID: 1513391560}
   chestScreen: {fileID: 797214362}
   blacksmithScreen: {fileID: 1548968560}
+  cointext: {fileID: 1282880306}
   clockText: {fileID: 1950380064}
   dayLength: 86400
   timeScale: 60
@@ -28356,7 +28413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 183, y: -364.5}
+  m_AnchoredPosition: {x: 179.2, y: -360.1}
   m_SizeDelta: {x: 297, y: 37.801}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2121236877

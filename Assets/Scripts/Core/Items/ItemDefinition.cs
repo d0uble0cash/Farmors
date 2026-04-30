@@ -16,13 +16,11 @@ public class ItemDefinition : ScriptableObject
     [SerializeField] private int itemValue = 0;
     public int ItemValue => itemValue;
 
-    private void OnValidate()
-    {
-        if (string.IsNullOrWhiteSpace(id))
-        {
+    
+    private void OnValidate(){
+        if (string.IsNullOrWhiteSpace(id)){
             Debug.LogWarning("ItemDefinition ID should not be empty!", this);
-        }        else if (id.Contains(" "))
-        {
+        }        else if (id.Contains(" ")){
             Debug.LogWarning("ItemDefinition ID should not contain spaces!", this);
         }
         id = id.ToLowerInvariant();

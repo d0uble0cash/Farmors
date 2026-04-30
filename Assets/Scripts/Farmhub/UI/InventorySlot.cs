@@ -18,7 +18,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     public TMP_Text itemDescriptionNameText;
     public TMP_Text itemDescriptionText;
     public TMP_Text itemDescriptionCost;
+    //private InventoryUI inventoryManager;
 
+    /*public void Start(){
+        inventoryManager = GameObject.Find("StartInv").GetComponent<InventoryManager>();
+    }*/
     //INVENTORYSLOT//
     [SerializeField] private Image itemImage;
     public void addItem(string itemName, Sprite itemSprite, string itemDescription, int itemCost){
@@ -32,7 +36,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     }
 
     public void OnPointerClick(PointerEventData eventData){
-        if(eventData.button == PointerEventData.InputButton.Left){
+        if(eventData.button == PointerEventData.InputButton.Left && itemSprite!=null){
             //inventoryManager.DeselectAllSlots();
             this.isSelected = true;
             itemDescriptionNameText.text = itemName;
