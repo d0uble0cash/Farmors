@@ -18,3 +18,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   maxStackSize: 99
   itemValue: 5
+  isMaterial: 1
