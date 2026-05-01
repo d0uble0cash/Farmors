@@ -15,6 +15,8 @@ public class ItemDefinition : ScriptableObject
     public int MaxStackSize => maxStackSize;
     [SerializeField] private int itemValue = 0;
     public int ItemValue => itemValue;
+    [SerializeField] private bool isMaterial;
+    public bool IsMaterial => isMaterial;
 
     
     private void OnValidate(){

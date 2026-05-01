@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VendorShop : MonoBehaviour
-{
+public class VendorShop : MonoBehaviour{
     [Header("Currency")]
     [SerializeField] private ItemDefinition currencyItem;
     [SerializeField] private int sellPriceDivisor = 2;
@@ -12,16 +11,14 @@ public class VendorShop : MonoBehaviour
 
     public IReadOnlyList<VendorOffer> Offers => offers;
 
-    public bool CanBuy(VendorOffer offer)
-    {
+    public bool CanBuy(VendorOffer offer){
         if (GameState.I == null || currencyItem == null || offer == null || !offer.IsValid())
             return false;
 
         return GameState.I.PlayerInventory.Has(currencyItem.Id, offer.Price);
     }
 
-    public bool Buy(VendorOffer offer)
-    {
+    public bool Buy(VendorOffer offer){
         if (GameState.I == null || currencyItem == null || offer == null || !offer.IsValid())
             return false;
 
@@ -34,8 +31,7 @@ public class VendorShop : MonoBehaviour
         return true;
     }
 
-    public bool CanSell(ItemDefinition item, int quantity = 1)
-    {
+    public bool CanSell(ItemDefinition item, int quantity = 1){
         if (GameState.I == null || currencyItem == null || item == null || quantity <= 0)
             return false;
 
@@ -45,8 +41,7 @@ public class VendorShop : MonoBehaviour
         return GameState.I.PlayerInventory.Has(item.Id, quantity);
     }
 
-    public bool Sell(ItemDefinition item, int quantity = 1)
-    {
+    public bool Sell(ItemDefinition item, int quantity = 1){
         if (GameState.I == null || currencyItem == null || item == null || quantity <= 0)
             return false;
 
@@ -66,16 +61,12 @@ public class VendorShop : MonoBehaviour
         return true;
     }
 
-    public int GetSellPrice(ItemDefinition item)
-    {
+    public int GetSellPrice(ItemDefinition item){
         if (item == null || item.ItemValue <= 0)
             return 0;
 
         return Mathf.Max(1, item.ItemValue / Mathf.Max(1, sellPriceDivisor));
     }
 
-    public ItemDefinition GetCurrencyItem()
-    {
-        return currencyItem;
-    }
+    public ItemDefinition GetCurrencyItem(){return currencyItem;}
 }

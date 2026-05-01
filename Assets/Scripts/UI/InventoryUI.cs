@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour{
         else{
             foreach (var item in items){
                 ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
-                if (definition?.Icon ?? item.Key == null){
+                if (definition.IsMaterial){
                     newText += $"{definition?.DisplayName ?? item.Key}: {item.Value}\n";
                 }
             }
@@ -44,7 +44,7 @@ public class InventoryUI : MonoBehaviour{
         if(items.Count==0){return;}
         foreach (var item in items){
             ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
-            if(definition?.Icon ?? item.Key !=null){
+            if(!definition.IsMaterial){
                 switch(definition?.Id ?? item.Key){
                     case "shears":
                     case "pitchfork":

@@ -229,8 +229,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 131295940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.3291278}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 20505693}
   m_Direction: 2
   m_Value: 1.0000043
-  m_Size: 0.6708722
+  m_Size: 0.67087233
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1107,6 +1107,7 @@ GameObject:
   - component: {fileID: 41142390}
   - component: {fileID: 41142389}
   - component: {fileID: 41142388}
+  - component: {fileID: 41142391}
   m_Layer: 5
   m_Name: BlackSmithButton2
   m_TagString: Untagged
@@ -1228,6 +1229,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 41142386}
   m_CullTransparentMesh: 1
+--- !u!114 &41142391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41142386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5247f280ab2fa7549976f87ce9973f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemName: 
+  itemSprite: {fileID: 0}
+  isFull: 0
+  isSelected: 0
+  itemDescription: 
+  itemCost: 0
+  emptySprite: {fileID: 0}
+  itemDescriptionNameText: {fileID: 279326766}
+  itemDescriptionText: {fileID: 1677115439}
+  itemDescriptionCost: {fileID: 0}
+  itemImage: {fileID: 105122913}
 --- !u!1 &57892129
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,6 +2781,7 @@ GameObject:
   - component: {fileID: 121771966}
   - component: {fileID: 121771965}
   - component: {fileID: 121771964}
+  - component: {fileID: 121771967}
   m_Layer: 5
   m_Name: BlackSmithButton4
   m_TagString: Untagged
@@ -2878,6 +2903,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121771962}
   m_CullTransparentMesh: 1
+--- !u!114 &121771967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121771962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5247f280ab2fa7549976f87ce9973f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemName: 
+  itemSprite: {fileID: 0}
+  isFull: 0
+  isSelected: 0
+  itemDescription: 
+  itemCost: 0
+  emptySprite: {fileID: 0}
+  itemDescriptionNameText: {fileID: 279326766}
+  itemDescriptionText: {fileID: 1677115439}
+  itemDescriptionCost: {fileID: 0}
+  itemImage: {fileID: 2025662164}
 --- !u!1 &123516364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4184,6 +4232,7 @@ GameObject:
   - component: {fileID: 210097561}
   - component: {fileID: 210097560}
   - component: {fileID: 210097559}
+  - component: {fileID: 210097562}
   m_Layer: 5
   m_Name: BlackSmithButton1
   m_TagString: Untagged
@@ -4305,6 +4354,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 210097557}
   m_CullTransparentMesh: 1
+--- !u!114 &210097562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210097557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5247f280ab2fa7549976f87ce9973f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemName: 
+  itemSprite: {fileID: 0}
+  isFull: 0
+  isSelected: 0
+  itemDescription: 
+  itemCost: 0
+  emptySprite: {fileID: 0}
+  itemDescriptionNameText: {fileID: 279326766}
+  itemDescriptionText: {fileID: 1677115439}
+  itemDescriptionCost: {fileID: 0}
+  itemImage: {fileID: 869517569}
 --- !u!1 &226020960
 GameObject:
   m_ObjectHideFlags: 0
@@ -5157,10 +5229,10 @@ RectTransform:
   - {fileID: 171854888}
   m_Father: {fileID: 755369574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 565, y: -95}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &280799351
 MonoBehaviour:
@@ -8199,8 +8271,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1878316969}
   m_HandleRect: {fileID: 1878316968}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.29978824
+  m_Value: 1
+  m_Size: 0.2997882
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10887,6 +10959,7 @@ GameObject:
   - component: {fileID: 669242158}
   - component: {fileID: 669242157}
   - component: {fileID: 669242156}
+  - component: {fileID: 669242159}
   m_Layer: 5
   m_Name: BlackSmithButton5
   m_TagString: Untagged
@@ -11008,6 +11081,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 669242154}
   m_CullTransparentMesh: 1
+--- !u!114 &669242159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669242154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5247f280ab2fa7549976f87ce9973f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemName: 
+  itemSprite: {fileID: 0}
+  isFull: 0
+  isSelected: 0
+  itemDescription: 
+  itemCost: 0
+  emptySprite: {fileID: 0}
+  itemDescriptionNameText: {fileID: 279326766}
+  itemDescriptionText: {fileID: 1677115439}
+  itemDescriptionCost: {fileID: 0}
+  itemImage: {fileID: 1966860543}
 --- !u!1 &670547432
 GameObject:
   m_ObjectHideFlags: 0
@@ -11043,10 +11139,10 @@ RectTransform:
   - {fileID: 386537642}
   m_Father: {fileID: 755369574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 335, y: -285}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &670547434
 MonoBehaviour:
@@ -12064,10 +12160,10 @@ RectTransform:
   - {fileID: 1446309595}
   m_Father: {fileID: 238242783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 335, y: -95}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &787938005
 MonoBehaviour:
@@ -15659,6 +15755,7 @@ GameObject:
   - component: {fileID: 1082069595}
   - component: {fileID: 1082069592}
   - component: {fileID: 1082069591}
+  - component: {fileID: 1082069596}
   m_Layer: 5
   m_Name: BlackSmithInv
   m_TagString: Untagged
@@ -15796,6 +15893,24 @@ MonoBehaviour:
   m_Spacing: {x: 100, y: 30}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1082069596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082069589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dda02467e3493a45a2428dd21479e45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlackSmithInv
+  weaponitemSlots:
+  - {fileID: 210097562}
+  - {fileID: 41142391}
+  - {fileID: 1265858393}
+  - {fileID: 121771967}
+  - {fileID: 669242159}
 --- !u!1001 &1089249080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16274,8 +16389,8 @@ RectTransform:
   m_Children:
   - {fileID: 279326765}
   - {fileID: 1677115438}
-  - {fileID: 1791557228}
   - {fileID: 936893468}
+  - {fileID: 1791557228}
   m_Father: {fileID: 1548968561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -16821,10 +16936,10 @@ RectTransform:
   - {fileID: 852631732}
   m_Father: {fileID: 755369574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105, y: -95}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1197001118
 MonoBehaviour:
@@ -17862,10 +17977,10 @@ RectTransform:
   - {fileID: 829123570}
   m_Father: {fileID: 755369574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 335, y: -95}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1249182384
 MonoBehaviour:
@@ -18256,6 +18371,7 @@ GameObject:
   - component: {fileID: 1265858392}
   - component: {fileID: 1265858391}
   - component: {fileID: 1265858390}
+  - component: {fileID: 1265858393}
   m_Layer: 5
   m_Name: BlackSmithButton3
   m_TagString: Untagged
@@ -18377,6 +18493,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1265858388}
   m_CullTransparentMesh: 1
+--- !u!114 &1265858393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265858388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5247f280ab2fa7549976f87ce9973f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
+  itemName: 
+  itemSprite: {fileID: 0}
+  isFull: 0
+  isSelected: 0
+  itemDescription: 
+  itemCost: 0
+  emptySprite: {fileID: 0}
+  itemDescriptionNameText: {fileID: 279326766}
+  itemDescriptionText: {fileID: 1677115439}
+  itemDescriptionCost: {fileID: 0}
+  itemImage: {fileID: 1162682113}
 --- !u!1 &1269113640
 GameObject:
   m_ObjectHideFlags: 0
@@ -18960,10 +19099,10 @@ RectTransform:
   - {fileID: 1498351413}
   m_Father: {fileID: 755369574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105, y: -285}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295436410
 MonoBehaviour:
@@ -22834,13 +22973,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513391561}
+  - component: {fileID: 1513391562}
   m_Layer: 0
   m_Name: VendorScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1513391561
 Transform:
   m_ObjectHideFlags: 0
@@ -22863,6 +23003,30 @@ Transform:
   - {fileID: 1028392438}
   m_Father: {fileID: 1954440819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1513391562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513391560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab93d067771e30a4a9bd925898487893, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VendorShopUI
+  vendorShop: {fileID: 1797572955}
+  buyContentRoot: {fileID: 0}
+  sellContentRoot: {fileID: 0}
+  buttonPrefab: {fileID: 0}
+  statusText: {fileID: 0}
+  itemNameText: {fileID: 1985096606}
+  itemStatsText: {fileID: 869887101}
+  itemCostText: {fileID: 1341936529}
+  buyPanel: {fileID: 1369854541}
+  sellPanel: {fileID: 501757808}
+  sellQuantityPerClick: 1
+  startOnBuyTab: 1
 --- !u!1 &1520532185
 GameObject:
   m_ObjectHideFlags: 0
@@ -30203,10 +30367,10 @@ RectTransform:
   - {fileID: 1226779227}
   m_Father: {fileID: 238242783}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 105, y: -95}
-  m_SizeDelta: {x: 150, y: 150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2130716892
 MonoBehaviour:
