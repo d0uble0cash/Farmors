@@ -8,6 +8,7 @@ public class CoinUpdate : MonoBehaviour{
             ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
             if(definition?.Id == "gold"){
                 cointText.text = $"Coins: {item.Value}ϵ";
+                break;
             }
         }
     }

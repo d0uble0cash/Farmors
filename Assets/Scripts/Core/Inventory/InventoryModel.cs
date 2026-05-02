@@ -36,6 +36,7 @@ public class InventoryModel
         return true;
     }
 
+
     public bool TryRemove(string id, int amount) {
 
         if (!VerifyValid(id, amount)) {

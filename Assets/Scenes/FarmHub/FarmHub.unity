@@ -354,8 +354,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 20505694}
   m_HandleRect: {fileID: 20505693}
   m_Direction: 2
-  m_Value: 1.0000043
-  m_Size: 0.67087233
+  m_Value: 1.0000039
+  m_Size: 0.6708722
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8564,7 +8564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce69583acbc44d24c8d400d76208ccd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryCheat
-  testItem: {fileID: 11400000, guid: d48608bde4635e747bd0bc811f4c53f3, type: 2}
+  testItem: {fileID: 11400000, guid: aff7af86e1e9ece4cafe1ce08d4e1042, type: 2}
   addAmount: 5
 --- !u!4 &492832522
 Transform:
@@ -20749,8 +20749,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
   inventoryText: {fileID: 1491622616}
   InventoryMenu: {fileID: 0}
-  weaponitemSlots: []
-  farmitemSlots: []
+  weaponitemSlots:
+  - {fileID: 1804307654}
+  - {fileID: 287296685}
+  - {fileID: 1521347566}
+  - {fileID: 498492402}
+  - {fileID: 1275524768}
+  farmitemSlots:
+  - {fileID: 1305503743}
+  - {fileID: 844029982}
 --- !u!1 &1369854541
 GameObject:
   m_ObjectHideFlags: 0
@@ -23283,7 +23290,7 @@ Transform:
   m_GameObject: {fileID: 1513391560}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -23.002188, y: 37.667614, z: 0}
+  m_LocalPosition: {x: -23.002188, y: 38, z: 0}
   m_LocalScale: {x: 1.0003115, y: 1.0003115, z: 1.0003115}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23310,6 +23317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VendorUI
   afterPurchaseText: {fileID: 1472067195}
+  buyitem: {fileID: 0}
 --- !u!1 &1520532185
 GameObject:
   m_ObjectHideFlags: 0
@@ -24729,7 +24737,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 2138687228, guid: e02d2396c9c68ee4c92e85a8e9f11d21, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -17,12 +17,10 @@ public class InventoryUI : MonoBehaviour{
     }
     private void RefreshText(){
         if (inventoryText == null) {return;}
-
         if (GameState.I == null){
             inventoryText.text = "Inventory:\nUnavailable";
             return;
         }
-        
         string newText = "Inventory:\n";
         var items = GameState.I.PlayerInventory.Items;
 
@@ -59,7 +57,7 @@ public class InventoryUI : MonoBehaviour{
                         }
                         break;
                     case "sword":
-                    case "bow":
+                    case "bow": 
                     case "greatsword":
                     case "darksword":
                     case "crossbow":
@@ -76,6 +74,15 @@ public class InventoryUI : MonoBehaviour{
                     
                 }
             }
+        }
+    }
+
+    public void DeselectAllSlots(){
+        for(int i=0;i<weaponitemSlots.Length; i++){
+            weaponitemSlots[i].isSelected = false;
+        }
+        for(int i=0;i<farmitemSlots.Length; i++){
+            farmitemSlots[i].isSelected = false;
         }
     }
 }

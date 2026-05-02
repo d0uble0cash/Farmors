@@ -28,4 +28,5 @@ public class ItemDefinition : ScriptableObject
         id = id.ToLowerInvariant();
     }
 
+
 }

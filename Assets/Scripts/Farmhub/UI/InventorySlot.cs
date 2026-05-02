@@ -9,7 +9,7 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     //ITEMDATA//
     public string itemName;
     public Sprite itemSprite;
-    public bool isFull;
+    public bool isFull = false;
     public bool isSelected = false;
     public string itemDescription;
     public int itemCost;
@@ -17,12 +17,11 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     //ITEMDESCRIPTIONslot
     public TMP_Text itemDescriptionNameText;
     public TMP_Text itemDescriptionText;
-    public TMP_Text itemDescriptionCost;
-    //private InventoryUI inventoryManager;
-
-    /*public void Start(){
-        inventoryManager = GameObject.Find("StartInv").GetComponent<InventoryManager>();
-    }*/
+    //public TMP_Text itemDescriptionCost;
+    [SerializeField] private InventoryUI inventoryUI;
+    public void SetInventoryUI(InventoryUI ui){
+        inventoryUI = ui;
+    }
     //INVENTORYSLOT//
     [SerializeField] private Image itemImage;
     public void addItem(string itemName, Sprite itemSprite, string itemDescription, int itemCost){
@@ -37,14 +36,14 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
 
     public void OnPointerClick(PointerEventData eventData){
         if(eventData.button == PointerEventData.InputButton.Left && itemSprite!=null){
-            //inventoryManager.DeselectAllSlots();
+            inventoryUI.DeselectAllSlots();
             this.isSelected = true;
             itemDescriptionNameText.text = itemName;
             itemDescriptionText.text = itemDescription;
-            itemDescriptionCost.text = itemCost.ToString() + "ϵ";
-            if(itemDescriptionCost.text == null){
-                itemDescriptionCost.text = "";
-            }
+            //itemDescriptionCost.text = itemCost.ToString() + "ϵ";
+            //if(itemDescriptionCost.text == null){
+            //    itemDescriptionCost.text = "";
+            //}
         }
     }
 }
