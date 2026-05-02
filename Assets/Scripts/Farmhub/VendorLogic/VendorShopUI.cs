@@ -3,8 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VendorShopUI : MonoBehaviour
-{
+public class VendorShopUI : MonoBehaviour{
     [Header("Shop Logic")]
     [SerializeField] private VendorShop vendorShop;
 
@@ -27,7 +26,7 @@ public class VendorShopUI : MonoBehaviour
 
     [Header("Sell Settings")]
     [SerializeField] private int sellQuantityPerClick = 1;
-    [SerializeField] private bool refreshOnEnable = true;
+    //[SerializeField] private bool refreshOnEnable = true;
     [SerializeField] private bool startOnBuyTab = true;
 
     private readonly List<GameObject> spawnedBuyButtons = new();
@@ -35,14 +34,12 @@ public class VendorShopUI : MonoBehaviour
 
     private bool showingBuyTab = true;
 
-    private void OnEnable()
-    {
+    private void OnEnable(){
         showingBuyTab = startOnBuyTab;
         RefreshUI();
     }
 
-    public void RefreshUI()
-    {
+    public void RefreshUI(){
         ClearSpawnedButtons();
         UpdateTabVisibility();
 
@@ -55,20 +52,17 @@ public class VendorShopUI : MonoBehaviour
             statusText.text = string.Empty;
     }
 
-    public void ShowBuyTab()
-    {
+    public void ShowBuyTab(){
         showingBuyTab = true;
         RefreshUI();
     }
 
-    public void ShowSellTab()
-    {
+    public void ShowSellTab(){
         showingBuyTab = false;
         RefreshUI();
     }
 
-    private void UpdateTabVisibility()
-    {
+    private void UpdateTabVisibility(){
         if (buyPanel != null)
             buyPanel.SetActive(showingBuyTab);
 
@@ -76,15 +70,13 @@ public class VendorShopUI : MonoBehaviour
             sellPanel.SetActive(!showingBuyTab);
     }
 
-    private void BuildBuyButtons()
-    {
+    private void BuildBuyButtons(){
         if (vendorShop == null || buyContentRoot == null || buttonPrefab == null)
             return;
 
         IReadOnlyList<VendorOffer> offers = vendorShop.Offers;
 
-        for (int i = 0; i < offers.Count; i++)
-        {
+        for (int i = 0; i < offers.Count; i++){
             VendorOffer offer = offers[i];
             if (offer == null || !offer.IsValid())
                 continue;
@@ -93,22 +85,19 @@ public class VendorShopUI : MonoBehaviour
             spawnedBuyButtons.Add(buttonInstance.gameObject);
 
             TMP_Text label = buttonInstance.GetComponentInChildren<TMP_Text>();
-            if (label != null)
-            {
+            if (label != null){
                 string itemName = offer.Item != null ? offer.Item.DisplayName : "Unknown Item";
                 string currencyName = GetCurrencyDisplayName();
                 label.text = $"{itemName} x{offer.Quantity} - {offer.Price} {currencyName}";
             }
 
             buttonInstance.onClick.RemoveAllListeners();
-            buttonInstance.onClick.AddListener(() =>
-            {
+            buttonInstance.onClick.AddListener(() =>{
                 ShowOfferInInspector(offer);
 
                 bool success = vendorShop.Buy(offer);
 
-                if (statusText != null)
-                {
+                if (statusText != null){
                     statusText.text = success
                         ? $"Bought {offer.Quantity}x {offer.Item.DisplayName}"
                         : "Not enough currency.";
@@ -119,16 +108,14 @@ public class VendorShopUI : MonoBehaviour
         }
     }
 
-    private void BuildSellButtons()
-    {
+    private void BuildSellButtons(){
         if (vendorShop == null || sellContentRoot == null || buttonPrefab == null || GameState.I == null)
             return;
 
         IReadOnlyDictionary<string, int> items = GameState.I.PlayerInventory.Items;
         ItemDefinition currencyItem = vendorShop.GetCurrencyItem();
 
-        foreach (var pair in items)
-        {
+        foreach (var pair in items){
             string itemId = pair.Key;
             int ownedAmount = pair.Value;
 
@@ -157,20 +144,17 @@ public class VendorShopUI : MonoBehaviour
             spawnedSellButtons.Add(buttonInstance.gameObject);
 
             TMP_Text label = buttonInstance.GetComponentInChildren<TMP_Text>();
-            if (label != null)
-            {
+            if (label != null){
                 label.text = $"{itemDef.DisplayName} (x{ownedAmount})";
             }
 
             buttonInstance.onClick.RemoveAllListeners();
-            buttonInstance.onClick.AddListener(() =>
-            {
+            buttonInstance.onClick.AddListener(() =>{
                 ShowSellItemInInspector(itemDef, ownedAmount, totalSellPrice, quantityToSell);
 
                 bool success = vendorShop.Sell(itemDef, quantityToSell);
 
-                if (statusText != null)
-                {
+                if (statusText != null){
                     statusText.text = success
                         ? $"Sold {quantityToSell}x {itemDef.DisplayName}"
                         : $"Could not sell {itemDef.DisplayName}.";
@@ -181,8 +165,7 @@ public class VendorShopUI : MonoBehaviour
         }
     }
 
-    private void ShowOfferInInspector(VendorOffer offer)
-    {
+    private void ShowOfferInInspector(VendorOffer offer){
         if (offer == null || offer.Item == null)
             return;
 
@@ -196,8 +179,7 @@ public class VendorShopUI : MonoBehaviour
             itemCostText.text = $"Buy Cost: {offer.Price} {GetCurrencyDisplayName()}";
     }
 
-    private void ShowSellItemInInspector(ItemDefinition itemDef, int ownedAmount, int totalSellPrice, int quantityToSell)
-    {
+    private void ShowSellItemInInspector(ItemDefinition itemDef, int ownedAmount, int totalSellPrice, int quantityToSell){
         if (itemDef == null)
             return;
 
@@ -211,8 +193,7 @@ public class VendorShopUI : MonoBehaviour
             itemCostText.text = $"Sell Value: +{totalSellPrice} {GetCurrencyDisplayName()}";
     }
 
-    private void ClearInspector()
-    {
+    private void ClearInspector(){
         if (itemNameText != null)
             itemNameText.text = string.Empty;
 
@@ -223,8 +204,7 @@ public class VendorShopUI : MonoBehaviour
             itemCostText.text = string.Empty;
     }
 
-    private string GetCurrencyDisplayName()
-    {
+    private string GetCurrencyDisplayName(){
         if (vendorShop == null)
             return "Currency";
 
@@ -235,17 +215,14 @@ public class VendorShopUI : MonoBehaviour
         return currencyItem.DisplayName;
     }
 
-    private void ClearSpawnedButtons()
-    {
-        for (int i = 0; i < spawnedBuyButtons.Count; i++)
-        {
+    private void ClearSpawnedButtons(){
+        for (int i = 0; i < spawnedBuyButtons.Count; i++){
             if (spawnedBuyButtons[i] != null)
                 Destroy(spawnedBuyButtons[i]);
         }
         spawnedBuyButtons.Clear();
 
-        for (int i = 0; i < spawnedSellButtons.Count; i++)
-        {
+        for (int i = 0; i < spawnedSellButtons.Count; i++){
             if (spawnedSellButtons[i] != null)
                 Destroy(spawnedSellButtons[i]);
         }
