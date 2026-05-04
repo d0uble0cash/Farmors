@@ -11,6 +11,10 @@ public class ItemDefinition : ScriptableObject
     public string Description => description;
     [SerializeField] private Sprite icon;
     public Sprite Icon => icon;
+    [SerializeField] private int damage;
+    public int Damage => damage;
+    [SerializeField] private int range;
+    public int Range => range;
     [SerializeField] private int maxStackSize  = 99;   
     public int MaxStackSize => maxStackSize;
     [SerializeField] private int itemValue = 0;
@@ -28,5 +32,11 @@ public class ItemDefinition : ScriptableObject
         id = id.ToLowerInvariant();
     }
 
+    public void ChangeDamage(int damage){
+        this.damage = damage;
+    }
+    public void ChangeRange(int range){
+        this.range = range;
+    }
 
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 public class InventoryModel
 {
     private readonly Dictionary<string, int> items = new();
@@ -67,9 +66,8 @@ public class InventoryModel
 
     public int GetCount(string id) {
 
-        if (string.IsNullOrWhiteSpace(id))
-        {
-        return 0;
+        if (string.IsNullOrWhiteSpace(id)){
+            return 0;
         }
 
         return items.TryGetValue(id, out var count) ? count : 0;
@@ -107,4 +105,20 @@ public class InventoryModel
     }
 
     public void Clear() => items.Clear();
+
+    /*public bool ChangeDamage(string id, int damage){
+        if (!VerifyValid(id, 1)) {
+            return false;
+        }
+        items[id].damage = damage;
+        return true;
+    }
+
+    public bool ChangeRange(string id, int range){
+        if (!VerifyValid(id, 1)) {
+            return false;
+        }
+        items[id].range = range;
+        return true;
+    }*/
 }

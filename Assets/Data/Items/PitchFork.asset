@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   displayName: PITCHFORK
   id: pitchfork
-  description: 'DAMAGE: 3'
+  description: ' '
   icon: {fileID: -2106268590, guid: 1b7ec229841d68e42a06ef71886aaf5e, type: 3}
+  damage: 3
+  range: 0
   maxStackSize: 1
   itemValue: 50
+  isMaterial: 0
