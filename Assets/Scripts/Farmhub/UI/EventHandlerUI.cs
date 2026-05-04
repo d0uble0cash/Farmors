@@ -31,6 +31,7 @@ public class EventHandlerUI : MonoBehaviour{
     [SerializeField] private float dayLength = 86400f;
     [SerializeField] private float timeScale = 2.0f;
 
+    [SerializeField]private InventoryUI inventoryUI; 
     private float elapsedTime;
     private int currentDay = 1;
 
@@ -53,6 +54,7 @@ public class EventHandlerUI : MonoBehaviour{
         if (invActionButton != null && invActionButton.WasPressedThisFrame()){
             OpenScreen(invScreen);
             cointext.SetActive(true);
+            inventoryUI.UpdateUI();
         }
         else if (mapActionButton != null && mapActionButton.WasPressedThisFrame()){
             OpenScreen(mapScreen);

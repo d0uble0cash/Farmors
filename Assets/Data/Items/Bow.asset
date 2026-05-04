@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   displayName: BOW
   id: bow
-  description: 'DAMAGE: 10 RANGE: 5'
+  description: 
   icon: {fileID: -1444867491, guid: 1b7ec229841d68e42a06ef71886aaf5e, type: 3}
+  damage: 10
+  range: 5
   maxStackSize: 1
   itemValue: 30
+  isMaterial: 0

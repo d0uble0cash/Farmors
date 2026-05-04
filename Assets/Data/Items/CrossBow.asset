@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   displayName: CROSSBOW
   id: crossbow
-  description: 'DAMAGE: 30 RANGE: 10'
+  description: 
   icon: {fileID: 56752619, guid: 1b7ec229841d68e42a06ef71886aaf5e, type: 3}
+  damage: 30
+  range: 10
   maxStackSize: 1
   itemValue: 150
+  isMaterial: 0

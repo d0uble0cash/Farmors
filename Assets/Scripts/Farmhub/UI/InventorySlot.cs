@@ -7,43 +7,62 @@ using UnityEngine.EventSystems;
 public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     
     //ITEMDATA//
+    public ItemDefinition itemInSlot;
     public string itemName;
     public Sprite itemSprite;
     public bool isFull = false;
     public bool isSelected = false;
     public string itemDescription;
     public int itemCost;
-    public Sprite emptySprite;
     //ITEMDESCRIPTIONslot
     public TMP_Text itemDescriptionNameText;
     public TMP_Text itemDescriptionText;
-    //public TMP_Text itemDescriptionCost;
+    public TMP_Text itemDescriptionCost;
     [SerializeField] private InventoryUI inventoryUI;
-    public void SetInventoryUI(InventoryUI ui){
-        inventoryUI = ui;
-    }
     //INVENTORYSLOT//
     [SerializeField] private Image itemImage;
-    public void addItem(string itemName, Sprite itemSprite, string itemDescription, int itemCost){
-        this.itemName = itemName;
-        this.itemSprite = itemSprite;
-        this.itemDescription = itemDescription;
-        this.itemCost = itemCost;
+    //private void Start(){
+        //inventoryUI = GameObject.Find("StartInv").GetComponent<InventoryUI>();
+    //}
+    public void addItem(ItemDefinition item){
+        itemInSlot = item;
+        this.itemName = item?.DisplayName;
+        this.itemCost = item.ItemValue;
+        this.itemSprite = item?.Icon;
+        this.itemDescription = item?.Description;
         isFull= true;
 
-        itemImage.sprite = itemSprite;
+        if(!item.IsMaterial){itemImage.sprite = itemSprite;}
+    }
+
+    public void addItemM(ItemDefinition item, int itemValue){
+        itemInSlot = item;
+        this.itemName = item?.DisplayName;
+        this.itemCost = item.ItemValue;
+        itemDescriptionNameText.text = itemName;
+        itemDescriptionCost.text = $": {itemValue}";
+        isFull = true;
     }
 
     public void OnPointerClick(PointerEventData eventData){
-        if(eventData.button == PointerEventData.InputButton.Left && itemSprite!=null){
+        if(GameState.I==null||itemInSlot==null){return;}
+        if(eventData.button == PointerEventData.InputButton.Left){
             inventoryUI.DeselectAllSlots();
             this.isSelected = true;
-            itemDescriptionNameText.text = itemName;
-            itemDescriptionText.text = itemDescription;
-            //itemDescriptionCost.text = itemCost.ToString() + "ϵ";
-            //if(itemDescriptionCost.text == null){
-            //    itemDescriptionCost.text = "";
-            //}
+            if (!itemInSlot.IsMaterial){
+                itemDescriptionNameText.text = itemName;
+                itemDescriptionText.text = $"Damage: {itemInSlot.Damage}";
+                itemDescriptionCost.text = $"Cost: {itemCost}ϵ";
+            }
         }
+    }
+    public void clearSlot(){
+        if(itemInSlot==null){return;}
+        itemDescriptionNameText.text = "ITEMNAME";
+        itemDescriptionText.text = "Description: ";
+        itemDescriptionCost.text = "Cost: ";
+        if(!itemInSlot.IsMaterial){itemImage.sprite = null;}
+        itemInSlot = null;
+        isFull = false;
     }
 }

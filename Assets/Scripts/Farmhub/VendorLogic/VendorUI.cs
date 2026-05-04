@@ -23,9 +23,12 @@ public class VendorUI : MonoBehaviour{
         }
         if (golditem == null ||buyitem == null){afterPurchaseText.text = "Item not selected!";}
         else if (GameState.I.PlayerInventory.GetCount("gold") >= buyitem.ItemValue){
-            GameState.I.PlayerInventory.TryRemove("gold", buyitem.ItemValue);
-            GameState.I.PlayerInventory.Add(buyitem.Id, 1);
-            afterPurchaseText.text = $"Purchased {buyitem?.DisplayName}";
+            if(GameState.I.PlayerInventory.GetCount(buyitem.Id) < 1){
+                GameState.I.PlayerInventory.TryRemove("gold", buyitem.ItemValue);
+                GameState.I.PlayerInventory.Add(buyitem.Id, 1);
+                afterPurchaseText.text = $"Purchased {buyitem?.DisplayName}";
+            }
+            else{afterPurchaseText.text = "Cannot have two of that item in the inventory!";}
         }
         else{afterPurchaseText.text = "Not enough gold!";}
     }

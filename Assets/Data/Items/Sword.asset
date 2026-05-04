@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
   displayName: SWORD
   id: sword
-  description: 'DAMAGE: 14'
+  description: ' '
   icon: {fileID: -1686284107, guid: 1b7ec229841d68e42a06ef71886aaf5e, type: 3}
+  damage: 14
+  range: 0
   maxStackSize: 1
   itemValue: 30
+  isMaterial: 0
