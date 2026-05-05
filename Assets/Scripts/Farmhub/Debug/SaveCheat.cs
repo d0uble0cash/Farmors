@@ -8,14 +8,7 @@ public class SaveCheat : MonoBehaviour
         if (SaveSystem.I == null)
             return;
 
-        // Save game (press S)
-        if (Keyboard.current.sKey.wasPressedThisFrame)
-        {
-            SaveSystem.I.Save();
-            Debug.Log("Manual save triggered.");
-        }
 
-        // Load game (press L)
         if (Keyboard.current.lKey.wasPressedThisFrame)
         {
             SaveSystem.I.Load();
