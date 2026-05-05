@@ -58,9 +58,9 @@ public class InventorySlot : MonoBehaviour, IPointerClickHandler{
     }
     public void clearSlot(){
         if(itemInSlot==null){return;}
-        itemDescriptionNameText.text = "ITEMNAME";
-        itemDescriptionText.text = "Description: ";
-        itemDescriptionCost.text = "Cost: ";
+        itemDescriptionNameText.text = null;
+        itemDescriptionText.text = null;
+        itemDescriptionCost.text = null;
         if(!itemInSlot.IsMaterial){itemImage.sprite = null;}
         itemInSlot = null;
         isFull = false;
