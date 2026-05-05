@@ -21,9 +21,23 @@ public class AnimalInteract : MonoBehaviour, IInteractable
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip petSound;
+    [SerializeField] private float minPitch = 0.7f;
+    [SerializeField] private float maxPitch = 1.4f;
+
+    [Header("Idle Audio")]
+    [SerializeField] private bool enableIdleSounds = true;
+    [SerializeField] private float minIdleTime = 6f;
+    [SerializeField] private float maxIdleTime = 15f;
+    [SerializeField] private float idleVolumeMultiplier = 0.6f;
+
+    [Header("Shared Noise Cooldown")]
+    [SerializeField] private float sharedSoundCooldown = 2f;
+
+    private static float nextAllowedAnimalSoundTime;
 
     private bool isFocused;
     private bool isReacting;
+    private float idleTimer;
     private Vector3 visualStartLocalPosition;
 
     public bool CanInteract => !isReacting;
@@ -46,6 +60,25 @@ public class AnimalInteract : MonoBehaviour, IInteractable
         }
     }
 
+    private void Start()
+    {
+        ResetIdleTimer();
+    }
+
+    private void Update()
+    {
+        if (!enableIdleSounds || isReacting)
+            return;
+
+        idleTimer -= Time.deltaTime;
+
+        if (idleTimer <= 0f)
+        {
+            TryPlayIdleSound();
+            ResetIdleTimer();
+        }
+    }
+
     private void Reset()
     {
         interactionCollider = GetComponentInChildren<Collider>();
@@ -59,12 +92,7 @@ public class AnimalInteract : MonoBehaviour, IInteractable
 
         Debug.Log($"Petted {animalName}");
 
-        // 🔊 Play sound
-        if (audioSource != null && petSound != null)
-        {
-            audioSource.PlayOneShot(petSound);
-        }
-
+        PlaySound(1f, true);
         StartCoroutine(PetReaction());
     }
 
@@ -91,6 +119,34 @@ public class AnimalInteract : MonoBehaviour, IInteractable
             visualRoot.localPosition = visualStartLocalPosition;
 
         isReacting = false;
+    }
+
+    private void TryPlayIdleSound()
+    {
+        if (Time.time < nextAllowedAnimalSoundTime)
+            return;
+
+        PlaySound(idleVolumeMultiplier, false);
+        nextAllowedAnimalSoundTime = Time.time + sharedSoundCooldown;
+    }
+
+    private void PlaySound(float volumeMultiplier, bool ignoreSharedCooldown)
+    {
+        if (audioSource == null || petSound == null)
+            return;
+
+        if (!ignoreSharedCooldown && Time.time < nextAllowedAnimalSoundTime)
+            return;
+
+        audioSource.pitch = Random.Range(minPitch, maxPitch);
+        audioSource.PlayOneShot(petSound, volumeMultiplier);
+
+        nextAllowedAnimalSoundTime = Time.time + sharedSoundCooldown;
+    }
+
+    private void ResetIdleTimer()
+    {
+        idleTimer = Random.Range(minIdleTime, maxIdleTime);
     }
 
     public void SetFocused(bool focused)

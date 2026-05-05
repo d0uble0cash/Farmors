@@ -10383,6 +10383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 492832522}
   - component: {fileID: 492832521}
+  - component: {fileID: 492832523}
   m_Layer: 0
   m_Name: DevTools
   m_TagString: Untagged
@@ -10419,6 +10420,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &492832523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492832520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73040615565c6084b8806c1ba0b899f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveCheat
 --- !u!1 &498492400
 GameObject:
   m_ObjectHideFlags: 0
@@ -17419,6 +17432,13 @@ MonoBehaviour:
   bounceSpeed: 15
   audioSource: {fileID: 817665843}
   petSound: {fileID: 8300000, guid: 783d4195deca26046b606880d9499ea2, type: 3}
+  minPitch: 0.7
+  maxPitch: 1.4
+  enableIdleSounds: 1
+  minIdleTime: 6
+  maxIdleTime: 15
+  idleVolumeMultiplier: 0.6
+  sharedSoundCooldown: 2
 --- !u!1001 &945963336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20792,6 +20812,13 @@ MonoBehaviour:
   bounceSpeed: 10
   audioSource: {fileID: 1977988602}
   petSound: {fileID: 8300000, guid: a56509d31f0271c4cbd9fc3e4e34e585, type: 3}
+  minPitch: 0.7
+  maxPitch: 1.4
+  enableIdleSounds: 1
+  minIdleTime: 6
+  maxIdleTime: 15
+  idleVolumeMultiplier: 0.6
+  sharedSoundCooldown: 2
 --- !u!1 &1197001116
 GameObject:
   m_ObjectHideFlags: 0
@@ -21112,6 +21139,78 @@ MonoBehaviour:
   bounceSpeed: 10
   audioSource: {fileID: 2141893880}
   petSound: {fileID: 8300000, guid: d23d319268b150a4991bdb249eaa6fbf, type: 3}
+  minPitch: 0.7
+  maxPitch: 1.4
+  enableIdleSounds: 1
+  minIdleTime: 6
+  maxIdleTime: 15
+  idleVolumeMultiplier: 0.6
+  sharedSoundCooldown: 2
+--- !u!1 &1216465492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1216465494}
+  - component: {fileID: 1216465493}
+  m_Layer: 0
+  m_Name: FarmAnimalSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1216465493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216465492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932953d1500a0de4391f0cecfdfa02e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FarmAnimalSpawner
+  animals:
+  - animalId: sheep
+    prefab: {fileID: 1868568693}
+    spawnPoints:
+    - {fileID: 1216465494}
+  - animalId: chicken
+    prefab: {fileID: 943238686}
+    spawnPoints:
+    - {fileID: 1216465494}
+  - animalId: cow
+    prefab: {fileID: 1203444849}
+    spawnPoints:
+    - {fileID: 1216465494}
+  - animalId: duck
+    prefab: {fileID: 1703625182}
+    spawnPoints:
+    - {fileID: 1216465494}
+  - animalId: pig
+    prefab: {fileID: 1188428679}
+    spawnPoints:
+    - {fileID: 1216465494}
+--- !u!4 &1216465494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216465492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1219355902
 GameObject:
   m_ObjectHideFlags: 0
@@ -24778,7 +24877,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358703467}
   m_LocalRotation: {x: 0, y: -0.9999796, z: 0.006384927, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 9.692}
+  m_LocalPosition: {x: 0, y: 0, z: 10.24}
   m_LocalScale: {x: 0.5, y: 1.01614, z: 0.4999199}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24786,7 +24885,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0.732, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.73, y: 2.25}
+  m_AnchoredPosition: {x: 1.668, y: 5.384}
   m_SizeDelta: {x: 3, y: 0.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1358703469
@@ -31365,6 +31464,13 @@ MonoBehaviour:
   bounceSpeed: 15
   audioSource: {fileID: 1227527141}
   petSound: {fileID: 8300000, guid: 3016f83f24b01784eb4618e49da65442, type: 3}
+  minPitch: 0.7
+  maxPitch: 1.4
+  enableIdleSounds: 1
+  minIdleTime: 6
+  maxIdleTime: 15
+  idleVolumeMultiplier: 0.6
+  sharedSoundCooldown: 2
 --- !u!1 &1706613738
 GameObject:
   m_ObjectHideFlags: 0
@@ -34193,6 +34299,13 @@ MonoBehaviour:
   bounceSpeed: 13
   audioSource: {fileID: 75227516}
   petSound: {fileID: 8300000, guid: f0d2f0133e9cd854484746399246e27b, type: 3}
+  minPitch: 0.7
+  maxPitch: 1.4
+  enableIdleSounds: 1
+  minIdleTime: 6
+  maxIdleTime: 15
+  idleVolumeMultiplier: 0.6
+  sharedSoundCooldown: 2
 --- !u!1 &1877337988
 GameObject:
   m_ObjectHideFlags: 0
@@ -38479,3 +38592,4 @@ SceneRoots:
   - {fileID: 1188428682}
   - {fileID: 1797572954}
   - {fileID: 1272910303}
+  - {fileID: 1216465494}

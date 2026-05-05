@@ -6,13 +6,35 @@ public class GameState : MonoBehaviour
     public static GameState I { get; private set; }
 
     [Header("Progress")]
-    // Use HashSet at runtime for fast lookups
     public HashSet<string> rescuedAnimals = new HashSet<string>();
+    public Dictionary<string, int> rescuedAnimalCounts = new Dictionary<string, int>();
     public HashSet<string> unlockedAbilities = new HashSet<string>();
+
     public InventoryModel PlayerInventory { get; } = new InventoryModel();
 
-    public void AddRescuedAnimal(string animalId) => rescuedAnimals.Add(animalId);
-    public bool HasRescuedAnimal(string animalId) => rescuedAnimals.Contains(animalId);
+    public void AddRescuedAnimal(string animalId, int amount = 1)
+    {
+        if (string.IsNullOrWhiteSpace(animalId))
+            return;
+
+        rescuedAnimals.Add(animalId);
+
+        if (!rescuedAnimalCounts.ContainsKey(animalId))
+            rescuedAnimalCounts[animalId] = 0;
+
+        rescuedAnimalCounts[animalId] += amount;
+    }
+
+    public bool HasRescuedAnimal(string animalId)
+    {
+        return rescuedAnimals.Contains(animalId);
+    }
+
+    public int GetRescuedAnimalCount(string animalId)
+    {
+        return rescuedAnimalCounts.TryGetValue(animalId, out int count) ? count : 0;
+    }
+
     public void UnlockAbility(string abilityId) => unlockedAbilities.Add(abilityId);
     public bool HasAbility(string abilityId) => unlockedAbilities.Contains(abilityId);
 
@@ -29,6 +51,7 @@ public class GameState : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         I = this;
         DontDestroyOnLoad(gameObject);
     }
@@ -36,6 +59,7 @@ public class GameState : MonoBehaviour
     public void InitializeNewGame()
     {
         rescuedAnimals.Clear();
+        rescuedAnimalCounts.Clear();
         unlockedAbilities.Clear();
         PlayerInventory.Clear();
 
@@ -44,18 +68,31 @@ public class GameState : MonoBehaviour
 
     public SaveData ToSaveData()
     {
+        List<AnimalCountSaveData> animalCounts = new List<AnimalCountSaveData>();
+
+        foreach (var pair in rescuedAnimalCounts)
+        {
+            animalCounts.Add(new AnimalCountSaveData
+            {
+                animalId = pair.Key,
+                count = pair.Value
+            });
+        }
+
         return new SaveData
         {
             rescuedAnimals = new List<string>(rescuedAnimals),
+            rescuedAnimalCounts = animalCounts,
             unlockedAbilities = new List<string>(unlockedAbilities),
             inventory = PlayerInventory.ToSnapshot(),
 
-            lastCheckpointID    = lastCheckpointID,
+            lastCheckpointID = lastCheckpointID,
             lastCheckpointScene = lastCheckpointScene,
-            lastCheckpointX     = lastCheckpointX,
-            lastCheckpointY     = lastCheckpointY
+            lastCheckpointX = lastCheckpointX,
+            lastCheckpointY = lastCheckpointY
         };
     }
+
     public void LoadFromSaveData(SaveData data)
     {
         if (data == null)
@@ -67,16 +104,35 @@ public class GameState : MonoBehaviour
         PlayerInventory.LoadFromSnapshot(data.inventory);
 
         rescuedAnimals.Clear();
-        foreach (var id in data.rescuedAnimals)
-            rescuedAnimals.Add(id);
+        if (data.rescuedAnimals != null)
+        {
+            foreach (var id in data.rescuedAnimals)
+                rescuedAnimals.Add(id);
+        }
+
+        rescuedAnimalCounts.Clear();
+        if (data.rescuedAnimalCounts != null)
+        {
+            foreach (var entry in data.rescuedAnimalCounts)
+            {
+                if (entry == null || string.IsNullOrWhiteSpace(entry.animalId))
+                    continue;
+
+                rescuedAnimalCounts[entry.animalId] = Mathf.Max(0, entry.count);
+                rescuedAnimals.Add(entry.animalId);
+            }
+        }
 
         unlockedAbilities.Clear();
-        foreach (var id in data.unlockedAbilities)
-            unlockedAbilities.Add(id);
+        if (data.unlockedAbilities != null)
+        {
+            foreach (var id in data.unlockedAbilities)
+                unlockedAbilities.Add(id);
+        }
 
-        lastCheckpointID    = data.lastCheckpointID;
+        lastCheckpointID = data.lastCheckpointID;
         lastCheckpointScene = data.lastCheckpointScene;
-        lastCheckpointX     = data.lastCheckpointX;
-        lastCheckpointY     = data.lastCheckpointY;
+        lastCheckpointX = data.lastCheckpointX;
+        lastCheckpointY = data.lastCheckpointY;
     }
 }
