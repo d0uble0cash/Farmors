@@ -8,42 +8,13 @@ public class InventoryUI : MonoBehaviour{
     public InventorySlot[] weaponitemSlots, farmitemSlots, materialitemTexts;
     [SerializeField] public GameObject sellCheckPanelMaterial; 
     [SerializeField] private GameObject sellCheckPanel;
-    [SerializeField]private TMP_InputField matInput;
-    private void Awake(){
-        //if (inventoryText == null)
-        //    inventoryText = GetComponentInChildren<TMP_Text>();
-    }
+    [SerializeField] private TMP_InputField matInput;
+    [SerializeField] private TMP_Text MaterialText;
+    [SerializeField] private TMP_Text SellText;
 
     public void UpdateUI(){
         RefreshSlots();
-        //RefreshText();
     }
-    /*private void RefreshText(){
-        if (inventoryText == null) {return;}
-        if (GameState.I == null){
-            inventoryText.text = "Inventory:\nUnavailable";
-            return;
-        }
-        string newText = "Inventory:\n";
-        var items = GameState.I.PlayerInventory.Items;
-
-        if (items.Count == 0){newText += "Empty";}
-        else{
-            foreach (var item in items){
-                ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
-                if (definition.IsMaterial && definition.DisplayName!="Gold"){
-                    for(int i = 0; i < materialitemTexts.Length; i++){
-                        if (materialitemTexts[i].isFull == false){
-                            materialitemTexts[i].addItemM(definition);
-                            break;
-                        }
-                    }
-                    newText += $"{definition?.DisplayName ?? item.Key}: {item.Value}\n";
-                }
-            }
-        }
-        inventoryText.text = newText;
-    }*/
 
     private void RefreshSlots(){
         if (GameState.I==null){return;}
@@ -91,8 +62,14 @@ public class InventoryUI : MonoBehaviour{
     public void SellSelectFirst(){
         ItemDefinition definition = findSelected().itemInSlot;
         if(definition==null||definition.Id=="gold"){return;}
-        else if(definition.IsMaterial){sellCheckPanelMaterial.SetActive(true);}
-        else{sellCheckPanel.SetActive(true);}
+        else if(definition.IsMaterial){
+            sellCheckPanelMaterial.SetActive(true);
+            MaterialText.text = $"Sell {definition.DisplayName}?";
+        }
+        else{
+            sellCheckPanel.SetActive(true);
+            SellText.text = $"Sell {definition.DisplayName}?";
+        }
     }
 
     public void SellSelected(){
