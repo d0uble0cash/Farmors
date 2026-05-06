@@ -11,6 +11,7 @@ public class ChestInteract : MonoBehaviour, IInteractable
     [Header("Inventory")]
     [SerializeField] private ChestInventory chestInventory;
     [SerializeField] private InventoryUI chestInventoryUI;
+    [SerializeField] private InventoryUI playerInventoryUI;
 
     [Header("Interaction")]
     [SerializeField] private Collider interactionCollider;
@@ -56,13 +57,9 @@ public class ChestInteract : MonoBehaviour, IInteractable
         }
 
         if (isOpen)
-        {
             CloseChest();
-        }
         else
-        {
             OpenChest();
-        }
 
         RefreshPrompt();
     }
@@ -75,8 +72,24 @@ public class ChestInteract : MonoBehaviour, IInteractable
         if (chestScreen != null)
             chestScreen.SetActive(true);
 
-        if (chestInventoryUI != null && chestInventory != null)
-            chestInventoryUI.Show(chestInventory.Inventory);
+        if (chestInventory == null)
+            return;
+
+        if (chestInventoryUI != null)
+        {
+            chestInventoryUI.Show(
+                chestInventory.Inventory,
+                GameState.I.PlayerInventory
+            );
+        }
+
+        if (playerInventoryUI != null)
+        {
+            playerInventoryUI.Show(
+                GameState.I.PlayerInventory,
+                chestInventory.Inventory
+            );
+        }
     }
 
     private void CloseChest()

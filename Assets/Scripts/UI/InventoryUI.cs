@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour{
     private InventoryModel currentInventory;
+    private InventoryModel otherInventory;
 
     [Header("Refs")]
     public InventorySlot[] weaponitemSlots, farmitemSlots, materialitemTexts;
@@ -15,6 +16,8 @@ public class InventoryUI : MonoBehaviour{
 
     public void Show(InventoryModel inventory){
         currentInventory = inventory;
+        otherInventory = targetInventory;
+
         gameObject.SetActive(true);
         RefreshSlots();
     }
