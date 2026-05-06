@@ -9,18 +9,15 @@ public class ChestInventory : MonoBehaviour
     public string ChestId => chestId;
     public InventoryModel Inventory { get; private set; } = new InventoryModel();
 
-    private void Awake()
-    {
+    private void Awake(){
         Inventory.LoadFromSnapshot(startingItems);
     }
 
-    public List<InventoryEntry> ToSnapshot()
-    {
+    public List<InventoryEntry> ToSnapshot(){
         return Inventory.ToSnapshot();
     }
 
-    public void LoadFromSnapshot(List<InventoryEntry> savedItems)
-    {
+    public void LoadFromSnapshot(List<InventoryEntry> savedItems){
         Inventory.LoadFromSnapshot(savedItems);
     }
 }
