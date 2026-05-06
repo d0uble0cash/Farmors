@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class FarmAnimalSpawner : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class FarmAnimalSpawner : MonoBehaviour
 
     [Header("Animal Spawn Entries")]
     [SerializeField] private AnimalSpawnEntry[] animals;
+
+    [Header("Spawn Spread")]
+    [SerializeField] private float randomSpawnRadius = 1.25f;
+    [SerializeField] private bool sampleNavMesh = true;
 
     private readonly List<GameObject> spawnedAnimals = new();
 
@@ -50,16 +55,31 @@ public class FarmAnimalSpawner : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 Transform spawnPoint = entry.spawnPoints[i % entry.spawnPoints.Length];
+                Vector3 spawnPosition = GetSpawnPosition(spawnPoint.position);
 
                 GameObject animal = Instantiate(
                     entry.prefab,
-                    spawnPoint.position,
+                    spawnPosition,
                     spawnPoint.rotation
                 );
 
                 spawnedAnimals.Add(animal);
             }
         }
+    }
+
+    private Vector3 GetSpawnPosition(Vector3 basePosition)
+    {
+        Vector2 randomCircle = Random.insideUnitCircle * randomSpawnRadius;
+        Vector3 candidate = basePosition + new Vector3(randomCircle.x, 0f, randomCircle.y);
+
+        if (!sampleNavMesh)
+            return candidate;
+
+        if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+            return hit.position;
+
+        return basePosition;
     }
 
     private void ClearSpawnedAnimals()
