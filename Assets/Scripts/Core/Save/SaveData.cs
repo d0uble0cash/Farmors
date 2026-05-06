@@ -4,6 +4,8 @@ using System.Collections.Generic;
 public class SaveData
 {
     public List<string> rescuedAnimals = new();
+    public List<AnimalCountSaveData> rescuedAnimalCounts = new();
+
     public List<string> unlockedAbilities = new();
     public List<InventoryEntry> inventory = new();
 

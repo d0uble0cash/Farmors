@@ -1,8 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
+    public PlayerState currentState;
+    public PlayerIdleState idleState;
+    public PlayerJumpState jumpState;
+    public PlayerMoveState moveState;
+    public PlayerCrouchState crouchState;
+    public PlayerSlideState slideState;
     public enum GameMode
     {
         Platformer,
@@ -46,9 +53,6 @@ public class Player : MonoBehaviour
     public Vector2 normalOffset;
 
     private bool isSliding;
-    private  bool slideInputLocked;
-    private float slideTimer;
-    private float slideStopTimer;
 
    [Header("Coyote Time")]
    public float coyoteTimeDuration = 0.12f;
@@ -57,10 +61,10 @@ public class Player : MonoBehaviour
    public float jumpBufferDuration = 0.12f;
    
    //Inputs
-   private Vector2 moveInput;
-   private bool runPressed;
-   private bool jumpPressed;
-   private bool jumpReleased;
+   public Vector2 moveInput;
+   public bool runPressed;
+   public bool jumpPressed;
+   public bool jumpReleased;
 
    [Header("Ground Check")]
    public Transform groundCheck;
@@ -88,43 +92,54 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         abilities = GetComponent<PlayerAbilities>();
+        idleState = new PlayerIdleState(this);
+        jumpState = new PlayerJumpState(this);
+        moveState = new PlayerMoveState(this);
+        crouchState = new PlayerCrouchState(this);
+        slideState = new PlayerSlideState(this);
+
     }
 
 
     private void Start()
    {
         if (rb != null) rb.gravityScale = normalGravity;
+        ChangeState(idleState);
    }
 
 
    void Update()
     {
+        currentState.Update();
         if (!isSliding)
         {
             Flip();
         }
         HandleAnimations();
-        HandleSlide();
-        TryStandUp();
         TickTimers();
     }
 
    void FixedUpdate()
     {
         CheckGrounded();
+        currentState.FixedUpdate();
         if (currentMode == GameMode.Platformer)
         {   
-            ApplyVariableGravity();
-            if (!isSliding)
-            {
-                HandleMovement();
-            }
-            HandleJump();
         } else
         {
             rb.gravityScale = 0f;
             HandleTopDownMovement();
         }
+    }
+
+    public void ChangeState (PlayerState newState)
+    {
+        if(currentState != null)
+        {
+            currentState.Exit();
+        }
+        currentState = newState;
+        currentState.Enter();
     }
     //Method to switch between platformer and farming mode
     public void SwitchMode(GameMode newMode)
@@ -182,106 +197,23 @@ public class Player : MonoBehaviour
         rb.linearVelocity = new Vector2(targetSpeed, rb.linearVelocity.y);
     }
 
-    private void HandleJump()
-    {
-        bool canJump = isGrounded || coyoteTimeCounter > 0f;
-        bool jumpQueued = jumpBufferCounter > 0f;
-        if(jumpQueued && canJump)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            jumpBufferCounter = 0f;
-            coyoteTimeCounter = 0f;
-            jumpPressed = false;
-            jumpReleased = false;
-        } else if (jumpQueued && !canJump)
-        {
-            if(abilities != null &&  abilities.TryAbilityJump())
-            {
-                jumpBufferCounter = 0f;
-            }
-        }
-        if(jumpReleased && rb.linearVelocity.y > 0f)
-        {
-            float cutSpeed = Mathf.Max(rb.linearVelocity.y * jumpCutMultiplier, jumpCutMinSpeed);
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, cutSpeed);
-            jumpReleased = false;
-        }
-    }
 
-    private void HandleSlide()
-    {
-        if (isSliding)
-        {
-            slideTimer -= Time.deltaTime;
-            rb.linearVelocity = new Vector2(slideSpeed * facingDirection, rb.linearVelocity.y);
-            //If we are done sliding
-            if (slideTimer <= 0)
-            {
-                isSliding = false;
-                slideStopTimer = slideStopDuration;
-                TryStandUp();
-            }
-        }
 
-        if (slideStopTimer > 0)
-        {
-            slideStopTimer -= Time.deltaTime;
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-        }
-
-        //Start the slide
-        if (isGrounded && runPressed && moveInput.y < -.1f && !isSliding && !slideInputLocked)
-        {
-            isSliding = true;
-            slideInputLocked = true;
-            slideTimer = slideDuration;
-            SetColliderSlide();
-        }
-
-        if (slideStopTimer < 0 && moveInput.y >= -.1f)
-        {
-            slideInputLocked = false;
-        }
-    }
-
-    void SetColliderNormal()
+    public void SetColliderNormal()
     {
         playerCollider.size = new Vector2(playerCollider.size.x, normalHeight);
         playerCollider.offset = normalOffset;
     }
 
-    void SetColliderSlide()
+    public void SetColliderSlide()
     {
         playerCollider.size = new Vector2(playerCollider.size.x, slideHeight);
         playerCollider.offset = slideOffset;
     }
 
-    void TryStandUp()
-    {
-        if (headCheck == null) return;
-        if (isSliding) return;
-        
-        bool ceilingAbove = Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
-        bool pressingDown = moveInput.y < -.1f;
-        if (ceilingAbove || pressingDown)
-        {
-            SetColliderSlide();
-            animator.SetBool("isCrouching", true);
-        } else
-        {
-            SetColliderNormal();
-            animator.SetBool("isCrouching", false);  
-        }
-    }
 
-    private void HandleMovement()
-    {
-        if (rb == null) return; //null check
-        float currentSpeed = runPressed ? runSpeed : walkSpeed;
-        rb.linearVelocity = new Vector2(moveInput.x * currentSpeed, rb.linearVelocity.y);
-    }
 
-    private void ApplyVariableGravity()
+    public void ApplyVariableGravity()
     {
         if(abilities != null && (abilities.isDashing || abilities.isWallDashing))
         {
@@ -315,21 +247,19 @@ public class Player : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
+    public bool CheckForCeiling()
+    {
+        return Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
+    }
+
     void HandleAnimations()
     {
         //FIX : null check so missing Animator doesn't crash the game
         if (animator == null) return;
-        bool isCrouching = animator.GetBool("isCrouching");
         if(currentMode == GameMode.Platformer) {
             animator.SetBool("isGrounded", isGrounded);
-            animator.SetBool("isJumping", rb.linearVelocity.y > 0.1f);
-            animator.SetBool("isSliding", isSliding);
             animator.SetFloat("yVelocity", rb.linearVelocity.y);
             
-            bool isMoving = Mathf.Abs(moveInput.x) > .1f && isGrounded;
-            animator.SetBool("isIdle", !isMoving && isGrounded && !isSliding && !isCrouching);
-            animator.SetBool("isWalking", isMoving && !runPressed && !isSliding && !isCrouching);   
-            animator.SetBool("isRunning", isMoving && runPressed && !isSliding && !isCrouching); 
         }
         else
         {

@@ -24,9 +24,10 @@ public class SaveSystem : MonoBehaviour
             Debug.LogWarning("No GameState found. Cannot save.");
             return;
         }
-        var data = GameState.I.ToSaveData();
 
+        var data = GameState.I.ToSaveData();
         var json = JsonUtility.ToJson(data, true);
+
         File.WriteAllText(SavePath, json);
         Debug.Log($"Saved to: {SavePath}");
     }
@@ -44,7 +45,7 @@ public class SaveSystem : MonoBehaviour
             Debug.Log("No save file found. Starting fresh.");
             return;
         }
-        
+
         var json = File.ReadAllText(SavePath);
         var data = JsonUtility.FromJson<SaveData>(json);
 
@@ -53,9 +54,28 @@ public class SaveSystem : MonoBehaviour
             Debug.LogError("Failed to load save data. Starting fresh.");
             return;
         }
-        
+
         GameState.I.LoadFromSaveData(data);
         Debug.Log($"Loaded from: {SavePath}");
     }
-    public bool HasSave() => File.Exists(SavePath); 
+
+    public bool HasSave() => File.Exists(SavePath);
+
+    public void DeleteSave()
+    {
+        if (File.Exists(SavePath))
+        {
+            File.Delete(SavePath);
+            Debug.Log($"Deleted save file: {SavePath}");
+        }
+        else
+        {
+            Debug.Log("No save file to delete.");
+        }
+
+        if (GameState.I != null)
+        {
+            GameState.I.InitializeNewGame();
+        }
+    }
 }

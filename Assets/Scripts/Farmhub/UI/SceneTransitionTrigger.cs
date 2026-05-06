@@ -38,7 +38,7 @@ public class SceneTransitionTrigger : MonoBehaviour, IInteractable
             return;
         }
 
-        SceneManager.LoadScene("ForestLevel");
+        SceneManager.LoadScene("MetroidTester");
     }
 
     public void SetFocused(bool focused)
