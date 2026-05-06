@@ -10,7 +10,7 @@ public class ChestInteract : MonoBehaviour, IInteractable
 
     [Header("Inventory")]
     [SerializeField] private ChestInventory chestInventory;
-    [SerializeField] private InventoryUI chestInventoryUI;
+    [SerializeField] private ChestUI chestInventoryUI;
     [SerializeField] private InventoryUI playerInventoryUI;
 
     [Header("Interaction")]
@@ -72,23 +72,12 @@ public class ChestInteract : MonoBehaviour, IInteractable
         if (chestScreen != null)
             chestScreen.SetActive(true);
 
-        if (chestInventory == null || GameState.I == null)
+        if (chestInventory == null || GameState.I == null){
             return;
-
-        if (chestInventoryUI != null)
-        {
-            chestInventoryUI.Show(
-                chestInventory.Inventory,
-                GameState.I.PlayerInventory
-            );
         }
 
-        if (playerInventoryUI != null)
-        {
-            playerInventoryUI.Show(
-                GameState.I.PlayerInventory,
-                chestInventory.Inventory
-            );
+        if (chestInventoryUI != null && playerInventoryUI != null){
+            chestInventoryUI.Show(chestInventory.Inventory, GameState.I.PlayerInventory);
         }
     }
 
