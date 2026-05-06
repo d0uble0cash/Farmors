@@ -1,4 +1,4 @@
-# Farmors (Working Title)
+# Blooming Blight
 
 Farmors is a 2.5D pixel-style farming and metroidvania game where you manage a farm and venture into biomes to rescue lost farm animals.
 
