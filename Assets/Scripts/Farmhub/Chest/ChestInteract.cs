@@ -72,7 +72,7 @@ public class ChestInteract : MonoBehaviour, IInteractable
         if (chestScreen != null)
             chestScreen.SetActive(true);
 
-        if (chestInventory == null)
+        if (chestInventory == null || GameState.I == null)
             return;
 
         if (chestInventoryUI != null)
