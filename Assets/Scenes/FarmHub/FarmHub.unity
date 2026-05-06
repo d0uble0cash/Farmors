@@ -15104,24 +15104,6 @@ MonoBehaviour:
   playerStopDistance: 1.5
   bobSpeed: 30
   bobAmount: 0.1
---- !u!1 &578223202
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 569957578}
-  - component: {fileID: 569957577}
-  - component: {fileID: 569957576}
-  m_Layer: 5
-  m_Name: ChestInvImage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &569957576
 MonoBehaviour:
   m_ObjectHideFlags: 0
