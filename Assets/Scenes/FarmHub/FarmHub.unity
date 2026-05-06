@@ -26172,6 +26172,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ChestInteract
   lidAnimator: {fileID: 1373116746}
   chestScreen: {fileID: 797214362}
+  chestInventory: {fileID: 0}
+  chestInventoryUI: {fileID: 0}
   interactionCollider: {fileID: 1373116745}
   prompt: {fileID: 369153944}
 --- !u!64 &1373116752

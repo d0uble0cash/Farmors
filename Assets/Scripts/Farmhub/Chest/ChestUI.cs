@@ -1,7 +1,7 @@
 using UnityEngine;
-public class ChestUI : MonoBehaviour{/*
-    public ChestSlot[] inventorySlots; 
-    public ChestSlot[] chestSlots;
+public class ChestUI : MonoBehaviour{
+    public ChestSlots[] inventorySlots; 
+    public ChestSlots[] chestSlots;
 
 
     public void RefreshSlots(){
@@ -19,7 +19,7 @@ public class ChestUI : MonoBehaviour{/*
                 }
             }
         }
-        items = GameState.I.ChestInventory.Items;
+        items = GameState.I.PlayerInventory.Items;
         foreach(var item in items){
             ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
             for(int i = 0; i < inventorySlots.Length; i++){
@@ -35,19 +35,27 @@ public class ChestUI : MonoBehaviour{/*
         if(GameState.I==null){return;}
 
     }
+    public void DeselectAllSlots(){
+        for (int i = 0; i < inventorySlots.Length; i++)
+            inventorySlots[i].isSelected = false;
 
-    private InventorySlot findSelected(){
-        InventorySlot selectedSlot = this.selectSort(weaponitemSlots);
-        if (selectedSlot==null){
-            selectedSlot = this.selectSort(materialitemTexts);
-        }
+        for (int i = 0; i < chestSlots.Length; i++)
+            chestSlots[i].isSelected = false;
+
+    }
+    private ChestSlots findSelected(){
+        ChestSlots selectedSlot = selectSort(inventorySlots);
+        if (selectedSlot == null)
+            selectedSlot = selectSort(chestSlots);
+
         return selectedSlot;
     }
 
-    private InventorySlot selectSort(InventorySlot[] sentSlot){
-        for(int i = 0; i < sentSlot.Length; i++){
-            if (sentSlot[i].isSelected){return sentSlot[i];}
+    private ChestSlots selectSort(ChestSlots[] sentSlot){
+        for (int i = 0; i < sentSlot.Length; i++){
+            if (sentSlot[i].isSelected)
+                return sentSlot[i];
         }
         return null;
-    }*/
+    }
 }

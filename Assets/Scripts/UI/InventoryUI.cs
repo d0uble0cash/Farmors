@@ -1,8 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class InventoryUI : MonoBehaviour
-{
+public class InventoryUI : MonoBehaviour{
     private InventoryModel currentInventory;
 
     [Header("Refs")]
@@ -14,20 +13,17 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TMP_Text MaterialText;
     [SerializeField] private TMP_Text SellText;
 
-    public void Show(InventoryModel inventory)
-    {
+    public void Show(InventoryModel inventory){
         currentInventory = inventory;
         gameObject.SetActive(true);
         RefreshSlots();
     }
 
-    public void UpdateUI()
-    {
+    public void UpdateUI(){
         RefreshSlots();
     }
 
-    private void RefreshSlots()
-    {
+    private void RefreshSlots(){
         if (GameState.I == null)
             return;
 
@@ -42,17 +38,14 @@ public class InventoryUI : MonoBehaviour
         if (items.Count == 0)
             return;
 
-        foreach (var item in items)
-        {
+        foreach (var item in items){
             ItemDefinition definition = ItemDatabase.itemDatabase.GetItemById(item.Key);
 
             if (definition == null)
                 continue;
 
-            if (!definition.IsMaterial)
-            {
-                switch (definition.Id)
-                {
+            if (!definition.IsMaterial){
+                switch (definition.Id){
                     case "shears":
                     case "pitchfork":
                         AddToFirstOpenSlot(farmitemSlots, definition);
@@ -67,39 +60,31 @@ public class InventoryUI : MonoBehaviour
                         break;
                 }
             }
-            else if (definition.Id != "gold")
-            {
+            else if (definition.Id != "gold"){
                 AddMaterialToFirstOpenSlot(materialitemTexts, definition, item.Value);
             }
         }
     }
 
-    private void AddToFirstOpenSlot(InventorySlot[] slots, ItemDefinition definition)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (!slots[i].isFull)
-            {
+    private void AddToFirstOpenSlot(InventorySlot[] slots, ItemDefinition definition){
+        for (int i = 0; i < slots.Length; i++){
+            if (!slots[i].isFull){
                 slots[i].addItem(definition);
                 break;
             }
         }
     }
 
-    private void AddMaterialToFirstOpenSlot(InventorySlot[] slots, ItemDefinition definition, int amount)
-    {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (!slots[i].isFull)
-            {
+    private void AddMaterialToFirstOpenSlot(InventorySlot[] slots, ItemDefinition definition, int amount){
+        for (int i = 0; i < slots.Length; i++){
+            if (!slots[i].isFull){
                 slots[i].addItemM(definition, amount);
                 break;
             }
         }
     }
 
-    public void SellSelectFirst()
-    {
+    public void SellSelectFirst(){
         InventorySlot selected = findSelected();
 
         if (selected == null)
@@ -110,20 +95,17 @@ public class InventoryUI : MonoBehaviour
         if (definition == null || definition.Id == "gold")
             return;
 
-        if (definition.IsMaterial)
-        {
+        if (definition.IsMaterial){
             sellCheckPanelMaterial.SetActive(true);
             MaterialText.text = $"Sell {definition.DisplayName}?";
         }
-        else
-        {
+        else{
             sellCheckPanel.SetActive(true);
             SellText.text = $"Sell {definition.DisplayName}?";
         }
     }
 
-    public void SellSelected()
-    {
+    public void SellSelected(){
         InventorySlot selected = findSelected();
 
         if (selected == null)
@@ -140,8 +122,7 @@ public class InventoryUI : MonoBehaviour
         UpdateUI();
     }
 
-    public void SellSelectedM()
-    {
+    public void SellSelectedM(){
         InventorySlot selected = findSelected();
 
         if (selected == null)
@@ -163,8 +144,7 @@ public class InventoryUI : MonoBehaviour
         UpdateUI();
     }
 
-    public void DeselectAllSlots()
-    {
+    public void DeselectAllSlots(){
         for (int i = 0; i < weaponitemSlots.Length; i++)
             weaponitemSlots[i].isSelected = false;
 
@@ -175,14 +155,12 @@ public class InventoryUI : MonoBehaviour
             materialitemTexts[i].isSelected = false;
     }
 
-    private void ClearSlot(InventorySlot[] sentSlots)
-    {
+    private void ClearSlot(InventorySlot[] sentSlots){
         for (int i = 0; i < sentSlots.Length; i++)
             sentSlots[i].clearSlot();
     }
 
-    private InventorySlot findSelected()
-    {
+    private InventorySlot findSelected(){
         InventorySlot selectedSlot = selectSort(weaponitemSlots);
 
         if (selectedSlot == null)
@@ -194,14 +172,11 @@ public class InventoryUI : MonoBehaviour
         return selectedSlot;
     }
 
-    private InventorySlot selectSort(InventorySlot[] sentSlot)
-    {
-        for (int i = 0; i < sentSlot.Length; i++)
-        {
+    private InventorySlot selectSort(InventorySlot[] sentSlot){
+        for (int i = 0; i < sentSlot.Length; i++){
             if (sentSlot[i].isSelected)
                 return sentSlot[i];
         }
-
         return null;
     }
 }

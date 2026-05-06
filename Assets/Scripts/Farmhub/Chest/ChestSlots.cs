@@ -1,7 +1,8 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-public class ChestSlots{/* : MonoBehaviour, IPointerClickHandler{
+using UnityEngine.UI;
+public class ChestSlots : MonoBehaviour, IPointerClickHandler{
     public ItemDefinition itemInSlot;
     public Sprite itemSprite;
     public bool isFull = false;
@@ -11,7 +12,7 @@ public class ChestSlots{/* : MonoBehaviour, IPointerClickHandler{
     [SerializeField] private Image itemImage;
     public void addItem(ItemDefinition item){
         itemInSlot = item;
-        itemName = item.DisplayName;
+        itemName.text = item.DisplayName;
         this.itemSprite = item?.Icon;
         isFull= true;
         if(!item.IsMaterial){itemImage.sprite = itemSprite;}
@@ -32,6 +33,6 @@ public class ChestSlots{/* : MonoBehaviour, IPointerClickHandler{
         if(!itemInSlot.IsMaterial){itemImage.sprite = null;}
         itemInSlot = null;
         isFull = false;
-    }*/
+    }
 
 }

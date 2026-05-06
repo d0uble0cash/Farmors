@@ -52,8 +52,7 @@ public class InventoryModel
 
         current -= amount;
 
-        if (current == 0)
-        {
+        if (current == 0){
             items.Remove(id);
         }
 
