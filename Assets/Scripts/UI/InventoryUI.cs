@@ -4,6 +4,7 @@ using UnityEngine;
 public class InventoryUI : MonoBehaviour
 {
     private InventoryModel currentInventory;
+    private InventoryModel otherInventory;
 
     [Header("Refs")]
     public InventorySlot[] weaponitemSlots, farmitemSlots, materialitemTexts;
@@ -14,9 +15,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private TMP_Text MaterialText;
     [SerializeField] private TMP_Text SellText;
 
-    public void Show(InventoryModel inventory)
+    public void Show(InventoryModel inventory, InventoryModel targetInventory = null)
     {
         currentInventory = inventory;
+        otherInventory = targetInventory;
+
         gameObject.SetActive(true);
         RefreshSlots();
     }
@@ -95,6 +98,35 @@ public class InventoryUI : MonoBehaviour
                 slots[i].addItemM(definition, amount);
                 break;
             }
+        }
+    }
+
+    public void TransferSelected()
+    {
+        InventorySlot selected = findSelected();
+
+        if (selected == null)
+            return;
+
+        ItemDefinition definition = selected.itemInSlot;
+
+        if (definition == null)
+            return;
+
+        if (currentInventory == null || otherInventory == null)
+            return;
+
+        bool transferred = InventoryTransfer.Transfer(
+            currentInventory,
+            otherInventory,
+            definition.Id,
+            1
+        );
+
+        if (transferred)
+        {
+            DeselectAllSlots();
+            RefreshSlots();
         }
     }
 
