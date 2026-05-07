@@ -9,20 +9,8 @@ public class CropPlot : MonoBehaviour, IInteractable
         Ready
     }
 
-    [System.Serializable]
-    public class CropRecipe
-    {
-        public ItemDefinition seedItem;
-        public ItemDefinition harvestItem;
-        public int harvestAmount = 1;
-        public float growTimeSeconds = 5f;
-    }
-
     [Header("Visuals")]
     [SerializeField] private Renderer plotRenderer;
-    [SerializeField] private Transform cropVisual;
-    [SerializeField] private Vector3 cropScaleMin = new(0.2f, 0.2f, 0.2f);
-    [SerializeField] private Vector3 cropScaleMax = new(0.8f, 1.0f, 0.8f);
 
     [Header("World Prompt")]
     [SerializeField] private WorldPrompt prompt;
@@ -55,6 +43,7 @@ public class CropPlot : MonoBehaviour, IInteractable
 
         mpb = new MaterialPropertyBlock();
 
+        HideAllGrowthStages();
         SetState(PlotState.Empty, true);
 
         if (prompt != null)
@@ -97,15 +86,9 @@ public class CropPlot : MonoBehaviour, IInteractable
         if (!CanInteract)
             return;
 
-        if (GameState.I == null)
+        if (GameState.I == null || GameState.I.PlayerInventory == null)
         {
-            Debug.LogError("GameState.I is null. Start from Boot scene so Core singletons exist.", this);
-            return;
-        }
-
-        if (GameState.I.PlayerInventory == null)
-        {
-            Debug.LogError("PlayerInventory is missing on GameState.", this);
+            Debug.LogError("GameState or PlayerInventory missing.", this);
             return;
         }
 
@@ -150,6 +133,7 @@ public class CropPlot : MonoBehaviour, IInteractable
         currentCrop = recipe;
         currentGrowTime = Mathf.Max(0.01f, recipe.growTimeSeconds);
 
+        HideAllGrowthStages();
         SetState(PlotState.Growing, true);
     }
 
@@ -279,21 +263,55 @@ public class CropPlot : MonoBehaviour, IInteractable
 
     private void ApplyCropGrowthVisual()
     {
-        if (cropVisual == null)
+        if (state == PlotState.Empty || currentCrop == null)
+        {
+            HideAllGrowthStages();
             return;
+        }
 
-        bool shouldShow = state != PlotState.Empty;
+        GameObject[] stages = currentCrop.growthStages;
 
-        if (cropVisual.gameObject.activeSelf != shouldShow)
-            cropVisual.gameObject.SetActive(shouldShow);
-
-        if (!shouldShow)
+        if (stages == null || stages.Length == 0)
             return;
 
         float t = state == PlotState.Ready
             ? 1f
             : Mathf.Clamp01(growTimer / Mathf.Max(0.0001f, currentGrowTime));
 
-        cropVisual.localScale = Vector3.Lerp(cropScaleMin, cropScaleMax, t);
+        int stageIndex = Mathf.FloorToInt(t * stages.Length);
+
+        if (stageIndex >= stages.Length)
+            stageIndex = stages.Length - 1;
+
+        SetGrowthStage(stages, stageIndex);
+    }
+
+    private void SetGrowthStage(GameObject[] stages, int activeIndex)
+    {
+        HideAllGrowthStages();
+
+        if (activeIndex < 0 || activeIndex >= stages.Length)
+            return;
+
+        if (stages[activeIndex] != null)
+            stages[activeIndex].SetActive(true);
+    }
+
+    private void HideAllGrowthStages()
+    {
+        if (cropRecipes == null)
+            return;
+
+        foreach (CropRecipe recipe in cropRecipes)
+        {
+            if (recipe == null || recipe.growthStages == null)
+                continue;
+
+            foreach (GameObject stage in recipe.growthStages)
+            {
+                if (stage != null)
+                    stage.SetActive(false);
+            }
+        }
     }
 }
