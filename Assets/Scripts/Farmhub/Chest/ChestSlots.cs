@@ -14,7 +14,7 @@ public class ChestSlots : MonoBehaviour, IPointerClickHandler{
     public void addItem(ItemDefinition item, int amount){
         itemInSlot = item;
         itemName.text = $"{item.DisplayName}: {amount}";
-        this.itemSprite = item?.Icon;
+        itemSprite = item?.Icon;
         isFull= true;
         if(!item.IsMaterial){itemImage.sprite = itemSprite;}
     }

@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class SeedSelection : MonoBehaviour
-{
+public class SeedSelection : MonoBehaviour{
     public static SeedSelection I { get; private set; }
 
     [SerializeField] private ItemDefinition selectedSeed;
@@ -26,6 +25,7 @@ public class SeedSelection : MonoBehaviour
 
         if (selectedSeed != null)
         {
+            
             Debug.Log($"Selected seed: {selectedSeed.DisplayName}");
         }
         else
