@@ -2225,12 +2225,10 @@ MonoBehaviour:
 
     D - RIGHT
 
-    SPACE - JUMP
+    B - BUILD
 
     E
     - INTERACT
-
-    MOUSE1 - ATTACK
 
     M - MAP
 
@@ -16123,12 +16121,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1919982714694327171, guid: ac72a9aea52b4964c90a6496ca3c093f, type: 3}
+      propertyPath: cropRecipes.Array.data[1].harvestEffects
+      value: 
+      objectReference: {fileID: 5432424573081653370, guid: a94e108d333e75d4ab5ae91fc1d4d2c2, type: 3}
+    - target: {fileID: 1919982714694327171, guid: ac72a9aea52b4964c90a6496ca3c093f, type: 3}
       propertyPath: cropRecipes.Array.data[0].growTimeSeconds
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 1919982714694327171, guid: ac72a9aea52b4964c90a6496ca3c093f, type: 3}
       propertyPath: cropRecipes.Array.data[1].growTimeSeconds
-      value: 120
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1919982714694327171, guid: ac72a9aea52b4964c90a6496ca3c093f, type: 3}
       propertyPath: cropRecipes.Array.data[0].growthStages.Array.size
