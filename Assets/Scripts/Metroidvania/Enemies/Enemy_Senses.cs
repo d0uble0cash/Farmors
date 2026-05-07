@@ -10,7 +10,7 @@ public class Enemy_Senses : MonoBehaviour
     [SerializeField] private Transform attackPoint;
 
     public bool IsAtCliff() => !Physics2D.Raycast(groundCheck.position, Vector2.down, config.groundCheckDistance, config.groundLayer);
-    public bool IsHittingWall() => Physics2D.Raycast(wallCheck.position, Vector2.right, config.wallCheckDistance, config.wallLayer);
+    public bool IsHittingWall() => Physics2D.Raycast(wallCheck.position, Vector2.right * enemy.FacingDirection, config.wallCheckDistance, config.wallLayer);
 
     public Transform GetChaseTarget()
     {
