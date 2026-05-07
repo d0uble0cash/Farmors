@@ -7,29 +7,44 @@ public class SeedSelectionCheat : MonoBehaviour
     [SerializeField] private List<ItemDefinition> seeds = new();
     [SerializeField] public SeedBarSlot[] hotbarFarm;
 
+    private void Start()
+    {
+        RefreshHotBar();
+    }
+
     private void Update()
     {
         if (SeedSelection.I == null || seeds.Count == 0)
             return;
 
-        // Loop through seeds and map to number keys (1–9)
-        for (int i = 0; i < seeds.Count && i < 9; i++)
+        for (int i = 0; i < seeds.Count && i < 9 && i < hotbarFarm.Length; i++)
         {
             if (IsNumberKeyPressed(i + 1))
             {
                 SeedSelection.I.SelectSeed(seeds[i]);
-                hotbarFarm[i].isSelected = true;
+
                 RefreshHotBar();
+                DeselectAll();
+
+                hotbarFarm[i].isSelected = true;
                 break;
             }
         }
     }
 
-    public void RefreshHotBar(){
-        for(int i=0;i<hotbarFarm.Length;i++){hotbarFarm[i].ClearSlot();}
-        for(int i=0;i<seeds.Count&& i < 9; i++){
+    public void RefreshHotBar()
+    {
+        for (int i = 0; i < hotbarFarm.Length; i++)
+            hotbarFarm[i].ClearSlot();
+
+        for (int i = 0; i < seeds.Count && i < 9 && i < hotbarFarm.Length; i++)
             hotbarFarm[i].AddItem(seeds[i]);
-        }
+    }
+
+    private void DeselectAll()
+    {
+        for (int i = 0; i < hotbarFarm.Length; i++)
+            hotbarFarm[i].isSelected = false;
     }
 
     private bool IsNumberKeyPressed(int number)
