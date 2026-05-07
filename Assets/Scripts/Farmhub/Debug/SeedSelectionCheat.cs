@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class SeedSelectionCheat : MonoBehaviour
 {
     [SerializeField] private List<ItemDefinition> seeds = new();
+    [SerializeField] public SeedBarSlot[] hotbarFarm;
 
     private void Update()
     {
@@ -17,7 +18,17 @@ public class SeedSelectionCheat : MonoBehaviour
             if (IsNumberKeyPressed(i + 1))
             {
                 SeedSelection.I.SelectSeed(seeds[i]);
+                hotbarFarm[i].isSelected = true;
+                RefreshHotBar();
+                break;
             }
+        }
+    }
+
+    public void RefreshHotBar(){
+        for(int i=0;i<hotbarFarm.Length;i++){hotbarFarm[i].ClearSlot();}
+        for(int i=0;i<seeds.Count&& i < 9; i++){
+            hotbarFarm[i].AddItem(seeds[i]);
         }
     }
 
