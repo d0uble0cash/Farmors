@@ -8,4 +8,6 @@ public class CropRecipe
     public int harvestAmount = 1;
     public float growTimeSeconds = 5f;
     public GameObject[] growthStages;
+
+    public GameObject harvestEffects;
 }

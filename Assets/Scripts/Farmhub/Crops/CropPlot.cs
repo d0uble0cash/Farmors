@@ -145,7 +145,20 @@ public class CropPlot : MonoBehaviour, IInteractable
             return;
         }
 
-        GameState.I.PlayerInventory.Add(currentCrop.harvestItem.Id, currentCrop.harvestAmount);
+        if (currentCrop.harvestEffects != null)
+        {
+            Instantiate(
+                currentCrop.harvestEffects,
+                transform.position,
+                Quaternion.identity
+            );
+        }
+
+        GameState.I.PlayerInventory.Add(
+            currentCrop.harvestItem.Id,
+            currentCrop.harvestAmount
+        );
+
         Debug.Log($"Harvested {currentCrop.harvestAmount}x {currentCrop.harvestItem.DisplayName}!", this);
 
         currentCrop = null;
