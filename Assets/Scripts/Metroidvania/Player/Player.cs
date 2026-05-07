@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -11,6 +12,8 @@ public class Player : MonoBehaviour
     public PlayerCrouchState crouchState;
     public PlayerSlideState slideState;
     public PlayerAttackState attackState;
+    public PlayerWallJumpState wallJumpState;
+    public PlayerWallSlideState wallSlideState;
 
     public enum GameMode
     {
@@ -73,6 +76,12 @@ public class Player : MonoBehaviour
    public bool jumpReleased;
    public bool attackPressed;
 
+   [Header("Wall Check")]
+   public Transform wallCheck;
+   public float wallCheckRadius = 0.15f;
+   public LayerMask wallLayer;
+   public bool isTouchingWall;
+
    [Header("Ground Check")]
    public Transform groundCheck;
    public float groundCheckRadius = 0.15f;
@@ -105,6 +114,8 @@ public class Player : MonoBehaviour
         crouchState = new PlayerCrouchState(this);
         slideState = new PlayerSlideState(this);
         attackState = new PlayerAttackState(this);
+        wallJumpState = new PlayerWallJumpState(this);
+        wallSlideState = new PlayerWallSlideState(this);
 
     }
 
@@ -130,6 +141,7 @@ public class Player : MonoBehaviour
    void FixedUpdate()
     {
         CheckGrounded();
+        CheckForWall();
         currentState.FixedUpdate();
         if (currentMode == GameMode.Platformer)
         {   
@@ -255,6 +267,11 @@ public class Player : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
 
+    void CheckForWall()
+    {
+        isTouchingWall = Physics2D.OverlapCircle(wallCheck.position, wallCheckRadius, wallLayer);
+    }
+
     public bool CheckForCeiling()
     {
         return Physics2D.OverlapCircle(headCheck.position, headCheckRadius, groundLayer);
@@ -314,7 +331,7 @@ public class Player : MonoBehaviour
     {
         if(value.isPressed) 
         {
-            if(isGrounded && !CheckForCeiling())
+            if(isGrounded && !CheckForCeiling() || isTouchingWall)
                 jumpPressed = true;
 
             jumpReleased = false;
@@ -340,7 +357,11 @@ public class Player : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
 
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(wallCheck.position, wallCheckRadius);
+
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(headCheck.position, headCheckRadius);
+    
     }
 }
