@@ -7,6 +7,7 @@ public class State
     protected virtual string AnimBoolName => null;
     protected EnemyConfig config;
     protected Enemy_Senses senses;
+    protected Enemy_Combat combat;
     protected StateMachine stateMachine;
     protected Enemy enemy;
 
@@ -16,6 +17,7 @@ public class State
         anim = enemy.Anim;
         config = enemy.Config;
         senses = enemy.Senses;
+        combat = enemy.Combat;
         stateMachine = enemy.StateMachine;
         this.enemy = enemy;
         
@@ -29,6 +31,7 @@ public class State
     }
     public virtual void Update() { }
     public virtual void FixedUpdate() { }
+    public virtual void OnAnimationFinished() { }
     public virtual void Exit()
     {
         if(!string.IsNullOrEmpty(AnimBoolName))
