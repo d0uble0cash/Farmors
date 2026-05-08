@@ -127,7 +127,7 @@ public class StagBoss : MonoBehaviour
         }
     }
 
-    private void OnDeath()
+    private void OnDeath(Vector2 sourcePosition)
     {
         IsDead = true;
         StateMachine.ChangeState(deathState);
