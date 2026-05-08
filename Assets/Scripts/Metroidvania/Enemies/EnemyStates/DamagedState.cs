@@ -16,6 +16,7 @@ public class DamagedState : State
         knockbackDuration = config.knockbackDuration;
         rb.linearVelocity = new Vector2(knockbackVelocity, rb.linearVelocity.y);
     }
+    
 
     public override void FixedUpdate()
     {
