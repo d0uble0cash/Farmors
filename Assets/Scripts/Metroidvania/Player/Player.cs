@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerMoveState moveState;
     public PlayerCrouchState crouchState;
     public PlayerDamagedState damagedState;
+    public PlayerDeathState deathState;
     public PlayerSlideState slideState;
     public PlayerAttackState attackState;
     public PlayerWallJumpState wallJumpState;
@@ -120,6 +121,7 @@ public class Player : MonoBehaviour
         wallJumpState = new PlayerWallJumpState(this);
         wallSlideState = new PlayerWallSlideState(this);
         damagedState = new PlayerDamagedState(this);
+        deathState = new PlayerDeathState(this);
 
     }
 
@@ -300,6 +302,10 @@ public class Player : MonoBehaviour
 
     private void Flip()
     {
+        if(currentState == deathState)
+        {
+            return;
+        }
         if(currentMode == GameMode.TopDown) 
         {
             return;

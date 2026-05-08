@@ -4,7 +4,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     public event Action<Vector2> OnDamaged;
-    public event Action OnDeath;
+    public event Action<Vector2> OnDeath;
     public int health;
     public int maxHealth;
 
@@ -21,7 +21,7 @@ public class Health : MonoBehaviour
 
             else if(health <= 0)
                 //Death
-                OnDeath?.Invoke();
+                OnDeath?.Invoke(sourcePosition);
 
             else if(amount < 0)
                 //Damage

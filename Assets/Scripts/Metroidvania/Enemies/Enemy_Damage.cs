@@ -31,7 +31,7 @@ public class Enemy_Damage : MonoBehaviour
         enemy.StateMachine.ChangeState(new DamagedState(enemy, knockBackDir));
     }
 
-    void HandleDeath()
+    void HandleDeath(Vector2 sourcePosition)
     {
         foreach (GameObject prefab in deathParts)
         {
@@ -47,6 +47,13 @@ public class Enemy_Damage : MonoBehaviour
             Destroy(part, lifetime);
         }
 
-        Destroy(gameObject);
+        GetComponent<Collider2D>().enabled = false;
+        enemy.RB.linearVelocity = Vector2.zero;
+        enemy.RB.gravityScale = 0f;
+
+        enemy.Anim.SetBool("IsDead", true);
+        enemy.enabled = false;
+
+        Destroy(enemy.gameObject, 2.0f);
     }
 }
