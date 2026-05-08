@@ -619,7 +619,7 @@ Transform:
   m_GameObject: {fileID: 576332424}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.14, y: -0.88, z: 0}
+  m_LocalPosition: {x: -0.92, y: -0.475, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1486,6 +1486,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1041890668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1766079344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1766079345}
+  m_Layer: 10
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1766079345
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766079344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.907, y: -0.435, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2088298307}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2026644171
 GameObject:
   m_ObjectHideFlags: 0
@@ -1511,7 +1542,7 @@ Transform:
   m_GameObject: {fileID: 2026644171}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.06, y: -0.89, z: 0}
+  m_LocalPosition: {x: -0.042, y: -0.845, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1531,6 +1562,7 @@ GameObject:
   - component: {fileID: 2088298304}
   - component: {fileID: 2088298303}
   - component: {fileID: 2088298308}
+  - component: {fileID: 2088298309}
   m_Layer: 10
   m_Name: Plant Monster
   m_TagString: Untagged
@@ -1585,8 +1617,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.1103363, y: 0.01471144}
-  m_Size: {x: 1.2054882, y: 1.812311}
+  m_Offset: {x: -0.1103363, y: -0.009087443}
+  m_Size: {x: 1.2054882, y: 1.7686617}
   m_Direction: 0
 --- !u!50 &2088298305
 Rigidbody2D:
@@ -1683,12 +1715,13 @@ Transform:
   m_GameObject: {fileID: 2088298302}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.74, y: -1.04, z: 0}
+  m_LocalPosition: {x: -3.725, y: -0.675, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2026644172}
   - {fileID: 576332425}
+  - {fileID: 1766079345}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2088298308
@@ -1707,6 +1740,29 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 46eeb5374474c1b49abb035670f601bc, type: 2}
   groundCheck: {fileID: 2026644172}
   wallCheck: {fileID: 576332425}
+  attackPoint: {fileID: 1766079345}
+--- !u!95 &2088298309
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088298302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a3389a0e7f0132d439113a4095ac970e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &196727381240888265
 PrefabInstance:
   m_ObjectHideFlags: 0
