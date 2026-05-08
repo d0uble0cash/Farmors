@@ -142021,8 +142021,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 364afbf3f88b4234f964a5edfedbf061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  enemy: {fileID: 0}
   health: {fileID: 1006968744}
-  anim: {fileID: 1006968745}
   deathParts:
   - {fileID: 3939020665310468448, guid: 9232e81b237c4114fa96eecd5ac3f6c0, type: 3}
   - {fileID: 2414347338048009836, guid: bb1d8fe413f6b4a45822e7a30c104fc7, type: 3}
@@ -144629,6 +144629,8 @@ GameObject:
   - component: {fileID: 2088298308}
   - component: {fileID: 2088298309}
   - component: {fileID: 2088298310}
+  - component: {fileID: 2088298312}
+  - component: {fileID: 2088298311}
   m_Layer: 10
   m_Name: Plant Monster
   m_TagString: Untagged
@@ -144842,6 +144844,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Combat
   attackPoint: {fileID: 1766079345}
+--- !u!114 &2088298311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088298302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c3435c28b7e6a941a45a7384ab603ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  health: 0
+  maxHealth: 100
+--- !u!114 &2088298312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088298302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364afbf3f88b4234f964a5edfedbf061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemy_Damage
+  enemy: {fileID: 2088298303}
+  health: {fileID: 2088298311}
+  deathParts: []
+  spawnForce: 5
+  torque: 5
+  lifetime: 2
 --- !u!1 &2141019465
 GameObject:
   m_ObjectHideFlags: 0
@@ -153004,6 +153038,18 @@ PrefabInstance:
     - target: {fileID: 5802538696048870882, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636826500774095230, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636826500774095230, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
+      propertyPath: attackRadius
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636826500774095230, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
+      propertyPath: attackCooldown
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7716142820288412587, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
       propertyPath: m_LocalPosition.x

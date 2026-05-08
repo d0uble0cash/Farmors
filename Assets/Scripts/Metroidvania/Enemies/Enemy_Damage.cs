@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class Enemy_Damage : MonoBehaviour
 {
+    [SerializeField] private Enemy enemy;
     public Health health;
-    public Animator anim;
 
     [Header("Death FX Pieces")]
     [SerializeField] private GameObject[] deathParts;
     [SerializeField] private float spawnForce = 5;
     [SerializeField] private float torque = 5;
-    [SerializeField] private float lifetime = 2
-    ;
+    [SerializeField] private float lifetime = 2;
 
     private void OnEnable() 
     {
@@ -24,9 +23,12 @@ public class Enemy_Damage : MonoBehaviour
         health.OnDeath -= HandleDeath;
     }
 
-    void HandleDamage()
+    void HandleDamage(Vector2 sourcePosition)
     {
-        anim.SetTrigger("isDamaged");
+        int knockBackDir = 0;
+        knockBackDir = transform.position.x > sourcePosition.x ? 1 : -1;
+
+        enemy.StateMachine.ChangeState(new DamagedState(enemy, knockBackDir));
     }
 
     void HandleDeath()
