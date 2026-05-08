@@ -18,6 +18,13 @@ public class ChaseState : State
 
         enemy.FaceTarget(target);
 
+        //Check if target is in melee range
+        if(senses.IsInMeleeRange(target) && combat.CanMeleeAttack())
+        {
+            stateMachine.ChangeState(new MeleeAttackState(enemy));
+            return;
+        }
+
         //Check if target is within turn threshold
         float distance = Mathf.Abs(target.position.x - enemy.transform.position.x);
         if(distance <= config.turnThreshold)

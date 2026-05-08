@@ -5,7 +5,7 @@ public class Combat : MonoBehaviour
     [Header("Attack Settings")]
     public int damage;
     public float attackRadius = .5f;
-    public float attackCooldown = .5f;
+    public float attackCooldown = .2f;
     public Transform attackPoint;
     public LayerMask enemyLayer;
     public Animator hitFX;
@@ -29,7 +29,7 @@ public class Combat : MonoBehaviour
         if(enemy != null)
         {
             hitFX.Play("HitFX");
-            enemy.gameObject.GetComponent<Health>().ChangeHealth(-damage);
+            enemy.gameObject.GetComponent<Health>().ChangeHealth(-damage, transform.position);
         }
     }
 }

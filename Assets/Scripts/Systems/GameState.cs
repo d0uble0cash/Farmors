@@ -98,9 +98,22 @@ public class GameState : MonoBehaviour
             });
         }
 
-        CropFieldSaveData cropField = placementController != null
-            ? placementController.GetSaveData()
-            : LoadedCropField ?? new CropFieldSaveData();
+        CropFieldSaveData cropField;
+
+        if (placementController != null)
+        {
+            cropField = placementController.GetSaveData();
+        }
+        else if (LoadedCropField != null)
+        {
+            cropField = LoadedCropField;
+        }
+        else
+        {
+            cropField = new CropFieldSaveData();
+        }
+
+        LoadedCropField = cropField;
 
         return new SaveData
         {

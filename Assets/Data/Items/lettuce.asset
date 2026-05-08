@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c886e354f436fd4eafdfc0b91953548, type: 3}
   m_Name: lettuce
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  displayName: Fresh Lettuce
+  displayName: Lettuce
   id: lettuce
   description: 
   icon: {fileID: 0}

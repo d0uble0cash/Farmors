@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c886e354f436fd4eafdfc0b91953548, type: 3}
   m_Name: corn
   m_EditorClassIdentifier: Assembly-CSharp::ItemDefinition
-  displayName: Fresh Corn
+  displayName: Corn
   id: corn
   description: Freshly Harvested Corn
   icon: {fileID: 0}
+  damage: 0
+  range: 0
   maxStackSize: 99
   itemValue: 5
   isMaterial: 1
