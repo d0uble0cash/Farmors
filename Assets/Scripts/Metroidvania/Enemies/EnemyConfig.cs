@@ -16,6 +16,7 @@ public class EnemyConfig : ScriptableObject
 
 
     [Header("Chase")]
+    public float minDistance = 1.5f;
     public float chaseSpeed = 7;
     public float chaseRange = 5;
     public LayerMask targetLayer;

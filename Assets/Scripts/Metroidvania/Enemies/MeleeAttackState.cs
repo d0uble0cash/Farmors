@@ -8,7 +8,8 @@ public class MeleeAttackState : State
     public override void Enter()
     {
         base.Enter();
-        rb.linearVelocity = Vector2.zero;  
+        rb.linearVelocity = Vector2.zero; 
+        combat.PerformMeleeAttack();
     }
 
     public override void OnAnimationFinished()

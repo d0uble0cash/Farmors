@@ -142023,6 +142023,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   enemy: {fileID: 0}
   health: {fileID: 1006968744}
+  useDeathAnimation: 0
+  deathAnimationDuration: 2
   deathParts:
   - {fileID: 3939020665310468448, guid: 9232e81b237c4114fa96eecd5ac3f6c0, type: 3}
   - {fileID: 2414347338048009836, guid: bb1d8fe413f6b4a45822e7a30c104fc7, type: 3}
@@ -142173,7 +142175,7 @@ Transform:
   m_GameObject: {fileID: 1006968741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.76, y: -0.45, z: 0}
+  m_LocalPosition: {x: 16.82, y: -0.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144431,7 +144433,7 @@ Transform:
   m_GameObject: {fileID: 2026644171}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.042, y: -0.845, z: 0}
+  m_LocalPosition: {x: -0.28, y: -0.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -144745,7 +144747,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1404416981, guid: 8ac52b6cb6ab95a4cbb17a4eee8d966f, type: 3}
+  m_Sprite: {fileID: -2132210092, guid: 43f1442ab5b9d014eab778de454241cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -144785,7 +144787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d4105f6f3f246a488a3ce4bfd099028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Senses
-  enemy: {fileID: 0}
+  enemy: {fileID: 2088298303}
   config: {fileID: 11400000, guid: 46eeb5374474c1b49abb035670f601bc, type: 2}
   groundCheck: {fileID: 2026644172}
   wallCheck: {fileID: 576332425}
@@ -144853,6 +144855,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy_Damage
   enemy: {fileID: 2088298303}
   health: {fileID: 2088298311}
+  useDeathAnimation: 1
+  deathAnimationDuration: 2
   deathParts: []
   spawnForce: 5
   torque: 5

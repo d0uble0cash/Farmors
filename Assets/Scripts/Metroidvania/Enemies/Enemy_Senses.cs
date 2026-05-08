@@ -34,7 +34,7 @@ public class Enemy_Senses : MonoBehaviour
         {
             return false;
         }
-        float distance = Vector2.Distance(target.position, attackPoint.position);
+        float distance = Mathf.Abs(target.position.x - attackPoint.position.x);
         return distance <= config.meleeRange;
     }
     private void ODrawGizmosSelected()
