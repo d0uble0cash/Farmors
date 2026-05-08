@@ -21,6 +21,8 @@ public class PlacementController : MonoBehaviour
     [SerializeField] private Vector3 placementCheckOffset = Vector3.zero;
 
     private readonly HashSet<Vector2Int> occupiedCells = new();
+    private readonly Dictionary<Vector2Int, CropPlot> placedPlots = new();
+
     private Renderer previewRenderer;
 
     private void Awake()
@@ -30,11 +32,23 @@ public class PlacementController : MonoBehaviour
             previewRenderer = previewObject.GetComponentInChildren<Renderer>();
 
             if (previewRenderer != null)
-            {
                 previewRenderer.material = new Material(previewRenderer.material);
-            }
 
             previewObject.gameObject.SetActive(placementModeActive);
+        }
+    }
+
+    private void Start()
+    {
+        if (GameState.I != null)
+        {
+            GameState.I.SetPlacementController(this);
+
+            if (GameState.I.LoadedCropField != null)
+            {
+                ClearPlacedPlots();
+                LoadFromSaveData(GameState.I.LoadedCropField);
+            }
         }
     }
 
@@ -45,7 +59,6 @@ public class PlacementController : MonoBehaviour
 
         placementModeActive = !placementModeActive;
         SetPreviewVisible(placementModeActive);
-        Debug.Log("Placement mode: " + placementModeActive);
     }
 
     private void Update()
@@ -69,6 +82,7 @@ public class PlacementController : MonoBehaviour
         }
 
         Vector2Int gridPosition = farmGrid.ConvertToGridPosition(snappedWorldPosition);
+        snappedWorldPosition = farmGrid.ConvertToWorldPosition(gridPosition);
 
         bool isLogicallyOccupied = occupiedCells.Contains(gridPosition);
         bool isPhysicallyBlocked = IsPhysicallyBlocked(snappedWorldPosition);
@@ -111,8 +125,70 @@ public class PlacementController : MonoBehaviour
 
     private void PlaceObject(Vector2Int gridPosition, Vector3 worldPosition)
     {
-        Instantiate(placeablePrefab, worldPosition, Quaternion.identity);
+        GameObject obj = Instantiate(placeablePrefab, worldPosition, Quaternion.identity);
+
+        CropPlot plot = obj.GetComponent<CropPlot>();
+
+        if (plot != null)
+            placedPlots[gridPosition] = plot;
+
         occupiedCells.Add(gridPosition);
+    }
+
+    public CropFieldSaveData GetSaveData()
+    {
+        CropFieldSaveData saveData = new CropFieldSaveData();
+
+        foreach (var pair in placedPlots)
+        {
+            if (pair.Value == null)
+                continue;
+
+            saveData.plots.Add(pair.Value.ToSaveData(pair.Key));
+        }
+
+        return saveData;
+    }
+
+    public void LoadFromSaveData(CropFieldSaveData saveData)
+    {
+        if (saveData == null || saveData.plots == null)
+            return;
+
+        Debug.Log("Loading crop plots: " + saveData.plots.Count);
+
+        foreach (CropPlotSaveData plotData in saveData.plots)
+        {
+            Vector2Int gridPosition = new Vector2Int(plotData.gridX, plotData.gridY);
+
+            if (occupiedCells.Contains(gridPosition))
+                continue;
+
+            Vector3 worldPosition = farmGrid.ConvertToWorldPosition(gridPosition);
+
+            GameObject obj = Instantiate(placeablePrefab, worldPosition, Quaternion.identity);
+            CropPlot plot = obj.GetComponent<CropPlot>();
+
+            if (plot != null)
+            {
+                plot.LoadFromSaveData(plotData);
+                placedPlots[gridPosition] = plot;
+            }
+
+            occupiedCells.Add(gridPosition);
+        }
+    }
+
+    public void ClearPlacedPlots()
+    {
+        foreach (var pair in placedPlots)
+        {
+            if (pair.Value != null)
+                Destroy(pair.Value.gameObject);
+        }
+
+        placedPlots.Clear();
+        occupiedCells.Clear();
     }
 
     private void SetPreviewVisible(bool isVisible)

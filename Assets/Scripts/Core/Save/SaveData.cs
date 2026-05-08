@@ -9,6 +9,8 @@ public class SaveData
     public List<string> unlockedAbilities = new();
     public List<InventoryEntry> inventory = new();
 
+    public CropFieldSaveData cropField = new();
+
     public string lastCheckpointID = "";
     public string lastCheckpointScene = "";
     public float lastCheckpointX = 0f;
