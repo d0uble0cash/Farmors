@@ -58,12 +58,6 @@ public class CropPlot : MonoBehaviour, IInteractable
         TickGrowth();
     }
 
-    private void Reset()
-    {
-        plotRenderer = GetComponentInChildren<Renderer>();
-        interactCollider = GetComponentInChildren<Collider>();
-    }
-
     private void TickGrowth()
     {
         if (state != PlotState.Growing)
@@ -87,10 +81,7 @@ public class CropPlot : MonoBehaviour, IInteractable
             return;
 
         if (GameState.I == null || GameState.I.PlayerInventory == null)
-        {
-            Debug.LogError("GameState or PlayerInventory missing.", this);
             return;
-        }
 
         switch (state)
         {
@@ -108,7 +99,6 @@ public class CropPlot : MonoBehaviour, IInteractable
     {
         if (SeedSelection.I == null || SeedSelection.I.SelectedSeed == null)
         {
-            Debug.Log("No seed selected.", this);
             RefreshPrompt();
             return;
         }
@@ -118,14 +108,12 @@ public class CropPlot : MonoBehaviour, IInteractable
 
         if (recipe == null)
         {
-            Debug.Log($"This plot cannot plant {selectedSeed.DisplayName}.", this);
             RefreshPrompt();
             return;
         }
 
         if (!GameState.I.PlayerInventory.TryRemove(selectedSeed.Id, 1))
         {
-            Debug.Log($"Not enough seeds: {selectedSeed.DisplayName}", this);
             RefreshPrompt();
             return;
         }
@@ -140,16 +128,15 @@ public class CropPlot : MonoBehaviour, IInteractable
     private void HarvestCrop()
     {
         if (currentCrop == null || currentCrop.harvestItem == null)
-        {
-            Debug.LogError("No current crop set.", this);
             return;
-        }
+
+        HideAllGrowthStages();
 
         if (currentCrop.harvestEffects != null)
         {
             Instantiate(
                 currentCrop.harvestEffects,
-                transform.position,
+                transform.position + Vector3.up * 0.25f,
                 Quaternion.identity
             );
         }
@@ -158,8 +145,6 @@ public class CropPlot : MonoBehaviour, IInteractable
             currentCrop.harvestItem.Id,
             currentCrop.harvestAmount
         );
-
-        Debug.Log($"Harvested {currentCrop.harvestAmount}x {currentCrop.harvestItem.DisplayName}!", this);
 
         currentCrop = null;
         SetState(PlotState.Empty, true);
@@ -180,6 +165,45 @@ public class CropPlot : MonoBehaviour, IInteractable
         }
 
         return null;
+    }
+
+    public CropPlotSaveData ToSaveData(Vector2Int gridPosition)
+    {
+        return new CropPlotSaveData
+        {
+            gridX = gridPosition.x,
+            gridY = gridPosition.y,
+            state = state.ToString(),
+            seedId = currentCrop != null && currentCrop.seedItem != null
+                ? currentCrop.seedItem.Id
+                : "",
+            growTimer = growTimer,
+            currentGrowTime = currentGrowTime
+        };
+    }
+
+    public void LoadFromSaveData(CropPlotSaveData data)
+    {
+        if (data == null)
+            return;
+
+        if (!string.IsNullOrEmpty(data.seedId))
+        {
+            ItemDefinition seed = ItemDatabase.itemDatabase.GetItemById(data.seedId);
+            currentCrop = GetRecipeForSeed(seed);
+        }
+        else
+        {
+            currentCrop = null;
+        }
+
+        growTimer = data.growTimer;
+        currentGrowTime = Mathf.Max(0.01f, data.currentGrowTime);
+
+        if (System.Enum.TryParse(data.state, out PlotState loadedState))
+            SetState(loadedState, false);
+        else
+            SetState(PlotState.Empty, true);
     }
 
     private string GetEmptyPromptText()

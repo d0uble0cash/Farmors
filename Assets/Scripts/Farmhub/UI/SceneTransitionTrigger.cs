@@ -37,7 +37,8 @@ public class SceneTransitionTrigger : MonoBehaviour, IInteractable
             Debug.LogWarning("SceneTransitionTrigger is missing EventHandlerUI reference.", this);
             return;
         }
-
+        
+        SaveSystem.I?.Save();
         SceneManager.LoadScene("MetroidTester");
     }
 

@@ -12,6 +12,46 @@ public class GameState : MonoBehaviour
 
     public InventoryModel PlayerInventory { get; } = new InventoryModel();
 
+    public CropFieldSaveData LoadedCropField { get; private set; }
+
+    [Header("Checkpoint")]
+    public string lastCheckpointID = "";
+    public string lastCheckpointScene = "";
+    public float lastCheckpointX = 0f;
+    public float lastCheckpointY = 0f;
+
+    [Header("References")]
+    [SerializeField] private PlacementController placementController;
+
+    private void Awake()
+    {
+        if (I != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        I = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void SetPlacementController(PlacementController controller)
+    {
+        placementController = controller;
+    }
+
+    public void InitializeNewGame()
+    {
+        rescuedAnimals.Clear();
+        rescuedAnimalCounts.Clear();
+        unlockedAbilities.Clear();
+        PlayerInventory.Clear();
+
+        LoadedCropField = new CropFieldSaveData();
+
+        PlayerInventory.Add("seed_corn", 10);
+    }
+
     public void AddRescuedAnimal(string animalId, int amount = 1)
     {
         if (string.IsNullOrWhiteSpace(animalId))
@@ -35,35 +75,14 @@ public class GameState : MonoBehaviour
         return rescuedAnimalCounts.TryGetValue(animalId, out int count) ? count : 0;
     }
 
-    public void UnlockAbility(string abilityId) => unlockedAbilities.Add(abilityId);
-    public bool HasAbility(string abilityId) => unlockedAbilities.Contains(abilityId);
-
-    [Header("Checkpoint")]
-    public string lastCheckpointID = "";
-    public string lastCheckpointScene = "";
-    public float lastCheckpointX = 0f;
-    public float lastCheckpointY = 0f;
-
-    private void Awake()
+    public void UnlockAbility(string abilityId)
     {
-        if (I != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        I = this;
-        DontDestroyOnLoad(gameObject);
+        unlockedAbilities.Add(abilityId);
     }
 
-    public void InitializeNewGame()
+    public bool HasAbility(string abilityId)
     {
-        rescuedAnimals.Clear();
-        rescuedAnimalCounts.Clear();
-        unlockedAbilities.Clear();
-        PlayerInventory.Clear();
-
-        PlayerInventory.Add("seed_corn", 10);
+        return unlockedAbilities.Contains(abilityId);
     }
 
     public SaveData ToSaveData()
@@ -79,12 +98,18 @@ public class GameState : MonoBehaviour
             });
         }
 
+        CropFieldSaveData cropField = placementController != null
+            ? placementController.GetSaveData()
+            : LoadedCropField ?? new CropFieldSaveData();
+
         return new SaveData
         {
             rescuedAnimals = new List<string>(rescuedAnimals),
             rescuedAnimalCounts = animalCounts,
             unlockedAbilities = new List<string>(unlockedAbilities),
             inventory = PlayerInventory.ToSnapshot(),
+
+            cropField = cropField,
 
             lastCheckpointID = lastCheckpointID,
             lastCheckpointScene = lastCheckpointScene,
@@ -97,7 +122,7 @@ public class GameState : MonoBehaviour
     {
         if (data == null)
         {
-            Debug.LogError("Failed to load save data. Starting fresh.");
+            Debug.LogError("Failed to load save data.");
             return;
         }
 
@@ -129,6 +154,8 @@ public class GameState : MonoBehaviour
             foreach (var id in data.unlockedAbilities)
                 unlockedAbilities.Add(id);
         }
+
+        LoadedCropField = data.cropField ?? new CropFieldSaveData();
 
         lastCheckpointID = data.lastCheckpointID;
         lastCheckpointScene = data.lastCheckpointScene;
