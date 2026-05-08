@@ -3700,14 +3700,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115622287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.06942, y: 0, z: 15.71665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1203444852}
   - {fileID: 737687653}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 168159057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &115778358
 GameObject:
@@ -5405,6 +5405,42 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d296abdb7b6ebf459734287a6e46da4, type: 3}
+--- !u!1 &168159056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 168159057}
+  m_Layer: 0
+  m_Name: Animals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &168159057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168159056}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.61, y: 0, z: 17.64}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 251274911}
+  - {fileID: 115622288}
+  - {fileID: 263515310}
+  - {fileID: 2033415367}
+  - {fileID: 426397976}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &171854887
 GameObject:
   m_ObjectHideFlags: 0
@@ -8002,14 +8038,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251274910}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.06942, y: 0, z: 15.71665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 943238688}
   - {fileID: 574654871}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 168159057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &252356537
 GameObject:
@@ -8187,14 +8223,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263515309}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.06942, y: 0, z: 15.71665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1868568695}
   - {fileID: 302767113}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 168159057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &272835683
 GameObject:
@@ -12777,14 +12813,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426397975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5523, y: 0, z: 16.02206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1188428682}
   - {fileID: 848980332}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 168159057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &428050287
 GameObject:
@@ -53423,14 +53459,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2033415366}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.5523, y: 0, z: 16.02206}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1703625185}
   - {fileID: 1679002768}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 168159057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2034584201
 PrefabInstance:
@@ -56202,6 +56238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacedPlot
       objectReference: {fileID: 0}
+    - target: {fileID: 7961574015645938619, guid: 787dcdeb21e282e4b8c2728bfb737c94, type: 3}
+      propertyPath: cropRecipes.Array.data[0].growTimeSeconds
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -56230,9 +56270,5 @@ SceneRoots:
   - {fileID: 1272910303}
   - {fileID: 1216465494}
   - {fileID: 1085262496}
-  - {fileID: 251274911}
-  - {fileID: 263515310}
-  - {fileID: 115622288}
-  - {fileID: 2033415367}
-  - {fileID: 426397976}
   - {fileID: 1834620021}
+  - {fileID: 168159057}
