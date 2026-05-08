@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class Melee : MonoBehaviour
+public class MeleeAttackState : State
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected override string AnimBoolName => "isAttacking";
+    public MeleeAttackState(Enemy enemy) : base(enemy) {}
+
+    public override void Enter()
     {
-        
+        base.Enter();
+        rb.linearVelocity = Vector2.zero;  
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void OnAnimationFinished()
     {
-        
+        stateMachine.ChangeState(new IdleState(enemy));
     }
+
 }
