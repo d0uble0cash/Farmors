@@ -20,7 +20,6 @@ public class MonsterSeedReward : MonoBehaviour
     [SerializeField] private List<SeedDrop> seedDrops = new List<SeedDrop>();
 
     [Header("Debug")]
-    [SerializeField] private bool   logRewards = true;
 
     private bool rewardGiven = false;
 
