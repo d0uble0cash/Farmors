@@ -6,6 +6,7 @@ public class PlayerIdleState : PlayerState
     public PlayerIdleState(Player player) : base(player) {}
     public override void Enter()
     {
+        base.Enter();
         animator.SetBool("isIdle", true);
     }
     public override void Update()

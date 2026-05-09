@@ -142,6 +142,7 @@ public class Player : MonoBehaviour
 
    void Update()
     {
+        
         currentState.Update();
         if (!isSliding)
         {
