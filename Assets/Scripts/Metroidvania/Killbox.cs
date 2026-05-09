@@ -39,4 +39,9 @@ public class Killbox : MonoBehaviour
         if(SaveSystem.I != null) SaveSystem.I.Save();
         SceneManager.LoadScene(farmSceneName);
     }
+
+    public void TriggerFaint()
+    {
+        StartCoroutine(FaintRoutine());
+    }
 }

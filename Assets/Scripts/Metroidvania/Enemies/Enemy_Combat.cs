@@ -23,7 +23,7 @@ public class Enemy_Combat : MonoBehaviour
         {
             return;
         }
-        Health health = hit.GetComponent<Health>();
+        Health health = hit.GetComponentInChildren<Health>();
         if(health != null)
         {
             health.ChangeHealth(-config.meleeDamage, transform.position);

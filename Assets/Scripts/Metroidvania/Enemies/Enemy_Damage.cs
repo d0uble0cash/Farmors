@@ -52,8 +52,9 @@ public class Enemy_Damage : MonoBehaviour
 
     public void DeathWithAnimation()
     {
+        Debug.Log("DeathWithAnimation called, IsDead param exists: " + HasParameter("IsDead"));
         Collider2D col = GetComponent<Collider2D>();
-        if(col != null) col.enabled =false;
+        if(col != null) col.enabled = false;
 
         if(enemy.RB != null)
         {
@@ -61,13 +62,25 @@ public class Enemy_Damage : MonoBehaviour
             enemy.RB.gravityScale = 0f;
         }
 
+        enemy.StateMachine.CurrentState?.Exit();
         enemy.Anim.SetBool("IsDead", true);
         enemy.enabled = false;
+        Debug.Log("IsDead set to: " + enemy.Anim.GetBool("IsDead"));
         Destroy(enemy.gameObject, deathAnimationDuration);
+    }
+
+    private bool HasParameter(string paramName)
+    {
+        foreach(var param in enemy.Anim.parameters)
+            if(param.name == paramName) return true;
+        return false;
     }
 
     public void DeathWithParts()
     {
+        enemy.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
+        enemy.RB.linearVelocity = Vector2.zero;
         foreach(GameObject prefab in deathParts)
         {
             Quaternion rotation = Quaternion.Euler(0, 0, Random.Range(0.5f, 1)).normalized;
@@ -83,6 +96,6 @@ public class Enemy_Damage : MonoBehaviour
             }
             Destroy(part, lifetime);
         }
-        Destroy(gameObject);
+        Destroy(enemy.gameObject, 0.1f);
     }
 }
