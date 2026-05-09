@@ -27,6 +27,7 @@ public class Enemy_Combat : MonoBehaviour
         if(health != null)
         {
             health.ChangeHealth(-config.meleeDamage, transform.position);
+            DamagePopup.Create(transform.position, config.meleeDamage);
         }
     }
 }
