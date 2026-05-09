@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -54,6 +55,12 @@ public class Player : MonoBehaviour
    [Header("Crouch Check")]
    public Transform headCheck;
    public float headCheckRadius = .2f;
+
+   [Header("DeathUI")]
+   public GameObject faintPanel;
+   public TextMeshProUGUI faintText;
+   public string farmSceneName = "FarmHub";
+   public float faintDuration = 1.5f;
 
    [Header("Slide Settings")]
     public float slideDuration = .6f;
@@ -135,6 +142,7 @@ public class Player : MonoBehaviour
 
    void Update()
     {
+        
         currentState.Update();
         if (!isSliding)
         {

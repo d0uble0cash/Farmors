@@ -5,14 +5,16 @@ public class PlayerDeathState : PlayerState
     private float knockbackVelocity;
     private float knockbackDuration;
     private bool isTimeSlow;
+    private bool hasTriggeredUI = false;
     public PlayerDeathState(Player player) : base(player){}
 
     public override void Enter()
     {
         base.Enter();
+        hasTriggeredUI = false;
         Time.timeScale = .3f;
         isTimeSlow = true;
-        animator.SetBool("IsDead", true);
+        animator.SetBool("isDead", true);
 
         player.groundCheckRadius = .2f;
         knockbackDuration = damage.knockbackDuration;
@@ -35,14 +37,34 @@ public class PlayerDeathState : PlayerState
                 isTimeSlow = false;
             }
             if(player.isGrounded)
+            {
                 player.rb.linearVelocity = Vector2.zero;
+                DeathScreenUI.Instance.Show();
+                if(!hasTriggeredUI)
+                {
+                    hasTriggeredUI = true;
+                    player.StartCoroutine(FaintRoutine());
+                }
+            }
         }
     }
+
+    private System.Collections.IEnumerator FaintRoutine()
+    {
+        if (player.faintPanel != null) player.faintPanel.SetActive(true);
+        if (player.faintText != null) player.faintText.text = "You fainted...";
+        yield return new WaitForSeconds(player.faintDuration);
+        
+        if (SaveSystem.I != null) SaveSystem.I.Save();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(player.farmSceneName);
+    }
+
 
     public override void Exit()
     {
         base.Exit();
-        animator.SetBool("IsDead", false);
+        animator.SetBool("isDead", false);
         player.groundCheckRadius = .35f;
     }
+
 }
