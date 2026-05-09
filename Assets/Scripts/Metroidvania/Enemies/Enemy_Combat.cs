@@ -6,7 +6,7 @@ public class Enemy_Combat : MonoBehaviour
     [SerializeField] private Transform attackPoint;
     private EnemyConfig config;
     private Enemy enemy;
-    private float lastAttackTime;
+    private float lastAttackTime = -10f;
 
     private void Start()
     {

@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     public StateMachine StateMachine { get; private set;}
 
+    private float lastFlipTime;
+    private float flipCoolDown = .3f;
+
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
@@ -36,12 +39,14 @@ public class Enemy : MonoBehaviour
     public void OnAnimationFinished() => StateMachine.CurrentState?.OnAnimationFinished();
     public void FaceTarget(Transform target)
     {
+        if(Time.time < lastFlipTime + flipCoolDown) return;
         float offset = target.position.x - transform.position.x;
         
         int direction = offset > 0 ? 1 : -1;
         if(direction != FacingDirection)
         {
             Flip();
+            lastFlipTime = Time.time;
         }
     }
     public void Flip()

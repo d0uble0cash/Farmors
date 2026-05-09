@@ -8,6 +8,7 @@ public class ChaseState : State
 
     public override void FixedUpdate()
     {
+        
         //Check for target
         target = senses.GetChaseTarget();
         if(!target)
@@ -15,27 +16,30 @@ public class ChaseState : State
             stateMachine.ChangeState(new PatrolState(enemy));
             return;
         }
+        // In ChaseState.FixedUpdate() at the top
 
         enemy.FaceTarget(target);
 
         //Check if target is in melee range
         if(senses.IsInMeleeRange(target) && combat.CanMeleeAttack())
         {
+            Debug.Log("Melee attack");
             stateMachine.ChangeState(new MeleeAttackState(enemy));
             return;
         }
 
         //Check if target is within turn threshold
         float distance = Mathf.Abs(target.position.x - enemy.transform.position.x);
-        if(distance <= config.turnThreshold)
+        if(distance < config.minDistance)
         {
-            stateMachine.ChangeState(new IdleState(enemy));
+            rb.linearVelocity = new Vector2(-config.chaseSpeed * enemy.FacingDirection, rb.linearVelocity.y);
             return;
-        }
+        } 
 
         //Checking for wall or cliff
         if(senses.IsHittingWall() || senses.IsAtCliff())
         {
+            enemy.Flip();
             stateMachine.ChangeState(new IdleState(enemy));
             return;
         }

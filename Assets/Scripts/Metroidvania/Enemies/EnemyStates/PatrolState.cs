@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PatrolState : State
 {
-    private float flipCooldown = .5f;
+    private float flipCooldown = 1f;
     private float lastFlipTime;
     public PatrolState(Enemy enemy) : base(enemy) {}
     protected override string AnimBoolName => "isWalking";
@@ -28,7 +28,8 @@ public class PatrolState : State
         if(senses.IsHittingWall() || senses.IsAtCliff())
         {
             enemy.Flip();
-            return;
+            lastFlipTime = Time.time;
+            rb.linearVelocity = new Vector2(config.patrolSpeed * enemy.FacingDirection, rb.linearVelocity.y);
         }
         
     }

@@ -14,7 +14,6 @@ public class IdleState : State
 
     public override void FixedUpdate()
     {
-
         //Check for target
         target = senses.GetChaseTarget();
         if(!target)
@@ -25,15 +24,14 @@ public class IdleState : State
 
         enemy.FaceTarget(target);
 
-        if(senses.IsInMeleeRange(target) && combat.CanMeleeAttack())
+        if(target != null && senses.IsInMeleeRange(target) && combat.CanMeleeAttack())
         {
             stateMachine.ChangeState(new MeleeAttackState(enemy));
             return;
         }
 
         //Check if we reached the target
-        float distance = Mathf.Abs(target.position.x - enemy.transform.position.x);
-        if(distance <= config.turnThreshold)
+        if(senses.IsInMeleeRange(target))
         {
             rb.linearVelocity = Vector2.zero;
             return;
