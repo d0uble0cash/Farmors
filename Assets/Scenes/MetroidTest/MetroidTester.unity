@@ -1550,6 +1550,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 469089560488228023, guid: fa83616a3a5195241bcae5b2e252413f, type: 3}
   m_PrefabInstance: {fileID: 3520539665401700551}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &258748586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7466450385009079920, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
+  m_PrefabInstance: {fileID: 6151999052094401404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &258748590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258748586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf93d162d20221408745f0ca13803a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HeartsUI
+  playerHealth: {fileID: 3520539665401700555}
+  hearts:
+  - {fileID: 656448994}
+  - {fileID: 1563973986}
+  - {fileID: 1015139918}
+  fullHeart: {fileID: -394032474, guid: 147cb198e19e017478319809411749c7, type: 3}
+  emptyHeart: {fileID: -1397550064, guid: 147cb198e19e017478319809411749c7, type: 3}
+  hpPerHeart: 10
 --- !u!1 &266597291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1849,6 +1874,17 @@ MonoBehaviour:
   maxIdleTime: 15
   idleVolumeMultiplier: 0.6
   sharedSoundCooldown: 2
+--- !u!114 &656448994 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2719993478844234035, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
+  m_PrefabInstance: {fileID: 6151999052094401404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &674070177
 GameObject:
   m_ObjectHideFlags: 0
@@ -142730,6 +142766,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1015139918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3373063934025811278, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
+  m_PrefabInstance: {fileID: 6151999052094401404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1 &1026391205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5872004978940998870, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
@@ -144345,6 +144392,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1563973986 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1550194129894514335, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
+  m_PrefabInstance: {fileID: 6151999052094401404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!224 &1565933832 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2195869223024011348, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
@@ -158070,8 +158128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3435c28b7e6a941a45a7384ab603ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  health: 100
-  maxHealth: 100
+  health: 30
+  maxHealth: 30
 --- !u!1001 &6151999052094401404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -158232,6 +158290,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5872004978940998870, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1565933836}
+    - targetCorrespondingSourceObject: {fileID: 7466450385009079920, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 258748590}
   m_SourcePrefab: {fileID: 100100000, guid: fff7e9539a45474419e5c31169e2b4b8, type: 3}
 --- !u!1001 &7187653004735333473
 PrefabInstance:
