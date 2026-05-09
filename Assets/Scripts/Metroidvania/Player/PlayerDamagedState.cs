@@ -31,7 +31,7 @@ public class PlayerDamagedState : PlayerState
         }
     }
 
-    public void Exit()
+    public override void Exit()
     {
         base.Exit();
         animator.SetBool("isDamaged", false);

@@ -27,8 +27,11 @@ public class BenchInteract : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log($"playerNearby: {playerNearby}, promptOpen: {promptOpen}, EPressed: {Keyboard.current.eKey.wasPressedThisFrame}");
         if(playerNearby && !promptOpen && Keyboard.current.eKey.wasPressedThisFrame) {
             OpenPrompt();
+            returnPrompt.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 

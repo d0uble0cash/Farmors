@@ -24,6 +24,8 @@ public class Damage : MonoBehaviour
 
     void HandleDamage(Vector2 sourcePosition)
     {
+        Debug.Log("Player took damage from: " + sourcePosition);
+        if(player == null) return;
         int knockBackDir = 0;
         knockBackDir = transform.position.x > sourcePosition.x ? 1 : -1;
 

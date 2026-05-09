@@ -37,7 +37,7 @@ public class Enemy_Senses : MonoBehaviour
         float distance = Mathf.Abs(target.position.x - attackPoint.position.x);
         return distance <= config.meleeRange;
     }
-    private void ODrawGizmosSelected()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + Vector3.down * config.groundCheckDistance);

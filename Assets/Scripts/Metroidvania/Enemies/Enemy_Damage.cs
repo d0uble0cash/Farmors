@@ -29,6 +29,9 @@ public class Enemy_Damage : MonoBehaviour
 
     void HandleDamage(Vector2 sourcePosition)
     {
+        Debug.Log("Enemy took damage from: " + sourcePosition);
+        
+        if(enemy.StateMachine.CurrentState is DamagedState) return;
         int knockBackDir = 0;
         knockBackDir = transform.position.x > sourcePosition.x ? 1 : -1;
 
