@@ -23,6 +23,10 @@ public class Enemy_Combat : MonoBehaviour
         {
             return;
         }
+
+        float dirToTarget = hit.transform.position.x - transform.position.x;
+        if(Mathf.Sign(dirToTarget) != enemy.FacingDirection) return;
+        
         Health health = hit.GetComponentInChildren<Health>();
         if(health != null)
         {

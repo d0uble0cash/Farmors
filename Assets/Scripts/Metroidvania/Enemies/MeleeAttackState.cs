@@ -9,6 +9,12 @@ public class MeleeAttackState : State
     {
         base.Enter();
         rb.linearVelocity = Vector2.zero; 
+
+        Transform target = senses.GetChaseTarget();
+        if(target != null)
+        {
+            enemy.FaceTarget(target);
+        }
         combat.PerformMeleeAttack();
     }
 
