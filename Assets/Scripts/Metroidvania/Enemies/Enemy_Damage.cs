@@ -55,11 +55,15 @@ public class Enemy_Damage : MonoBehaviour
     }
     private void GiveSeedReward()
     {
-        if (seedReward == null)
+        Debug.Log("GiveSeedReward was called on " + name);
+        if (seedReward == null) {
             seedReward = GetComponent<MonsterSeedReward>();
+            Debug.LogWarning("Enemy_Damage: No MonsterSeedReward found on " + name);
+            return;
+        }
+        Debug.Log("Enemy_Damage: Calling GiveRewards on " + seedReward.name);
 
-        if (seedReward != null)
-            seedReward.GiveRewards();
+        seedReward.GiveRewards();
     }
 
     public void DeathWithAnimation()

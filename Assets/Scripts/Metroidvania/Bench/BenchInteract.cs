@@ -27,7 +27,6 @@ public class BenchInteract : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"playerNearby: {playerNearby}, promptOpen: {promptOpen}, EPressed: {Keyboard.current.eKey.wasPressedThisFrame}");
         if(playerNearby && !promptOpen && Keyboard.current.eKey.wasPressedThisFrame) {
             OpenPrompt();
             returnPrompt.SetActive(true);
@@ -58,6 +57,7 @@ public class BenchInteract : MonoBehaviour
             GameState.I.lastCheckpointX = transform.position.x;
             GameState.I.lastCheckpointY = transform.position.y;
         }
+        Debug.Log("Before saving, seed_corn count = " + GameState.I.PlayerInventory.GetCount("seed_corn"));
         SaveSystem.I?.Save();
         SceneManager.LoadScene(farmSceneName);
     }

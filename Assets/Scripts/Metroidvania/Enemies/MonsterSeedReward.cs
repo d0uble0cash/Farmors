@@ -7,8 +7,7 @@ public class MonsterSeedReward : MonoBehaviour
     [Serializable]
     public class SeedDrop
     {
-        [Tooltip("Must match the ItemDefinition.Id exactly. Example: seed_corn")]
-        public string seedId = "seed_corn";
+        public ItemDefinition seedItem;
 
         [Min(1)] public int minAmount = 1;
         [Min(1)] public int maxAmount = 1;
@@ -20,12 +19,8 @@ public class MonsterSeedReward : MonoBehaviour
     [Header("Seed Rewards")]
     [SerializeField] private List<SeedDrop> seedDrops = new List<SeedDrop>();
 
-    [Header("Optional Player Kill Check")]
-    [SerializeField] private bool requirePlayerKiller = false;
-    [SerializeField] private string playerTag = "Player";
-
     [Header("Debug")]
-    [SerializeField] private bool logRewards = true;
+    [SerializeField] private bool   logRewards = true;
 
     private bool rewardGiven = false;
 
@@ -36,28 +31,17 @@ public class MonsterSeedReward : MonoBehaviour
 
     public void GiveRewards()
     {
-        GiveRewardsInternal(null);
-    }
+        Debug.Log($"{name}: GiveRewards was called.");
 
-    public void GiveRewardsFromKiller(GameObject killer)
-    {
-        GiveRewardsInternal(killer);
-    }
-
-    private void GiveRewardsInternal(GameObject killer)
-    {
         if (rewardGiven)
-            return;
-
-        if (requirePlayerKiller)
         {
-            if (killer == null || !killer.CompareTag(playerTag))
-                return;
+            Debug.LogWarning($"{name}: reward already given, stopping.");
+            return;
         }
 
         if (GameState.I == null)
         {
-            Debug.LogWarning($"{name} could not give seed reward because GameState.I is null.");
+            Debug.LogError($"{name}: GameState.I is null. Cannot add seeds.");
             return;
         }
 
@@ -65,39 +49,77 @@ public class MonsterSeedReward : MonoBehaviour
 
         if (inventory == null)
         {
-            Debug.LogWarning($"{name} could not give seed reward because PlayerInventory is null.");
+            Debug.LogError($"{name}: PlayerInventory is null. Cannot add seeds.");
             return;
         }
 
-        rewardGiven = true;
+        Debug.Log($"{name}: Seed drop count = {seedDrops.Count}");
+
+        bool gaveAnyReward = false;
 
         foreach (SeedDrop drop in seedDrops)
         {
             if (drop == null)
-                continue;
-
-            if (string.IsNullOrWhiteSpace(drop.seedId))
             {
-                Debug.LogWarning($"{name} has a seed drop with an empty seedId.");
+                Debug.LogWarning($"{name}: drop was null.");
                 continue;
             }
 
-            if (UnityEngine.Random.value > drop.dropChance)
+            if (drop.seedItem == null)
+            {
+                Debug.LogWarning($"{name}: seedItem is not assigned.");
                 continue;
+            }
+
+            if (string.IsNullOrWhiteSpace(drop.seedItem.Id))
+            {
+                Debug.LogWarning($"{name}: seedItem has empty Id.");
+                continue;
+            }
+
+            float roll = UnityEngine.Random.value;
+
+            Debug.Log($"{name}: rolling for {drop.seedItem.Id}. Roll={roll}, Chance={drop.dropChance}");
+
+            if (roll > drop.dropChance)
+            {
+                Debug.Log($"{name}: failed chance roll for {drop.seedItem.Id}.");
+                continue;
+            }
 
             int min = Mathf.Min(drop.minAmount, drop.maxAmount);
             int max = Mathf.Max(drop.minAmount, drop.maxAmount);
             int amount = UnityEngine.Random.Range(min, max + 1);
 
-            bool added = inventory.Add(drop.seedId, amount);
+            bool added = inventory.Add(drop.seedItem.Id, amount);
 
-            if (logRewards)
+            Debug.Log(
+                $"{name}: Add result={added}, item={drop.seedItem.Id}, amount={amount}, total now={inventory.GetCount(drop.seedItem.Id)}"
+            );
+
+            if (added)
+                gaveAnyReward = true;
+        }
+
+        rewardGiven = true;
+
+        if (gaveAnyReward)
+        {
+            Debug.Log($"{name}: at least one seed was added.");
+
+            if (SaveSystem.I != null)
             {
-                if (added)
-                    Debug.Log($"{name} gave player {amount}x {drop.seedId}.");
-                else
-                    Debug.LogWarning($"{name} failed to add {amount}x {drop.seedId} to inventory.");
+                SaveSystem.I.Save();
+                Debug.Log($"{name}: saved after seed reward.");
             }
+            else
+            {
+                Debug.LogWarning($"{name}: SaveSystem.I is null, could not save after reward.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{name}: no seed rewards were added.");
         }
     }
 }
