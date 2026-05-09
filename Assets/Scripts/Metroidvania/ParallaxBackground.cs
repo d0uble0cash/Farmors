@@ -23,7 +23,8 @@ public class ParallaxBackground : MonoBehaviour
 
         // Parallax movement
         float deltaX = cameraTransform.position.x - lastCameraPos.x;
-        transform.position += new Vector3(deltaX * parallaxSpeed, 0, 0);
+        float deltaY = cameraTransform.position.y - lastCameraPos.y;
+        transform.position += new Vector3(deltaX * parallaxSpeed, deltaY, 0);
         lastCameraPos = cameraTransform.position;
 
         // Infinite tiling
