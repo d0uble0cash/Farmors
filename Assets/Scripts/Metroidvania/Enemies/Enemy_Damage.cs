@@ -15,6 +15,8 @@ public class Enemy_Damage : MonoBehaviour
     [SerializeField] private float torque = 5;
     [SerializeField] private float lifetime = 2;
 
+    [SerializeField] private MonsterSeedReward seedReward;
+
     private void OnEnable() 
     {
         health.OnDamaged += HandleDamage;
@@ -40,6 +42,8 @@ public class Enemy_Damage : MonoBehaviour
 
     void HandleDeath(Vector2 sourcePosition)
     {
+        GiveSeedReward();
+
         if(useDeathAnimation) 
         {
             DeathWithAnimation();
@@ -48,6 +52,14 @@ public class Enemy_Damage : MonoBehaviour
         {
             DeathWithParts();
         }
+    }
+    private void GiveSeedReward()
+    {
+        if (seedReward == null)
+            seedReward = GetComponent<MonsterSeedReward>();
+
+        if (seedReward != null)
+            seedReward.GiveRewards();
     }
 
     public void DeathWithAnimation()
