@@ -12,8 +12,8 @@ public class InventoryCheat : MonoBehaviour
         if (GameState.I == null)
             return;
 
-        // Add item (press I)
-        if (Keyboard.current.iKey.wasPressedThisFrame)
+        // Add item (press O)
+        if (Keyboard.current.oKey.wasPressedThisFrame)
         {
             if (testItem == null)
             {

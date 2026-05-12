@@ -11,21 +11,32 @@ public class ItemDefinition : ScriptableObject
     public string Description => description;
     [SerializeField] private Sprite icon;
     public Sprite Icon => icon;
+    [SerializeField] private int damage;
+    public int Damage => damage;
+    [SerializeField] private int range;
+    public int Range => range;
     [SerializeField] private int maxStackSize  = 99;   
     public int MaxStackSize => maxStackSize;
     [SerializeField] private int itemValue = 0;
     public int ItemValue => itemValue;
+    [SerializeField] private bool isMaterial;
+    public bool IsMaterial => isMaterial;
 
-    private void OnValidate()
-    {
-        if (string.IsNullOrWhiteSpace(id))
-        {
+    
+    private void OnValidate(){
+        if (string.IsNullOrWhiteSpace(id)){
             Debug.LogWarning("ItemDefinition ID should not be empty!", this);
-        }        else if (id.Contains(" "))
-        {
+        }        else if (id.Contains(" ")){
             Debug.LogWarning("ItemDefinition ID should not contain spaces!", this);
         }
         id = id.ToLowerInvariant();
+    }
+
+    public void ChangeDamage(int damage){
+        this.damage = damage;
+    }
+    public void ChangeRange(int range){
+        this.range = range;
     }
 
 }

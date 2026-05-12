@@ -1,14 +1,12 @@
-# Farmors (Working Title)
+# Blooming Blight
 
-Farmors is a 2.5D pixel-style farming and metroidvania game where you manage a farm and venture into biomes to rescue lost farm animals.
-
-> ⚠ Working title — name may change.
+Blooming Blight is a 2.5D pixel-style farming and metroidvania game where you manage a farm and venture into biomes to rescue lost farm animals.
 
 ---
 
 ## 🎮 Project Overview
 
-Farmors combines:
+Blooming Blight combines:
 - 🌾 A farming loop (plant, grow, harvest, sell)
 - 🐑 Animal rescue mechanics
 - 🗺 A metroidvania-style exploration system
@@ -28,6 +26,7 @@ Unity **6.3 LTS (6000.3.10f1)**
 
 Scenes:
 - Boot (game initialization)
+- MainMenu(Start Screen)
 - FarmHub (farm gameplay)
 - Biome (exploration gameplay)
 

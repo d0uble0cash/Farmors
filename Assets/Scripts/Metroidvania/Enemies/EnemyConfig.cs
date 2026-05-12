@@ -1,0 +1,33 @@
+using UnityEngine;
+
+[CreateAssetMenu(menuName = "Enemy/EnemyConfig")]
+
+public class EnemyConfig : ScriptableObject
+{
+    [Header("General")]
+    public float turnThreshold = 0.2f;
+
+    [Header("Patrol")]
+    public float patrolSpeed = 5;
+    public float groundCheckDistance = 0.7f;
+    public float wallCheckDistance = 0.5f;
+    public LayerMask groundLayer;
+    public LayerMask wallLayer;
+
+
+    [Header("Chase")]
+    public float minDistance = 1.5f;
+    public float chaseSpeed = 7;
+    public float chaseRange = 5;
+    public LayerMask targetLayer;
+
+    [Header("Attack")]
+    public float meleeRange = 1.2f;
+    public int meleeDamage = 10;
+    public float meleeCooldown = 1.0f;
+
+    [Header("Damaged")]
+    public float knockbackForce = 30;
+    public float knockbackDuration = 0.2f;
+    
+}

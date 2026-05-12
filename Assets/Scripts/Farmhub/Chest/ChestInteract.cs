@@ -5,6 +5,14 @@ public class ChestInteract : MonoBehaviour, IInteractable
     [Header("Animation")]
     [SerializeField] private Animator lidAnimator;
 
+    [Header("Chest Screen")]
+    [SerializeField] private GameObject chestScreen;
+
+    [Header("Inventory")]
+    [SerializeField] private ChestInventory chestInventory;
+    [SerializeField] private ChestUI chestInventoryUI;
+    [SerializeField] private InventoryUI playerInventoryUI;
+
     [Header("Interaction")]
     [SerializeField] private Collider interactionCollider;
 
@@ -19,20 +27,25 @@ public class ChestInteract : MonoBehaviour, IInteractable
     private void Awake()
     {
         if (interactionCollider == null)
-        {
             interactionCollider = GetComponent<Collider>();
-        }
+
+        if (chestInventory == null)
+            chestInventory = GetComponent<ChestInventory>();
 
         if (prompt != null)
         {
             prompt.Show(false);
             prompt.SetPulsing(false);
         }
+
+        if (chestScreen != null)
+            chestScreen.SetActive(false);
     }
 
     private void Reset()
     {
         interactionCollider = GetComponent<Collider>();
+        chestInventory = GetComponent<ChestInventory>();
     }
 
     public void Interact()
@@ -44,17 +57,37 @@ public class ChestInteract : MonoBehaviour, IInteractable
         }
 
         if (isOpen)
-        {
-            lidAnimator.Play("Chest_Close");
-            isOpen = false;
-        }
+            CloseChest();
         else
-        {
-            lidAnimator.Play("chest_Open");
-            isOpen = true;
-        }
+            OpenChest();
 
         RefreshPrompt();
+    }
+
+    private void OpenChest()
+    {
+        lidAnimator.Play("chest_Open");
+        isOpen = true;
+
+        if (chestScreen != null)
+            chestScreen.SetActive(true);
+
+        if (chestInventory == null || GameState.I == null){
+            return;
+        }
+
+        if (chestInventoryUI != null && playerInventoryUI != null){
+            chestInventoryUI.Show(chestInventory.Inventory, GameState.I.PlayerInventory);
+        }
+    }
+
+    private void CloseChest()
+    {
+        lidAnimator.Play("Chest_Close");
+        isOpen = false;
+
+        if (chestScreen != null)
+            chestScreen.SetActive(false);
     }
 
     public void SetFocused(bool focused)
@@ -66,14 +99,10 @@ public class ChestInteract : MonoBehaviour, IInteractable
     public bool MatchesCollider(Collider hit)
     {
         if (hit == null)
-        {
             return false;
-        }
 
         if (interactionCollider != null)
-        {
             return hit == interactionCollider;
-        }
 
         return hit.GetComponentInParent<ChestInteract>() == this;
     }
@@ -81,9 +110,7 @@ public class ChestInteract : MonoBehaviour, IInteractable
     private void RefreshPrompt()
     {
         if (prompt == null)
-        {
             return;
-        }
 
         if (!isFocused)
         {

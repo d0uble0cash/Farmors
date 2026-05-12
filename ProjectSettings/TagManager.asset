@@ -12,19 +12,19 @@ TagManager:
   - Water
   - UI
   - FrontGround
-  - Ground
+  - 
   - PlacementBlocking
+  - Animals
+  - Enemy
+  - Player
   - 
+  - Trees
+  - Bridge
+  - Ground
+  - BackGround
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Water
+  - Bushes & Background
   - 
   - 
   - 
